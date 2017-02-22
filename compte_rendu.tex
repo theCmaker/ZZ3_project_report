@@ -22,6 +22,7 @@
 \usepackage{fancyhdr}             % Headers & footers
 \usepackage{tcolorbox}              % Coloration des cellules de tableaux
 \usepackage[xindy,toc]{glossaries}  % Glossaire
+\usepackage[sfdefault]{quattrocento}
 
 \usepackage{chngcntr}               % Gestion des compteurs
 \usepackage{emptypage}              % Pages blanches sans header ni footer
@@ -35,10 +36,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %        PARAMETRES DE METADONNEES       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\titre}{Nom du projet}
-\newcommand{\sujet}{Objet}              % i.e. Projet ZZ3
-\newcommand{\sujetLong}{Objet complet}  % i.e. Projet de 3\ieme{} année
-\newcommand{\auteur}{Auteur(s)}
+\newcommand{\titre}{Conception d'un solveur pour l'interception de mobiles}
+\newcommand{\sujet}{Projet ZZ3}
+\newcommand{\sujetLong}{Projet de 3\ieme{} année}
+\newcommand{\auteur}{Aurélie PERES, Pierre-Loup PISSAVY}
 \newcommand{\dateRendu}{Mars 2017}
 
 % Paramètres de métadonnées du PDF
@@ -118,7 +119,7 @@
   % Glossaire
   \cleardoublepage
   \pagenumbering{roman}                   % Retour chiffres romains
-  \setcounter{page}{\value{oldRomanNum}}  % Récupération du numéro de page => a ajuster (+0/1 selon la parité souhaitée)
+  \setcounter{page}{\value{oldRomanNum}}  % Récupération du numéro de page
   \printglossary[title=Glossaire]
   
   %Webographie
