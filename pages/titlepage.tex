@@ -1,0 +1,76 @@
+\makeatletter
+\begin{titlepage}
+  \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+  \center
+  \includegraphics[width=6.4cm]{ISIMA_logo.pdf}
+  \vspace{.5cm}
+
+  % \thiswatermark{
+  %   \begin{minipage}{\textwidth}
+  %     \vspace{24cm}
+  %     \begin{center}
+  %     \rotatebox{45}{\scalebox{5}{\color{red!50!white}RAPPORT CONFIDENTIEL}}
+  %     \end{center}
+  %   \end{minipage}
+  % }
+
+  % \null\hfill
+  % \begin{minipage}{.3\textwidth}
+  % \begin{flushleft} \large
+  %   Adresse entreprise
+  % \end{flushleft}
+  % \end{minipage}
+  % \vspace{1cm}
+
+  {\bfseries\Large Rapport d'ingénieur\\[.3cm]
+  \sujetLong \\[.5cm]
+  \large Filière Génie Logiciel\\[1cm]}
+  \HRule \\[0.3cm]
+  { \LARGE \bfseries \@title}\\ %[.3cm] %A activer si plusieurs lignes
+  \HRule \\[1.5cm]
+
+  \begin{flushleft} \Large \bfseries
+    \emph{Présenté par:} \@author\\[1cm]
+  \end{flushleft}
+  \begin{minipage}[t]{0.52\textwidth}
+    \begin{flushleft} \large
+      Responsable ISIMA: %\\[.5cm]
+%      Responsable Entreprise: 
+    \end{flushleft}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.42\textwidth}
+    \begin{flushleft} \large
+      Soutenance: \@date\\[.5cm]
+
+      %Durée du stage: 5 mois
+    \end{flushleft}
+  \end{minipage}\\[1.5cm]
+
+  \vfill
+
+  \begin{minipage}[c]{0.10\textwidth}
+    \vfill
+    \includegraphics[width=\linewidth]{isima_main.png}
+    \vfill \null
+  \end{minipage}
+  \begin{minipage}[b]{0.89\textwidth}
+    \textbf{Institut Supérieur d'Informatique, de Modélisation et de leurs Applications}
+    \vskip1mm
+    {\color{NavyBlue}\hrule}
+    \vskip3mm
+    \begin{minipage}{0.78\textwidth}
+      \textcolor{NavyBlue}{\large\textbf{www.isima.fr}}\\
+      Campus universitaire des Cézeaux -- 1 rue de la Chebarde\\
+      TSA 60125 -- CS 60026 -- 63178 Aubière CEDEX\\
+      Tel (+33/0) 473 405 000 -- Fax (+33/0) 473 405 001
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.20\textwidth}
+      \raggedleft
+      \includegraphics[height=1.6cm]{UBP_logo.jpg}
+    \end{minipage}
+  \end{minipage} 
+
+\end{titlepage}
+\makeatother

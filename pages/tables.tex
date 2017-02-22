@@ -1,0 +1,19 @@
+\newlength{\currentparskip}
+\setlength{\currentparskip}{\parskip}
+\setlength{\parskip}{0pt}
+\tableofcontents
+
+\bigskip\null\bigskip
+
+\noindent\textbf{Nota:} Les termes présents dans le glossaire voient leur première occurrence dans le texte succédée par un double obèle (symbole $\ddagger$).
+
+\newpage
+\begingroup
+  \addcontentsline{toc}{chapter}{Table des figures}
+  \listoffigures
+  \addcontentsline{toc}{chapter}{Liste des tableaux}
+  \listoftables
+  \addcontentsline{toc}{chapter}{Liste des extraits de code}
+  \listoflistings
+\endgroup
+\setlength{\parskip}{\currentparskip}

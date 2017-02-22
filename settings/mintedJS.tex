@@ -1,0 +1,38 @@
+\input{settings/mintedSettings}
+\usepackage{MnSymbol}
+
+\newminted[jscode]{js}{
+  linenos                = true,
+  breaklines             = true,
+  frame                  = single,
+  breakautoindent        = true,
+  breaksymbolleft        = $\lhookrightarrow$,
+  breaksymbolindentleft  = 10pt,
+  breaksymbolsepleft     = 2pt,
+  breaksymbolright       = $\rhookleftarrow$,
+  breaksymbolindentright = 10pt,
+  breaksymbolsepright    = 2pt,
+  texcomments            = false
+}
+
+
+\newmintedfile[jsfile]{js}{
+  linenos                = true,
+  tabsize                = 2,
+  breaklines             = true,
+  fontsize               = \footnotesize,
+  frame                  = single,
+  breakautoindent        = true,
+  breaksymbolleft        = $\lhookrightarrow$,
+  breaksymbolindentleft  = 10pt,
+  breaksymbolsepleft     = 2pt,
+  breaksymbolright       = $\rhookleftarrow$,
+  breaksymbolindentright = 10pt,
+  breaksymbolsepright    = 2pt,
+  label                  = Code JavaScript,
+  texcomments            = false
+}
+
+\newmintinline[jsinline]{js}{
+breaklines = true
+}

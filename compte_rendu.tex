@@ -1,0 +1,133 @@
+\documentclass[11pt,twoside,openright]{report}
+\usepackage[utf8]{inputenc}   % Encodage entrée
+\usepackage[T1]{fontenc}      % Encodage des polices
+\usepackage{graphicx}         % Images
+\usepackage[usenames,svgnames,table]{xcolor} % Couleurs
+\usepackage{tocloft}          % Gestion des tables
+\newlistof{listing}{lol}{Liste des extraits de code}
+\usepackage[chapter,newfloat]{minted}  % Mise en forme de code source
+\usepackage{framed}           % Cadres et bordures
+\usepackage[francais]{babel}  % Langue
+\usepackage{amsmath}          % Symboles maths
+
+\usepackage[autolanguage,np]{numprint} % Formatage des nombres
+\usepackage{caption}          % Légendes
+\usepackage{sidecap}          % Légende latérale
+\usepackage{subcaption}       % Légendes des sous-figures
+\usepackage{enumitem}         % Formatage des listes à puces
+\usepackage{blindtext}        % Texte caché
+\usepackage[nobottomtitles]{titlesec} % Formatage des chapitres
+\usepackage[a4paper]{geometry}    % Mise en page
+\usepackage[hidelinks]{hyperref}  % Liens
+\usepackage{fancyhdr}             % Headers & footers
+\usepackage{tcolorbox}              % Coloration des cellules de tableaux
+\usepackage[xindy,toc]{glossaries}  % Glossaire
+
+\usepackage{chngcntr}               % Gestion des compteurs
+\usepackage{emptypage}              % Pages blanches sans header ni footer
+\counterwithout{footnote}{chapter}  % Numérotation des notes de pied de page indépendante du chapitre (pas de RAZ)
+
+% Paramètres affichage des liens et métadonnées PDF
+\input{settings/hyperrefSettings}
+% Import des paramètres de mise en forme de code source.
+% \input{settings/mintedCPP}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        PARAMETRES DE METADONNEES       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\titre}{Nom du projet}
+\newcommand{\sujet}{Objet}              % i.e. Projet ZZ3
+\newcommand{\sujetLong}{Objet complet}  % i.e. Projet de 3\ieme{} année
+\newcommand{\auteur}{Auteur(s)}
+\newcommand{\dateRendu}{Mars 2017}
+
+% Paramètres de métadonnées du PDF
+\hypersetup{
+  pdftitle={\sujetLong{} - \titre},
+  pdfsubject={\sujet},
+  pdfkeywords={},
+  pdfauthor={\auteur}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        MISE EN PAGE DU DOCUMENT        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\geometry{left=3cm,right=2cm,top=2.5cm,bottom=2.5cm}
+
+\input{settings/layout}
+\input{settings/format}
+
+\newcommand{\TODO}[1]{\colorbox{red}{#1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        ENVIRONNEMENT POUR CODE         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{%
+  name={Code},
+  fileext=lol}
+
+\author{\auteur}
+\date{\dateRendu}
+\title{\titre}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        PARAMETRES DU GLOSSAIRE         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{settings/glossary}   % Import des paramètres
+\input{glossary-entries}    % Récupération des entrées du glossaire
+
+\begin{document}
+  \setlength{\parskip}{10pt}
+  % 1ere de couverture
+  \pagestyle{plain} % Page blanche
+  \input{titlepage}
+  \blankpage
+
+  \pagenumbering{roman}       % numérotation en chiffres romains
+  
+  % Remerciements
+  \cleardoublepage
+  \input{remerciements}
+
+  % Résumé + Abstract sur 1 page
+  \cleardoublepage
+  \input{resume_abstract}
+
+  % Table des matières, illustrations, tableaux, listings
+  \cleardoublepage
+  \pagestyle{IHA-fancy-style}
+  \input{tables}
+  \cleardoublepage
+  % Mémorisation du dernier numéro de page en chiffres romains
+  \newcounter{oldRomanNum}
+  \setcounter{oldRomanNum}{\value{page}}
+  \pagenumbering{arabic}      % Chiffres arabes
+
+  % Introduction
+  \input{introduction}
+
+  % Parties
+  \input{part1}
+  \input{part2}
+  \input{part3}
+
+  % Conclusion
+  \input{conclusion}
+
+  % Glossaire
+  \cleardoublepage
+  \pagenumbering{roman}                   % Retour chiffres romains
+  \setcounter{page}{\value{oldRomanNum}}  % Récupération du numéro de page => a ajuster (+0/1 selon la parité souhaitée)
+  \printglossary[title=Glossaire]
+  
+  %Webographie
+  \cleardoublepage
+  \input{webographie}
+
+  %Annexes
+  \cleardoublepage
+  \appendix
+  \pagenumbering{Roman}
+  \input{annexes}
+\end{document}
