@@ -1,3 +1,6 @@
+# Default pdf output
+compte_rendu.pdf
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
