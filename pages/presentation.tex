@@ -24,11 +24,47 @@
 
     	Dans les schémas que nous utiliserons pour décrire nos approches, nous emploierons les symboles suivants:
     	\begin{itemize}
-    		\item Pour un mobile: le symbole (\tikz[baseline=-0.5ex]{\node[mobile,caught,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il est intercepté, ou (\tikz[baseline=-0.5ex]{\node[mobile,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il ne l'est pas dans un schéma spatial, et le symbole $\oplus$ dans un schéma de tournée. Un vecteur vitesse (\tikz[baseline=-0.5ex]{\draw[speed] (0,0) -- (1,0);}) indique sa direction ainsi que sa vitesse. Sa trajectoire est tracée par une ligne pointillée (\tikz[baseline=-0.5ex]{\draw[route] (0,0) -- (1,0);}).
+    		\item Pour un mobile: le symbole (\tikz[baseline=-0.65ex]{\node[mobile,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il est intercepté, ou (\tikz[baseline=-0.65ex]{\node[mobile,uncaught,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il ne l'est pas dans un schéma spatial, et le symbole (\tikz[baseline=-0.65ex]{\node[mobile,draw]{};}) dans un schéma de tournée. Un vecteur vitesse (\tikz[baseline=-0.65ex]{\draw[speed] (0,0) -- (1,0);}) indique sa direction ainsi que sa vitesse. Sa trajectoire est tracée par une ligne pointillée (\tikz[baseline=-0.65ex]{\draw[direction] (0,0) -- (1,0);}).
     		
-    		\item Pour un dépôt, un symbole (\tikz[baseline=-0.5ex]{\node[interceptor,inner sep=0,outer sep=0]{\interceptor};}) indique sa position.
+    		\item Pour un dépôt, un symbole (\tikz[baseline=-0.65ex]{\node[interceptor,inner sep=0,outer sep=0]{\interceptor};}) indique sa position.
     		
-    		\item Pour un intercepteur: son tracé est réalisé en traits pleins, et part d'un dépôt. Afin d'en faciliter la lecture, le retour au dépôt n'est pas représenté. Le tracé est ponctué de symboles (\tikz[baseline=-0.5ex]{\node[interceptor,inner sep=0,outer sep=0]{\mobile};}) aux emplacements où l'interception d'un mobile a eu lieu. La date de fin d'une tournée est indiquée à proximité du dernier mobile intercepté.
+    		\item Pour un intercepteur: son tracé est réalisé en traits pleins, et part d'un dépôt. Afin d'en faciliter la lecture, le retour au dépôt n'est pas représenté. Le tracé est ponctué de symboles (\tikz[baseline=-0.65ex]{\node[route,inner sep=0,outer sep=0]{\mobile};}) aux emplacements où l'interception d'un mobile a eu lieu. La date de fin d'une tournée est indiquée à proximité du dernier mobile intercepté.
     	\end{itemize}
+
+    	La figure \ref{fig:example} présente un schéma spatial et un schéma de tournée.
+
+    	\begin{figure}
+    		\begin{subfigure}[b]{.45\linewidth}
+    			\centering
+    			\begin{tikzpicture}[scale=.5]
+    				\input{spatial_example}
+    			\end{tikzpicture}
+    			\subcaption{Représentation spatiale}
+    			\label{subfig:spatial}
+    		\end{subfigure}
+    		\hfill
+    		\begin{subfigure}[b]{.45\linewidth}
+    			\centering
+    			\vfill
+    			\begin{tikzpicture}[schema]
+    				\input{route_example}
+    			\end{tikzpicture}
+    			\vfill
+    			\null
+    			\subcaption{Représentation schématique d'une tournée}
+    		\end{subfigure}
+    		\caption{Exemples de schémas}
+    		\label{fig:example}
+    	\end{figure}
+
     \section{Etat de l'art}
+    	Le projet réalisé en première année permettait de travailler avec un seul intercepteur pour obtenir des résultats comme celui que l'on peut voir sur la figure \ref{subfig:spatial}. Le programme était écrit en langage C et prenait en entrée un fichier décrivant les données du problème. Le listing \ref{lst:old_input_file} correspond au fichier d'entrée menant au résultat de la figure \ref{subfig:spatial}.
+
+    	Ce fichier avait été conçu pour en faciliter l'évolution. Bien que le programme ne puisse travailler qu'avec un seul intercepteur, il était possible d'en renseigner plusieurs, ainsi que plusieurs dépôts. Nous avons donc conservé un format de fichier similaire pour notre projet, il sera présenté plus tard.
+
+    	\begin{code}
+    		\textfile{files/old_input_file.txt}
+    		\captionof{listing}{Fichier d'entrée original}
+    		\label{lst:old_input_file}
+    	\end{code}
     \section{Travail à réaliser}

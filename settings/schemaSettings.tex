@@ -1,17 +1,24 @@
 \usepackage{tikz} %schémas
 \usetikzlibrary{calc}
 \usetikzlibrary{plotmarks}
-\usetikzlibrary{positioning}
+\usetikzlibrary{scopes}
+\usetikzlibrary{arrows,chains,positioning,quotes}
 \usepackage{MnSymbol}
+\usepackage{relsize}
 
 \newcommand{\mobile}{\Large{$+$}}
+\newcommand{\mobileroute}{\Large{$\oplus$}}
 \newcommand{\interceptor}{\Large{$\square$}}
 \newcommand{\depot}{\Large{$\square$}}
 \tikzset{%styles schémas
-    interceptor/.style={thick,color=Blue},  %intercepteur
-    mobile/.style={color=LimeGreen},  %mobile
-    route/.style={mobile,dashed}, %chemin mobile
+    interceptor/.style={thick,color=DarkBlue},  %intercepteur
+    route/.style={interceptor},
+    mobile/.style={color=LimeGreen, circle},  %mobile
+    direction/.style={mobile,dashed}, %chemin mobile
     speed/.style={mobile, thick, >=latex,->}, %vitesse mobile
-    caught/.style={color=OrangeRed},  %mobile attrapé
-    grided/.style={dotted,color=Black!20}    %grille
+    uncaught/.style={color=OrangeRed},  %mobile non attrapé
+    grided/.style={dotted,color=Black!20},    %grille
+    schema/.style={	every node/.style=draw,
+    				every join/.style=-latex,
+    				every label/.append style={font=\scriptsize}}
 }

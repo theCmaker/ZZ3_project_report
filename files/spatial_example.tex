@@ -1,0 +1,26 @@
+\draw[grided,step=1.0,thin] (0,0) grid (12,12);
+\draw[color=Gray] (0,0) -- coordinate (x axis mid) (12,0);
+\draw[color=Gray] (0,0) -- coordinate (x axis mid) (0,12);
+\foreach \x in {0,...,12}
+\draw[color=Gray] (\x,1pt) -- (\x,-3pt) node[anchor=north] {\x};
+\foreach \y in {0,...,12}
+\draw[color=Gray] (1pt,\y) -- (-3pt,\y) node[anchor=east] {\y};
+\node[interceptor] (D0) at (12,12) {\interceptor};
+\node (I0) at (D0) {};
+\node[interceptor] at ($ (I0) + (315:0.4) $) {$I_0$};
+\node[mobile,anchor=center] (M0) at (2,5) {\mobile};
+\node[mobile] at (M0.south east) {$M_{0}$};
+\draw[speed] (M0.center) -- ($ (M0.center) + (1,0.3) $);
+\node[mobile,anchor=center] (M1) at (4,1) {\mobile};
+\node[mobile] at (M1.south east) {$M_{1}$};
+\draw[speed] (M1.center) -- ($ (M1.center) + (0.5,0.5) $);
+\node[mobile,uncaught,anchor=center] (M2) at (6,10) {\mobile};
+\node[mobile] at (M2.south east) {$M_{2}$};
+\draw[speed,uncaught] (M2.center) -- ($ (M2.center) + (-4,0) $);
+\draw[direction] (M0.center) -- (6.11793,6.23538);
+\draw[route] (12,12) -- (6.11793,6.23538);
+\node[route] at (6.11793,6.23538) {\mobile};
+\draw[direction] (M1.center) -- (6.70783,3.70783);
+\draw[route] (6.11793,6.23538) -- (6.70783,3.70783);
+\node[route] at (6.70783,3.70783) {\mobile};
+\draw[route](6.70783,3.70783) node[anchor=north east] {$t_{0}=5.41567$};
