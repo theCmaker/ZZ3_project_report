@@ -1,0 +1,23 @@
+\begin{scope}[start chain]
+	\node[interceptor, on chain] {};
+	\node[mobile, on chain, join] (B1) {};
+	\node[mobile, on chain, join,red] (S1) {};
+	\node[mobile, on chain, join] (A1) {};
+	\node[interceptor, on chain, join] {};
+\end{scope}
+\begin{scope}[start chain,yshift=-1.25cm]
+	\node[interceptor, on chain] {};
+	\node[mobile, on chain, join] (B2) {};
+	\node[mobile, on chain, join,red] (S2) {};
+	\node[mobile, on chain, join] (A2) {};
+	\node[interceptor, on chain, join] {};
+\end{scope}
+\draw[correction,dotted] (B1) -- node[stepnode] {1} (S2);
+\draw[correction,dotted] (S2) -- node[stepnode] {2} (A1);
+\draw[correction,dotted] (B2) to[out=120,in=-120] ($(B1)+(-1,.5)$) to[out=45,in=135]  node[stepnode,near start] {3} (S1);
+\draw[correction,dotted] (S1) to[out=45,in=120] node[stepnode,near end] {4} ($(A1)+(1,.5)$) to[out=-60,in=60] (A2);
+\node[left= .5 of S1,cross] {$\times$};
+\node[right= .5 of S1,cross] {$\times$};
+\node[left= .5 of S2,cross] {$\times$};
+\node[right= .5 of S2,cross] {$\times$};
+\draw[correction,<->] (S1) -- (S2);

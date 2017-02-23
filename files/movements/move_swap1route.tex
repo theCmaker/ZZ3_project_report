@@ -1,0 +1,18 @@
+\begin{scope}[start chain]
+	\node[interceptor, on chain] (B1) {};
+	\node[mobile, on chain, join,red] (S1) {};
+	\node[mobile, on chain, join] (A1) {};
+	\node[mobile, on chain, join] (B2) {};
+	\node[mobile, on chain, join,red] (S2) {};
+	\node[mobile, on chain, join] (A2) {};
+	\node[interceptor, on chain, join] {};
+\end{scope}
+\draw[correction,dotted] (B1) to[bend right] node[stepnode] {1} (S2);
+\draw[correction,dotted] (S2) to[bend right] node[stepnode] {2} (A1);
+\draw[correction,dotted] (B2) to[bend left] node[stepnode] {3} (S1);
+\draw[correction,dotted] (S1) to[bend left,out=60, in=120] node[stepnode] {4} (A2);
+\node[left= .5 of S1,cross] {$\times$};
+\node[right= .5 of S1,cross] {$\times$};
+\node[left= .5 of S2,cross] {$\times$};
+\node[right= .5 of S2,cross] {$\times$};
+\draw[correction,<->] (S1) to[bend left,out=45,in=135] (S2);

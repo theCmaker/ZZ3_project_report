@@ -29,5 +29,92 @@
 			Afin d'optimiser les performances, nous avons développé une politique de cache permettant de conserver une matrice des durées nécessaires pour atteindre chaque mobile à partir de chaque intercepteur. Ainsi lorsqu'un mobile est intercepté, seules les durées relatives à l'intercepteur candidat sont faussées et doivent être recalculées, les durées nécessaires aux autres intercepteurs pour atteindre les autres mobiles restent identiques.
 
     \section{Recherche Locale}
+
+		\subsection{Mouvement d'extraction}
+			\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}[schema]
+				\input{move_extract}
+			\end{tikzpicture}
+			\caption{Schéma d'extraction d'un mobile hors d'une tournée}
+			\label{fig:move_extract}
+			\end{figure}
+
+		\subsection{Mouvement d'insertion}
+			\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}[schema]
+				\input{move_insert}
+			\end{tikzpicture}
+			\caption{Schéma d'insertion d'un mobile dans une tournée}
+			\label{fig:move_insert}
+			\end{figure}
+
+		\subsection{Mouvement de substitution (ou remplacement)}
+			\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}[schema]
+				\input{move_replace}
+			\end{tikzpicture}
+			\caption{Schéma de substitution d'un mobile dans une tournée}
+			\label{fig:move_replace}
+			\end{figure}
+
+		\subsection{Mouvements de déplacement}
+			\begin{figure}[h!]
+			\begin{subfigure}[b]{.54\linewidth}
+				\centering
+				\begin{tikzpicture}[schema]
+					\input{move_move1route}
+				\end{tikzpicture}
+				\subcaption{Au sein d'une même tournée}
+				\label{subfig:move_move1route}
+			\end{subfigure}
+			\hfill
+			\begin{subfigure}[b]{.45\linewidth}
+				\centering
+				\begin{tikzpicture}[schema]
+					\input{move_move2routes}
+				\end{tikzpicture}
+				\subcaption{Entre deux tournées}
+				\label{subfig:move_move2routes}
+			\end{subfigure}
+			\caption{Schéma de déplacement d'un mobile}
+			\label{fig:move_move}
+			\end{figure}
+
+		\subsection{Mouvements d'intervertion (ou swap)}
+			\begin{figure}[h!]
+			\begin{subfigure}[b]{.54\linewidth}
+				\centering
+				\begin{tikzpicture}[schema]
+					\input{move_swap1route}
+				\end{tikzpicture}
+				\subcaption{Au sein d'une même tournée}
+				\label{subfig:move_swap1route}
+			\end{subfigure}
+			\hfill
+			\begin{subfigure}[b]{.45\linewidth}
+				\centering
+				\begin{tikzpicture}[schema]
+					\input{move_swap2routes}
+				\end{tikzpicture}
+				\subcaption{Entre deux tournées}
+				\label{subfig:move_swap2routes}
+			\end{subfigure}
+			\caption{Schéma d'intervertion de deux mobiles}
+			\label{fig:move_swap}
+			\end{figure}
+
+		\subsection{Mouvement d'intervertion de fin de tournées (ou 2-Opt)}
+			\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}[schema]
+				\input{move_2opt}
+			\end{tikzpicture}
+			\caption{Schéma d'intervertion de fin de tournées}
+			\label{fig:move_2opt}
+			\end{figure}
+
     \section{Méta-heuristiques et optimisation bi-critères}
     \section{Aspect gestion de projet}

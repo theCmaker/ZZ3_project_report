@@ -2,6 +2,7 @@
 \usetikzlibrary{calc}
 \usetikzlibrary{plotmarks}
 \usetikzlibrary{scopes}
+\usetikzlibrary{shapes}
 \usetikzlibrary{arrows,chains,positioning,quotes}
 \usepackage{MnSymbol}
 \usepackage{relsize}
@@ -18,7 +19,11 @@
     speed/.style={mobile, thick, >=latex,->}, %vitesse mobile
     uncaught/.style={color=OrangeRed},  %mobile non attrapé
     grided/.style={dotted,color=Black!20},    %grille
-    schema/.style={	every node/.style=draw,
-    				every join/.style=-latex,
-    				every label/.append style={font=\scriptsize}}
+    schema/.style={ every node/.style=draw,
+                    >=latex,
+                    every join/.style=->,
+                    every label/.append style={font=\scriptsize}},
+    cross/.style={draw=none, red, anchor=center, font=\LARGE},
+    correction/.style={red,->},
+    stepnode/.style={midway,circle,solid,inner sep=1pt,gray,font=\scriptsize,fill=white}
 }

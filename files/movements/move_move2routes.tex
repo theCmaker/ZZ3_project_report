@@ -1,0 +1,23 @@
+\begin{scope}[start chain]
+	\node[interceptor, on chain] {};
+	\node[mobile, on chain, join] (B) {};
+	\node[mobile, on chain, join,red] (M) {};
+	\node[mobile, on chain, join] (A) {};
+	\node[interceptor, on chain, join] {};
+\end{scope}
+\begin{scope}[start chain, yshift=-1.25cm]
+	\node[interceptor, on chain] {};
+	\node[mobile, on chain, join] {};
+	\node[mobile, on chain, join] (I) {};
+	\node[mobile, on chain, join] (IA) {};
+	\node[mobile, on chain, join] {};
+	\node[interceptor, on chain, join] {};
+\end{scope}
+\draw[correction,dotted] (I) -- node[stepnode] {1} (M);
+\draw[correction,dotted] (M) -- node[stepnode] {2} (IA);
+\draw[correction,dotted] (B) to[bend left] node[stepnode] {3} (A);
+\node[right= .5 of M,cross] {$\times$};
+\node[right= .5 of B,cross] {$\times$};
+\node[right= .5 of I,cross] (X) {$\times$};
+\draw[correction] (M) -- (X);
+

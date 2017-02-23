@@ -1,0 +1,28 @@
+\begin{scope}[start chain]
+	\node[interceptor, on chain] {};
+	\node[mobile, on chain, join] (B1) {};
+	\node[mobile, on chain, join] (S1) {};
+	\node[mobile, on chain, join] (A1) {};
+	\node[mobile, on chain, join] (L1) {};
+	\node[interceptor, on chain, join] (E1) {};
+\end{scope}
+\begin{scope}[start chain,yshift=-1.25cm]
+	\node[interceptor, on chain] {};
+	\node[mobile, on chain, join] (B2) {};
+	\node[mobile, on chain, join] (S2) {};
+	\node[mobile, on chain, join] (A2) {};
+	\node[mobile, on chain, join] (L2) {};
+	\node[interceptor, on chain, join] (E2) {};
+\end{scope}
+\draw[correction,rounded corners] ($(A1) + (-.4,.3)$) rectangle ($(L1) + (.3,-.3) $);
+\draw[correction,rounded corners] ($(A2) + (-.4,.3)$) rectangle ($(L2) + (.3,-.3) $);
+\draw[correction,dotted] (S1) -- node[stepnode,near start] {1} (A2);
+\draw[correction,dotted] (S2) -- node[stepnode,near start] {3} (A1);
+\draw[correction,dotted] (L1) -- node[stepnode,near start] {4} (E2);
+\draw[correction,dotted] (L2) -- node[stepnode,near start] {2} (E1);
+\node[right= .5 of S1,cross] {$\times$};
+\node[right= .5 of S2,cross] {$\times$};
+\node[right= .5 of L1,cross] {$\times$};
+\node[right= .5 of L2,cross] {$\times$};
+
+\draw[correction,<->] ($(L1) + (-.75,-.32) $) -- ($(L2) + (-.75,.32) $);

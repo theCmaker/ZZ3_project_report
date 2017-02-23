@@ -1,0 +1,16 @@
+\begin{scope}[start chain]
+	\node[interceptor, on chain] {};
+	\node[mobile, on chain, join] (B) {};
+	\node[mobile, on chain, join,red] (M) {};
+	\node[mobile, on chain, join] (A) {};
+	\node[mobile, on chain, join] (I) {};
+	\node[mobile, on chain, join] (IA) {};
+	\node[interceptor, on chain, join] {};
+\end{scope}
+\draw[correction,dotted] (B) to[bend right] node[stepnode] {1} (A);
+\draw[correction,dotted] (I) to[bend right] node[stepnode] {2} (M);
+\draw[correction,dotted] (M) to[bend left, out=60, in=120] node[stepnode] {3} (IA);
+\node[right= .5 of M,cross] {$\times$};
+\node[right= .5 of B,cross] {$\times$};
+\node[right= .5 of I,cross] (X) {$\times$};
+\draw[correction] (M) to[bend right] (X);
