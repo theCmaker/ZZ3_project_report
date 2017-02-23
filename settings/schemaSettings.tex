@@ -1,0 +1,17 @@
+\usepackage{tikz} %schémas
+\usetikzlibrary{calc}
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{positioning}
+\usepackage{MnSymbol}
+
+\newcommand{\mobile}{\Large{$+$}}
+\newcommand{\interceptor}{\Large{$\square$}}
+\newcommand{\depot}{\Large{$\square$}}
+\tikzset{%styles schémas
+    interceptor/.style={thick,color=Blue},  %intercepteur
+    mobile/.style={color=LimeGreen},  %mobile
+    route/.style={mobile,dashed}, %chemin mobile
+    speed/.style={mobile, thick, >=latex,->}, %vitesse mobile
+    caught/.style={color=OrangeRed},  %mobile attrapé
+    grided/.style={dotted,color=Black!20}    %grille
+}
