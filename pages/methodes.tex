@@ -1,5 +1,33 @@
 \chapter{Méthodes}
     \section{Heuristiques de construction}
+		Nous proposons deux heuristiques d'insertion. La première est pilotée par l'utilisateur, et la seconde est autonome.
+		\subsection{Interception selon une séquence}
+		\label{sub:heuristic_sequence}
+			Dans cette heuristique, l'utilisateur fournit une séquence de mobiles à intercepter dans l'ordre de la lecture de cette séquence. L'heuristique est alors chargée pour chaque mobile de cette séquence de déterminer l'intercepteur capable de l'intercepter dans les meilleurs délais. On garantit alors la propriété suivante pour chaque tournée $r$:
+			\[
+				\forall i, j \qtext{t.q.}  i<j, \qtext{on a} \text{pos}(r_i) < \text{pos}(r_j)
+			\]
+			avec $r_k$ le mobile intercepté en $k$\ieme{} position dans la tournée $r$, et pos($r_k$) la fonction permettant d'obtenir la position du mobile $r_k$ dans la séquence imposée par l'utilisateur.
+
+			La figure~\ref{fig:heuristic_sequence_demo} présente un exemple de solution réalisable.
+
+			\begin{figure}[h!]
+			\centering
+			Séquence donnée: $\{4, 2, 3, 0, 1\}$
+
+			\begin{tikzpicture}[schema]
+				\input{example_heuristic_sequence}
+			\end{tikzpicture}
+			\caption{Exemple de solution réalisable pour l'heuristique ``Séquence''}
+			\label{fig:heuristic_sequence_demo}
+			\end{figure}
+
+		\subsection{Interception au plus tôt}
+		\label{sub:heuristic_fastest}
+			Dans cette heuristique, le calcul de chaque interception est piloté par le temps. L'heuristique calcule pour chaque insertion les meilleurs candidats (mobile et tournée). Il s'agit donc de déterminer quel est le mobile qui demandera le moins de temps pour être inseré dans la tournée réalisée par l'intercepteur capable de le rejoindre au plus tôt. Il s'agit d'une méthode plus gourmande en ressources mais qui permet d'obtenir de bons résultats.
+
+			Afin d'optimiser les performances, nous avons développé une politique de cache permettant de conserver une matrice des durées nécessaires pour atteindre chaque mobile à partir de chaque intercepteur. Ainsi lorsqu'un mobile est intercepté, seules les durées relatives à l'intercepteur candidat sont faussées et doivent être recalculées, les durées nécessaires aux autres intercepteurs pour atteindre les autres mobiles restent identiques.
+
     \section{Recherche Locale}
     \section{Méta-heuristiques et optimisation bi-critères}
     \section{Aspect gestion de projet}
