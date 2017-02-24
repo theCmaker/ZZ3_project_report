@@ -1,2 +1,16 @@
-\chapter{Première annexe}
+\chapter{Réalisation d'une politique de cache de données}
+\label{app:cache}
+	L'utilisation d'un \gls{cache} permet de stocker des informations et de les conserver jusqu'au moment où l'on souhaite y accéder.
+
+	Dans notre heuristique d'insertion au plus tôt, nous sommes contraints de déterminer après chaque interception quel est le mobile suivant qui pourra être intercepté au plus tôt. Une interception concerne uniquement un mobile et un intercepteur. Ainsi dans un problème à $n$ mobiles et $m$ intercepteurs, à la première interception, ce sont $n-1$ mobiles et $m-1$ intercepteurs ne seront pas concernés, soit $n \times m -n -m +1$ dates d'interception potentielles qui resteront les mêmes au calcul de la seconde interception.
+
+	Le calcul des dates d'interception fait appel à plusieurs fonctions trigonométriques et demande donc un temps plus important que pour effectuer des calculs élémentaires. Il est par conséquent impératif de faire le maximum pour réduire le nombre d'appels à ce calcul. Sachant que l'on travaille avec $n$ mobiles et $m$ intercepteurs, il suffit de conserver entre chaque interception une matrice des dates d'interception. Il s'agit précisément du principe de cache. Le contrôle de l'obsolescence des données de ce cache est simple à définir: les dates d'interception pour un mobile ne sont plus d'aucune utilité lorsque ce dernier est intercepté, et les dates d'interception de tous les mobiles non-interceptés pour un intercepteur doivent être recalculées lorsque ce dernier change de position, c'est-à-dire lorsqu'il réalise une interception. Dans ce dernier cas, il convient de mettre à jour les données en cache pour les mobiles qui ne sont pas encore interceptés.
+
+	Le schéma de la figure \ref{fig:cache} détaille les opérations sur le cache selon les différentes étapes du diagramme de séquences de la figure \ref{diag:cache}.
+
+	\TODO{fig:cache}
+	\TODO{diag:cache}
+
+	Dans notre implémentation, nous avons donc proposé deux politiques: la première dépourvue de cache et la seconde fournissant les fonctionnalités décrites plus haut. Ces deux politiques sont décrites selon le diagramme UML de la figure \ref{uml:cache_policies}.
+
 \chapter{Seconde annexe}

@@ -1,6 +1,10 @@
 \chapter{Méthodes}
-    \section{Heuristiques de construction}
+    \section{Heuristiques constructives}
 		Nous proposons deux heuristiques d'insertion. La première est pilotée par l'utilisateur, et la seconde est autonome.
+
+		Ces deux heuristiques servent à construire des solutions réalisables. L'optimalité de ces solutions n'est pas garantie et n'est pas un objectif. En effet, une heuristique est une étape de résolution qui vise seulement à produire une solution viable sur laquelle on pourra appliquer des modifications de manière itérative jusqu'à l'obtention d'un résultat répondant aux critères de qualité que l'on aura fixés.
+
+		Il est très souvent plus facile d'améliorer un système dont on sait qu'il fonctionne que de chercher à rendre efficace un système défectueux.
 		\subsection{Interception selon une séquence}
 		\label{sub:heuristic_sequence}
 			Dans cette heuristique, l'utilisateur fournit une séquence de mobiles à intercepter dans l'ordre de la lecture de cette séquence. L'heuristique est alors chargée pour chaque mobile de cette séquence de déterminer l'intercepteur capable de l'intercepter dans les meilleurs délais. On garantit alors la propriété suivante pour chaque tournée $r$:
@@ -24,13 +28,29 @@
 
 		\subsection{Interception au plus tôt}
 		\label{sub:heuristic_fastest}
-			Dans cette heuristique, le calcul de chaque interception est piloté par le temps. L'heuristique calcule pour chaque insertion les meilleurs candidats (mobile et tournée). Il s'agit donc de déterminer quel est le mobile qui demandera le moins de temps pour être inseré dans la tournée réalisée par l'intercepteur capable de le rejoindre au plus tôt. Il s'agit d'une méthode plus gourmande en ressources mais qui permet d'obtenir de bons résultats.
+			Dans cette heuristique, le calcul de chaque interception est piloté par le temps. L'heuristique calcule pour chaque insertion les meilleurs candidats (mobile et tournée). Il s'agit donc de déterminer quel est le mobile qui pourra être inseré dans la tournée réalisée par l'intercepteur capable de le rejoindre au plus tôt. Il s'agit d'une méthode plus gourmande en ressources mais qui permet d'obtenir des résultats généralement de meilleure qualité que l'insertion par séquence.
 
-			Afin d'optimiser les performances, nous avons développé une politique de cache permettant de conserver une matrice des durées nécessaires pour atteindre chaque mobile à partir de chaque intercepteur. Ainsi lorsqu'un mobile est intercepté, seules les durées relatives à l'intercepteur candidat sont faussées et doivent être recalculées, les durées nécessaires aux autres intercepteurs pour atteindre les autres mobiles restent identiques.
+			Afin d'optimiser les performances, nous avons développé une politique de \gls{cache} permettant de conserver une matrice des durées nécessaires pour atteindre chaque mobile à partir de chaque intercepteur. Ainsi lorsqu'un mobile est intercepté, seules les durées relatives à l'intercepteur candidat sont faussées et doivent être recalculées, les durées nécessaires aux autres intercepteurs pour atteindre les autres mobiles restent identiques. Nous décrivons plus en détail ce mécanisme dans l'annexe \ref{app:cache}.
 
-    \section{Recherche Locale}
+			Toutefois, cette heuristique doit être utilisée avec parcimonie en raison de son coût de calcul, mais aussi car elle n'est pas paramétrable et n'offre donc pas de capacités d'extension de ses possibilités, notamment le fait d'ignorer des mobiles ou de prioriser l'interception d'un mobile par rapport à un autre sur une décision arbitraire\ldots
+
+    \section{Recherche Locale et optimisation bi-critères}
+		La recherche locale vise à améliorer une solution en réalisant une succession de mutations simples. En effet, lorsque l'heuristique d'insertion se termine, deux cas se présentent:
+		\begin{itemize}
+			\item Tous les mobiles ont été interceptés,
+			\item Il reste un ou plusieurs mobiles non-interceptés.
+		\end{itemize}
+
+		Dans le premier cas, le moyen le plus simple pour gagner du temps consiste à retirer un mobile, c'est le mouvement présenté dans la section \ref{subs:move_extract}. Dans le second cas, on peut essayer d'insérer les mobiles restants dans une tournée (section \ref{subs:move_insert}).
+
+		Egalement, il est possible de combiner ces deux mouvements élémentaires pour former quelques mouvements plus complexes, par exemple enlever un mobile pour le déplacer dans une autre tournée, ou ailleurs dans la même tournée. Nous présentons donc plusieurs mouvements que nous jugeons pertinents dans les sections suivantes.
+
+		Remarquons que les mouvements ainsi décrits doivent être appliqués stratégiquement, l'objectif est d'améliorer la solution et non de la détériorer. Il convient donc de fixer les limites d'une détérioration que l'on jugera acceptable. L'intérêt d'accepter une légère détérioration est que cette détérioration ne peut être que temporaire, pour permettre un autre mouvement qui laissera ensuite envisager une amélioration plus forte.
+
+		Les objectifs de qualité pour une solution sont le nombre de mobiles interceptés et la date de fin de la tournée la plus longue (en termes de durée). C'est la raison pour laquelle nous avons défini des politiques d'amélioration visant à atteindre ces objectifs qui sont mutuellement contradictoires, tout en garantissant que les limites de détérioration ne sont pas dépassées. Ces politiques définissent quelle est la solution à choisir et valident (ou invalides) des propositions de modifications. Elles sont décrites dans les sections \ref{subs:first_available_policy} et \ref{subs:best_available_policy}.
 
 		\subsection{Mouvement d'extraction}
+			\label{subs:move_extract}
 			\begin{figure}[h!]
 			\centering
 			\begin{tikzpicture}[schema]
@@ -41,6 +61,7 @@
 			\end{figure}
 
 		\subsection{Mouvement d'insertion}
+			\label{subs:move_insert}
 			\begin{figure}[h!]
 			\centering
 			\begin{tikzpicture}[schema]
@@ -83,7 +104,7 @@
 			\label{fig:move_move}
 			\end{figure}
 
-		\subsection{Mouvements d'intervertion (ou swap)}
+		\subsection{Mouvements d'interversion (ou swap)}
 			\begin{figure}[h!]
 			\begin{subfigure}[b]{.54\linewidth}
 				\centering
@@ -102,19 +123,26 @@
 				\subcaption{Entre deux tournées}
 				\label{subfig:move_swap2routes}
 			\end{subfigure}
-			\caption{Schéma d'intervertion de deux mobiles}
+			\caption{Schéma d'interversion de deux mobiles}
 			\label{fig:move_swap}
 			\end{figure}
 
-		\subsection{Mouvement d'intervertion de fin de tournées (ou 2-Opt)}
+		\subsection{Mouvement d'interversion de fins de tournées (ou 2-Opt)}
 			\begin{figure}[h!]
 			\centering
 			\begin{tikzpicture}[schema]
 				\input{move_2opt}
 			\end{tikzpicture}
-			\caption{Schéma d'intervertion de fin de tournées}
+			\caption{Schéma d'interversion de fins de tournées}
 			\label{fig:move_2opt}
 			\end{figure}
 
-    \section{Méta-heuristiques et optimisation bi-critères}
+		\subsection{Politique du premier améliorant}
+			\label{sub:first_available_policy}
+
+		\subsection{Politique du meilleur améliorant}
+			\label{sub:best_available_policy}
+
+
+    \section{Méta-heuristiques}
     \section{Aspect gestion de projet}
