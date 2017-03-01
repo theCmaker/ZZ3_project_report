@@ -82,6 +82,26 @@
 			\end{figure}
 
 		\subsection{Mouvements de déplacement}
+			Le mouvement de déplacement d'un mobile dans une tournée consiste à changer de position l'un des mobiles au sein de la même tournée. L'objectif est de trouver une meilleure organisation de la tournée et donc d'obtenir un gain de temps sur la date d'interception finale.
+
+			L'algorithme de principe est le suivant :
+
+Pour toutes les tournées t faire
+	Pour toutes les positions possibles dans t faire
+		Pour tous les mobiles m faire
+			Si le déplacement existe alors
+				Calculer le nouveau temps d'interception de t avec le déplacement de 				m dans la tournée.
+				Comparer le résultat obtenu avec le temps initial (avec arrêt de la 					recherche selon les politiques)
+			Fsi
+		Fin
+	Fin
+Fin
+Retourner vrai s'il y a eu amélioration, faux sinon.
+
+			Le mouvement de déplacement d'un mobile dans une autre tournée consiste à supprimer un mobile de sa tournée pour l'insérer dans une seconde tournée. 
+
+\TODO descriptif et algo déplacement d'un mobile dans une autre tournée.
+			
 			\begin{figure}[h!]
 			\begin{subfigure}[b]{.54\linewidth}
 				\centering
@@ -105,6 +125,35 @@
 			\end{figure}
 
 		\subsection{Mouvements d'interversion (ou swap)}
+			Le mouvement d'interversion ou swap consiste à échanger deux mobiles déjà présents dans une tournée. Il existe deux variantes de ce mouvement : lorsque les deux mobiles appartiennent à la même tournée ou lorsque les tournées sont différentes. Étant donné que ce mouvement ne peut pas diminuer le nombre de mobiles traités, le critère d'amélioration porte uniquement sur la réduction du temps final de la ou l'une des tournées considérées.
+
+			L'algorithme de principe pour l'interversion dans une même tournée est le suivant :
+			
+Pour toutes les tournées t faire
+	Pour tous les mobiles m1 dans la tournée t faire
+		Pour tous les mobiles m2 situées après m1 dans la tournée t faire
+			Calculer le nouveau temps d'interception de t avec m2 à la place de m1
+			Comparer le résultat obtenu avec le temps initial (avec arrêt de la 					recherche selon les politiques)
+		Fin
+	Fin
+Fin
+Retourner vrai s'il y a eu amélioration, faux sinon.
+
+			L'algorithme de principe pour l'interversion avec deux tournées est le suivant :
+			
+Pour toutes les tournées t1 sauf la dernière faire
+	Pour toutes les tournées t2 après t1 faire
+		Pour tous les mobiles m1 dans la tournée t1 faire
+			Pour tous les mobiles m2 dans la tournée t2 faire
+				Calculer le nouveau temps d'interception de t1 avec m2 à la place de 				m1
+				Calculer le nouveau temps d'interception de t2 avec m1 à la place de 				m2
+				Comparer les résultats obtenus avec les temps initiaux (avec arrêt de 				la recherche selon les politiques)
+			Fin
+		Fin
+	Fin
+Fin
+Retourner vrai s'il y a eu amélioration, faux sinon.
+			
 			\begin{figure}[h!]
 			\begin{subfigure}[b]{.54\linewidth}
 				\centering
@@ -128,6 +177,23 @@
 			\end{figure}
 
 		\subsection{Mouvement d'interversion de fins de tournées (ou 2-Opt)}
+			Le mouvement d'interversion de fin de tournée ou 2-Opt consiste à échanger deux séquences de mobiles dans deux tournées différentes. Les séquences considérées sont une suite de mobiles tels qu'ils ont été définis au sein d'une tournée, qu'il s'agisse de la tournée entière ou d'un ensemble à partir d'un mobile donné jusqu'à la fin de la tournée. Comme pour le mouvement d'interversion, le nombre de mobiles ne sera jamais réduit, seul le gain en temps est donc considéré. Un cas particulier de ce mouvement consiste à changer les intercepteurs de chaque tournée.
+
+			L'algorithme de principe pour le mouvement 2-Opt est le suivant :
+			
+Pour toutes les tournées t1 sauf le dernier faire
+	Pour toutes les tournées t2 après t1 faire
+		Pour tous les mobiles m1 dans la tournée t1 faire
+			Pour tous les mobiles m2 dans la tournée t2 faire
+				Calculer le nouveau temps d'interception de t1 en remplaçant la 					séquence [m1 à fin de tournée] par [m2 à fin de tournée].
+				Calculer le nouveau temps d'interception de t2 en remplaçant la 					séquence [m2 à fin de tournée] par [m1 à fin de tournée].
+				Comparer les résultats obtenus avec les temps initiaux (avec arrêt de 				la recherche selon les politiques).
+			Fin
+		Fin
+	Fin
+Fin
+Retourner vrai s'il y a eu amélioration, faux sinon.
+			
 			\begin{figure}[h!]
 			\centering
 			\begin{tikzpicture}[schema]
@@ -145,4 +211,42 @@
 
 
     \section{Méta-heuristiques}
+    
+    La recherche locale permet d'obtenir de bonnes améliorations au sein d'une solution déterminée, mais les algorithmes génétiques ajoutent la possibilité d'étendre la recherche de la meilleure solution à une multitude de solutions possibles.
+	Les algorithmes génétiques vont insérer une perturbation (mutation) dans la solution étudiée qui va déterminer une population sur laquelle on va appliquer la recherche locale. Seuls les meilleurs résultats sont conservés et on réitère l'opération autant de fois que désiré.
+	
+    	\subsection{Multi-Start Evolutionary Local Search}
+    	
+    	L'algorithme Multi-Start Evolutionary Local Search (ou MS-ELS) est le premier  à avoir été implémenté pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème sur lesquelles on va appliquer l'algorithme génétique ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
+		Puis l'Evolutionary Local Search va, pour un nombre d'itérations donné, perturber la solution avant d'y appliquer la recherche locale. On va alors sélectionner le meilleur résultat local trouvé et relancer l'ELS à de multiples reprises pour déterminer un record parmi le meilleur local de chaque ELS.
+		À la fin, l'algorithme retourne la meilleure solution trouvée.
+		
+		Algorithme de principe :
+		
+Pour i de 1 à nombre max de générations faire
+	Créer une solution aléatoire
+	Record ← solution
+	Pour j de 1 à nombre max d'itérations de l'ELS faire
+		Meilleur local ← solution
+		Pour k de 1 à nombre max de copies faire
+			Créer une copie de solution
+			Créer une perturbation dans la copie (shake)
+			Lancer la VND pour la copie
+			Si la copie donne un meilleur résultat alors
+				Meilleur local ← copie
+			Fsi
+		Si le meilleur local donne un meilleur résultat que le record alors
+			Record ← meilleur local
+		Fsi
+	Fin
+Fin
+Retourner record
+
+\TODO Ajouter le schéma du MS-ELS de Duhamel
+
+    	\subsection{Biased Random-Key Genetic Algorithm}
     \section{Aspect gestion de projet}
+    
+	- Plateforme de gestion de projet
+	- Soucis de retard
+	- Organisation
