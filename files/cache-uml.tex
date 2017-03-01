@@ -1,0 +1,16 @@
+\umlclass[anchor=north]{NoCachePolicy}{
+	\umlstatic{+ isCached : const bool = false}
+}{
+	\umlstatic{+ init(x: int, y: int) : void}\\
+	\umlstatic{+ get(x: int, y: int) : Time}\\
+	\umlstatic{+ set(x: int, y: int, t: Time) : void}
+}
+
+\umlclass[x=7,anchor=north]{SimpleCachePolicy}{
+	\umlstatic{-- cache : vector< vector<Time> >}\\
+	\umlstatic{+ isCached : const bool = true}
+}{
+	\umlstatic{+ init(x: int, y: int) : void}\\
+	\umlstatic{+ get(x: int, y: int) : Time}\\
+	\umlstatic{+ set(x: int, y: int, t: Time) : void}
+}

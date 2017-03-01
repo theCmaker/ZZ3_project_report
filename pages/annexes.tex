@@ -7,26 +7,33 @@
 	Le calcul des dates d'interception fait appel à plusieurs fonctions trigonométriques et demande donc un temps plus important que pour effectuer des calculs élémentaires. Il est par conséquent impératif de faire le maximum pour réduire le nombre d'appels à ce calcul. Sachant que l'on travaille avec $n$ mobiles et $m$ intercepteurs, il suffit de conserver entre chaque interception une matrice des dates d'interception. Il s'agit précisément du principe de cache. Le contrôle de l'obsolescence des données de ce cache est simple à définir: les dates d'interception pour un mobile ne sont plus d'aucune utilité lorsque ce dernier est intercepté, et les dates d'interception de tous les mobiles non-interceptés pour un intercepteur doivent être recalculées lorsque ce dernier change de position, c'est-à-dire lorsqu'il réalise une interception. Dans ce dernier cas, il convient de mettre à jour les données en cache pour les mobiles qui ne sont pas encore interceptés.
 
 	Le schéma de la figure \ref{fig:cache} détaille les opérations sur le cache selon les différentes étapes du diagramme de séquences de la figure \ref{diag:cache}.
-	\begin{figure}
+	\begin{figure}[h]
 		\centering
 		\begin{tikzpicture}
 			\input{cache-operations-fig}
 		\end{tikzpicture}
-		\caption{Opérations sur le cache}
+		\caption[Opérations sur le cache]{Opérations sur le cache. {\scriptsize Lorsqu'une interception est validée pour le mobile $i$ et l'intercepteur $j$, les données en bleu ne changeront pas, car elles concernent les autres mobiles et les autres intercepteurs. Les données en rouge sont alors rendues obsolètes et nécessitent une actualisation (elles concernent l'intercepteur $j$ qui réalise l'interception). Les données en gris ne seront plus jamais utilisées (elles ne concernent que le mobile $i$ qui vient d'être intercepté), on n'y accèdera plus.}}
 		\label{fig:cache}
 	\end{figure}
 
-	\begin{figure}
+	\begin{figure}[H]
 		\centering
 		\begin{tikzpicture}
 			\input{cache-sequence-diag}
 		\end{tikzpicture}
-		\caption{Diagramme de séquence des appels au cache dans l'heuristique}
+		\caption[Diagramme de séquence des appels au cache dans l'heuristique]{Diagramme de séquence des appels au cache dans l'heuristique. {\scriptsize Les deux premières étapes consistent à initialiser le cache. Ensuite les appels successifs permettent de chercher les meilleurs candidats. Si une amélioration est trouvée, on valide l'insertion (en vert), on recalcule les valeurs obsolètes (en rouge) et on bloque l'accès aux valeurs devenues inutiles (en gris).}}
 		\label{diag:cache}
 	\end{figure}
 
 	Dans notre implémentation, nous avons donc proposé deux politiques: la première dépourvue de cache et la seconde fournissant les fonctionnalités décrites plus haut. Ces deux politiques sont décrites selon le diagramme UML de la figure \ref{uml:cache_policies}.
 
-	\TODO{uml:cache\_policies}
+	\begin{figure}[h]
+		\centering
+		\begin{tikzpicture}
+			\input{cache-uml}			
+		\end{tikzpicture}
+		\caption[Politiques de cache]{Politiques de cache. {\scriptsize La politique sans cache se contente simplement d'indiquer qu'elle ne fournit pas cette fonctionnalité. La politique avec cache possède un espace dédié pour gérer le cache. Ses méthodes en facilitent la consultation et la mise à jour.}}
+		\label{uml:cache_policies}
+	\end{figure}
 
 \chapter{Seconde annexe}

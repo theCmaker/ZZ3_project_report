@@ -1,12 +1,16 @@
 \begin{umlseqdiag}
-	\umlobject[class=Heuristic]{h}
-	\umlobject[class=CachePolicy]{cache}
-	\begin{umlcall}[op={init()}]{h}{cache}
+	\umlobject[class=Heuristic\_Fastest]{h}
+	\umlobject[class=SimpleCachePolicy]{cache}
+	\begin{umlcall}[op={init($m$,$n$)}]{h}{cache}
 	\end{umlcall}
+	\begin{umlfragment}[type=for, label={$i$=1..$m$, $j$=1..$n$}, inner  xsep=11]
+		\begin{umlcall}[op={set($i$,$j$,$t_{ij}$)},dt=7]{h}{cache}
+		\end{umlcall}
+	\end{umlfragment}
 
 	\begin{umlfragment}[type=while,label={insertion possible},inner xsep=11]
-		\begin{umlfragment}[type=for,name=alt , label={i=1..m, j=1..n}, inner  xsep=2]
-			\begin{umlcall}[ op={get(i,j)},  dt=7,return=$t_{ij}$]{h}{cache}
+		\begin{umlfragment}[type=for,name=alt , label={$i$=1..$m$, $j$=1..$n$}, inner  xsep=2]
+			\begin{umlcall}[ op={get($i$,$j$)},  dt=8,return=$t_{ij}$]{h}{cache}
 			\end{umlcall}
 			\begin{umlfragment}[type=alt,inner xsep=7,label={$t_{ij} \prec  \text{best} $}]
 				\begin{umlcallself}[op=updateBest($t_{ij}$),dt=5]{h}
@@ -14,13 +18,13 @@
 			\end{umlfragment}
 		\end{umlfragment}
 		\begin{umlfragment}[type=alt,inner xsep=5,label=improved?]
-			\begin{umlcallself}[op={insert(i,j,$t_{ij}$)},fill=green!40,dt=8]{h}
+			\begin{umlcallself}[op={insert($i$,$j$,$t_{ij}$)},fill=green!40,dt=8]{h}
 			\end{umlcallself}
-			\begin{umlfragment}[type=for, label={i=1..m}, inner  xsep=3]
-				\begin{umlcall}[op=update(new $t_{ij}$),dt=8, fill=red!40]{h}{cache}
+			\begin{umlfragment}[type=for, label={$i$=1..$m$}, inner  xsep=3]
+				\begin{umlcall}[op={set($i$,$j$,new $t_{ij}$)},dt=8, fill=red!40]{h}{cache}
 				\end{umlcall}
 			\end{umlfragment}
-			\begin{umlcallself}[op={markUseless(i)},fill=gray!40,dt=5]{h}
+			\begin{umlcallself}[op={markUseless($i$)},fill=gray!40,dt=5]{h}
 			\end{umlcallself}
 		\end{umlfragment}
 	\end{umlfragment}
