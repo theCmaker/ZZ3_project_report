@@ -1,0 +1,28 @@
+\tikzset{zone/.style = {rounded corners,fill opacity=.4,fill=#1}}
+\tikzset{node style ge/.style={anchor=center}}
+\matrix (A) [matrix of math nodes,node style ge,column sep=1 pt] 
+{ t_{11} & t_{12} & \hdots & \hdots & \hdots & t_{1n}	\\
+  t_{21} & t_{22} & \hdots & \hdots & \hdots & t_{2n}	\\
+  \vdots & \vdots & \ddots & \phantom{\hdots}	& \phantom{\udots} & \vdots	\\
+  \vdots & \vdots &  \phantom{\ddots}  & \null &  \phantom{\ddots}	 & \vdots	\\
+  \vdots & \vdots & \phantom{\udots} &  \phantom{\cdots}	& \ddots & \vdots	\\
+  t_{m1} & t_{m2} & \hdots & \hdots & \hdots & t_{mn}	\\
+};
+
+%Labels
+\node[above,rotate=90] at (A.west) {Mobiles};
+\node[above] at (A.north) {Intercepteurs};
+
+% Kept
+\node [fill=green, circle, inner sep=0pt, fill opacity=.4, above=-1.5pt] at (A-4-4.south) {$t_{ij}$};
+% Outdated
+\fill [zone=red] (A-1-4.west |- A-1-1.north) rectangle (A-3-4.east |- A-3-1.south);
+\fill [zone=red] (A-5-4.west |- A-5-3.north) rectangle (A-6-4.south east |- A-6-1.south);
+% Useless
+\fill [zone=gray] (A-4-3.north east) rectangle (A-4-1.south west -| A-6-1.south west);
+\fill [zone=gray] (A-4-5.north west) rectangle (A-4-6.south east -| A-6-6.south east);
+% Unchanged
+\fill [zone=blue] (A-1-1.north -| A-6-1.west) rectangle (A-1-3.east |- A-3-1.south);
+\fill [zone=blue] (A-5-5.north -| A-6-5.west) rectangle (A-6-6.south east);
+\fill [zone=blue] (A-3-6.south -| A-1-5.west) rectangle (A-1-6.north -| A-6-6.east);
+\fill [zone=blue] (A-6-1.south west) rectangle (A-5-3.north -| A-6-3.east);
