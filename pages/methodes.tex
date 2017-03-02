@@ -84,23 +84,31 @@
 		\subsection{Mouvements de déplacement}
 			Le mouvement de déplacement d'un mobile dans une tournée consiste à changer de position l'un des mobiles au sein de la même tournée. L'objectif est de trouver une meilleure organisation de la tournée et donc d'obtenir un gain de temps sur la date d'interception finale.
 
-			L'algorithme de principe est le suivant :
+			L'algorithme de principe est le suivant:
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe du déplacement dans 1 tournée}
+					\BEGIN
+						\FORGEN{toutes les tournées t}
+							\FORGEN{toutes les positions possibles dans t}
+								\FORGEN{tous les mobiles m}
+									\IF{le déplacement existe}
+										\STATE{Calculer le nouveau temps d'interception de t avec le déplacement de m dans la tournée.}
+										\STATE{Comparer le résultat obtenu avec le temps initial (avec arrêt de la recherche selon les politiques)}
+									\ENDIF
+								\ENDFORGEN
+							\ENDFORGEN
+						\ENDFORGEN
+						\RETURN{vrai s'il y a eu amélioration, faux sinon}
+					\END
+				\end{algo}
+	    		\captionof{listing}{Algorithme de principe -- Déplacement au sein d'une tournée}
+	    	\end{code}
 
-Pour toutes les tournées t faire
-	Pour toutes les positions possibles dans t faire
-		Pour tous les mobiles m faire
-			Si le déplacement existe alors
-				Calculer le nouveau temps d'interception de t avec le déplacement de 				m dans la tournée.
-				Comparer le résultat obtenu avec le temps initial (avec arrêt de la 					recherche selon les politiques)
-			Fsi
-		Fin
-	Fin
-Fin
-Retourner vrai s'il y a eu amélioration, faux sinon.
 
 			Le mouvement de déplacement d'un mobile dans une autre tournée consiste à supprimer un mobile de sa tournée pour l'insérer dans une seconde tournée. 
 
-\TODO descriptif et algo déplacement d'un mobile dans une autre tournée.
+\TODO{descriptif et algo déplacement d'un mobile dans une autre tournée.}
 			
 			\begin{figure}[h!]
 			\begin{subfigure}[b]{.54\linewidth}
@@ -127,33 +135,48 @@ Retourner vrai s'il y a eu amélioration, faux sinon.
 		\subsection{Mouvements d'interversion (ou swap)}
 			Le mouvement d'interversion ou swap consiste à échanger deux mobiles déjà présents dans une tournée. Il existe deux variantes de ce mouvement : lorsque les deux mobiles appartiennent à la même tournée ou lorsque les tournées sont différentes. Étant donné que ce mouvement ne peut pas diminuer le nombre de mobiles traités, le critère d'amélioration porte uniquement sur la réduction du temps final de la ou l'une des tournées considérées.
 
-			L'algorithme de principe pour l'interversion dans une même tournée est le suivant :
-			
-Pour toutes les tournées t faire
-	Pour tous les mobiles m1 dans la tournée t faire
-		Pour tous les mobiles m2 situées après m1 dans la tournée t faire
-			Calculer le nouveau temps d'interception de t avec m2 à la place de m1
-			Comparer le résultat obtenu avec le temps initial (avec arrêt de la 					recherche selon les politiques)
-		Fin
-	Fin
-Fin
-Retourner vrai s'il y a eu amélioration, faux sinon.
-
+			L'algorithme de principe pour l'interversion dans une même tournée est le suivant:
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe de l'interversion dans une tournée}
+					\BEGIN
+						\FORGEN{toutes les tournées t}
+							\FORGEN{tous les mobiles m1 dans t}
+								\FORGEN{tous les mobiles m2 après m1 dans t}
+									\STATE{Calculer le nouveau temps d'interception de t avec m2 à la place de m1}
+									\STATE{Comparer le résultat obtenu avec le temps initial (avec arrêt de la recherche selon les politiques)}
+								\ENDFORGEN
+							\ENDFORGEN
+						\ENDFORGEN
+						\RETURN{vrai s'il y a eu amélioration, faux sinon}
+					\END
+				\end{algo}
+	    		\captionof{listing}{Algorithme de principe -- Interversion au sein d'une même tournée}
+	    	\end{code}
+		
 			L'algorithme de principe pour l'interversion avec deux tournées est le suivant :
-			
-Pour toutes les tournées t1 sauf la dernière faire
-	Pour toutes les tournées t2 après t1 faire
-		Pour tous les mobiles m1 dans la tournée t1 faire
-			Pour tous les mobiles m2 dans la tournée t2 faire
-				Calculer le nouveau temps d'interception de t1 avec m2 à la place de 				m1
-				Calculer le nouveau temps d'interception de t2 avec m1 à la place de 				m2
-				Comparer les résultats obtenus avec les temps initiaux (avec arrêt de 				la recherche selon les politiques)
-			Fin
-		Fin
-	Fin
-Fin
-Retourner vrai s'il y a eu amélioration, faux sinon.
-			
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe de l'interversion entre 2 tournées}
+					\BEGIN
+						\FORGEN{toutes les tournées t1 sauf la dernière}
+							\FORGEN{toutes les tournées t2 après t1}
+								\FORGEN{tous les mobiles m1 dans t1}
+									\FORGEN{tous les mobiles m2 dans t2}
+										\STATE{Calculer le nouveau temps d'interception de t1 avec m2 à la place de m1}
+										\STATE{Calculer le nouveau temps d'interception de t2 avec m1 à la place de m2}
+										\STATE{Comparer les résultats obtenus avec les temps initiaux (avec arrêt de la recherche selon les politiques)}
+									\ENDFORGEN
+								\ENDFORGEN
+							\ENDFORGEN
+						\ENDFORGEN
+						\RETURN{vrai s'il y a eu amélioration, faux sinon}
+					\END
+				\end{algo}
+	    		\captionof{listing}{Algorithme de principe -- Interversion entre deux tournées}
+	    	\end{code}
+
+
 			\begin{figure}[h!]
 			\begin{subfigure}[b]{.54\linewidth}
 				\centering
@@ -180,19 +203,26 @@ Retourner vrai s'il y a eu amélioration, faux sinon.
 			Le mouvement d'interversion de fin de tournée ou 2-Opt consiste à échanger deux séquences de mobiles dans deux tournées différentes. Les séquences considérées sont une suite de mobiles tels qu'ils ont été définis au sein d'une tournée, qu'il s'agisse de la tournée entière ou d'un ensemble à partir d'un mobile donné jusqu'à la fin de la tournée. Comme pour le mouvement d'interversion, le nombre de mobiles ne sera jamais réduit, seul le gain en temps est donc considéré. Un cas particulier de ce mouvement consiste à changer les intercepteurs de chaque tournée.
 
 			L'algorithme de principe pour le mouvement 2-Opt est le suivant :
-			
-Pour toutes les tournées t1 sauf le dernier faire
-	Pour toutes les tournées t2 après t1 faire
-		Pour tous les mobiles m1 dans la tournée t1 faire
-			Pour tous les mobiles m2 dans la tournée t2 faire
-				Calculer le nouveau temps d'interception de t1 en remplaçant la 					séquence [m1 à fin de tournée] par [m2 à fin de tournée].
-				Calculer le nouveau temps d'interception de t2 en remplaçant la 					séquence [m2 à fin de tournée] par [m1 à fin de tournée].
-				Comparer les résultats obtenus avec les temps initiaux (avec arrêt de 				la recherche selon les politiques).
-			Fin
-		Fin
-	Fin
-Fin
-Retourner vrai s'il y a eu amélioration, faux sinon.
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe du 2-Opt}
+					\BEGIN
+						\FORGEN{toutes les tournées t1 sauf la dernière}
+							\FORGEN{toutes les tournées t2 après t1}
+								\FORGEN{tous les mobiles m1 dans t1}
+									\FORGEN{tous les mobiles m2 dans t2}
+										\STATE{Calculer le nouveau temps d'interception de t1 en remplaçant la séquence [m1 à fin de tournée] par [m2 à fin de tournée]}
+										\STATE{Calculer le nouveau temps d'interception de t2 en remplaçant la séquence [m2 à fin de tournée] par [m1 à fin de tournée]}
+										\STATE{Comparer les résultats obtenus avec les temps initiaux (avec arrêt de la recherche selon les politiques)}
+									\ENDFORGEN
+								\ENDFORGEN
+							\ENDFORGEN
+						\ENDFORGEN
+						\RETURN{vrai s'il y a eu amélioration, faux sinon}
+					\END
+				\end{algo}
+	    		\captionof{listing}{Algorithme de principe -- 2-Opt}
+	    	\end{code}
 			
 			\begin{figure}[h!]
 			\centering
@@ -222,27 +252,35 @@ Retourner vrai s'il y a eu amélioration, faux sinon.
 		À la fin, l'algorithme retourne la meilleure solution trouvée.
 		
 		Algorithme de principe :
-		
-Pour i de 1 à nombre max de générations faire
-	Créer une solution aléatoire
-	Record ← solution
-	Pour j de 1 à nombre max d'itérations de l'ELS faire
-		Meilleur local ← solution
-		Pour k de 1 à nombre max de copies faire
-			Créer une copie de solution
-			Créer une perturbation dans la copie (shake)
-			Lancer la VND pour la copie
-			Si la copie donne un meilleur résultat alors
-				Meilleur local ← copie
-			Fsi
-		Si le meilleur local donne un meilleur résultat que le record alors
-			Record ← meilleur local
-		Fsi
-	Fin
-Fin
-Retourner record
+		\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe du Multi-Start Evolutionary Local Search}
+					\BEGIN
+						\FOR{i}{1}{nombre max de générations}
+							\STATE{Créer une solution aléatoire}
+							\STATE{Record ← solution}
+							\FOR{j}{1}{nombre max d'itérations de l'ELS}
+								\STATE{Meilleur local ← solution}
+								\FOR{k}{1}{nombre max de copies}
+									\STATE{Créer une copie de solution}
+									\STATE{Créer une perturbation dans la copie (shake)}
+									\STATE{Lancer la VND pour la copie}
+									\IF{la copie donne un meilleur résultat}
+										\STATE{Meilleur local ← copie}
+									\ENDIF
+								\ENDFOR
+								\IF{le meilleur local donne un meilleur résultat que le record}
+									\STATE{Record ← meilleur local}
+								\ENDIF
+							\ENDFOR
+						\ENDFOR
+						\RETURN{record}
+					\END
+				\end{algo}
+	    		\captionof{listing}{Algorithme de principe -- MS-ELS}
+	    	\end{code}
 
-\TODO Ajouter le schéma du MS-ELS de Duhamel
+\TODO{Ajouter le schéma du MS-ELS de Duhamel}
 
     	\subsection{Biased Random-Key Genetic Algorithm}
     \section{Aspect gestion de projet}
