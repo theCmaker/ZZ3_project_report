@@ -74,6 +74,28 @@
 		Les objectifs de qualité pour une solution sont le nombre de mobiles interceptés et la date de fin de la tournée la plus longue (en termes de durée). C'est la raison pour laquelle nous avons défini des politiques d'amélioration visant à atteindre ces objectifs qui sont mutuellement contradictoires, tout en garantissant que les limites de détérioration ne sont pas dépassées. Ces politiques définissent quelle est la solution à choisir et valident (ou invalides) des propositions de modifications. Elles sont décrites dans les sections \ref{subs:first_available_policy} et \ref{subs:best_available_policy}.
 
 		\subsection{Mouvement d'extraction}
+			Le mouvement d'extraction permet de retirer un mobile dans une tournée afin d'améliorer le plus grand temps d'interception. Pour cela, seule la suppression d'un mobile dans la tournée la plus longue en temps sera validée, car une extraction dans les autres tournées n'apporterait pas d'amélioration à la solution globale. Afin que ce mouvement ne vide pas successivement les tournées jusqu'à aboutir à une solution où aucun mobile n'est intercepté (solution triviale pour la minimisation du le temps), une politique a été ajoutée pour considérer le problème avec le critère de temps, mais aussi celui du nombre de mobiles. Un minimum est donc fixé pour ne pas aller en-dessous d'un certain seuil.
+			
+			
+			L'algorithme de principe est le suivant :
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe d'extraction d'un mobile dans une tournée}
+					\BEGIN
+						\STATE{Amélioration ← Faux}
+						\STATE{Récupérer la pire tournée t en temps}
+						\FORGEN{tous les mobiles m dans la tournée t faire}
+							\STATE{Calculer le temps d'interception de la tournée sans le mobile m}
+							\IF{le temps d'interception est fini et que la politique est respectée}
+								\STATE{Amélioration ← Vrai}
+							\ENDIF
+						\ENDFORGEN
+						\RETURN{Amélioration}
+					\END
+				\end{algo}
+				\captionof{listing}{Algorithme de principe -- Extraction d'un mobile dans une tournée}
+			\end{code}
+			
 			\label{subs:move_extract}
 			\begin{figure}[h!]
 			\centering
@@ -85,6 +107,30 @@
 			\end{figure}
 
 		\subsection{Mouvement d'insertion}
+			Le mouvement d'insertion permet d'ajouter un mobile à une tournée. Il est donc forcément améliorant en terme de mobiles, mais il peut impacter le temps maximum d'interception. Ce mouvement sera donc validé uniquement s'il ne l'augmente pas.
+			
+			L'algorithme de principe est le suivant :
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe d'insertion d'un mobile dans une tournée}
+					\BEGIN
+						\FORGEN{tous les mobiles non interceptés m}
+							\FORGEN{toutes les tournées t}
+								\FORGEN{toutes les positions p}
+									\STATE{Calculer le temps d'interception en insérant m dans t à la position p}
+									\IF{l'insertion est possible (le temps est fini)}
+										\STATE{Comparer le résultat obtenu avec le temps initial (avec arrêt de la recherche selon les politiques)}
+									\ENDIF
+								\ENDFORGEN
+							\ENDFORGEN
+						\ENDFORGEN
+						\RETURN{vrai s'il y a eu amélioration, faux sinon}
+					\END
+				\end{algo}
+				\captionof{listing}{Algorithme de principe -- Insertion d'un mobile dans une tournée}
+			\end{code}
+					
+		
 			\label{subs:move_insert}
 			\begin{figure}[h!]
 			\centering
@@ -96,6 +142,27 @@
 			\end{figure}
 
 		\subsection{Mouvement de substitution (ou remplacement)}
+				Le mouvement de substitution permet d'insérer un mobile à la place d'un autre mobile dans une tournée. Il s''agit donc d'un mouvement de suppression suivi d'un mouvement d'insertion. Comme le nombre de mobile ne change pas, seul le gain de temps est considéré pour valider ou non l'opération.
+				
+				L'algorithme de principe est le suivant :
+				\begin{code}
+					\begin{algo}[informal]
+						\ALGO{Principe du remplacement dans une tournée}
+						\BEGIN
+							\FORGEN{tous les mobiles non interceptés m}
+								\FORGEN{toutes les tournées t}
+									\FORGEN{tous les mobiles m' dans t'}
+										\STATE{Calculer le temps d'interception en remplaçant m' par m dans t}
+										\STATE{Comparer le résultat obtenu avec le temps initial (avec arrêt de la recherche selon les politiques)}
+									\ENDFORGEN
+								\ENDFORGEN
+							\ENDFORGEN
+							\RETURN{vrai s'il y a eu amélioration, faux sinon}
+						\END
+					\end{algo}
+				\captionof{listing}{Algorithme de principe -- Remplacement d'un mobile dans une tournée}
+			\end{code}
+			
 			\begin{figure}[h!]
 			\centering
 			\begin{tikzpicture}[schema]
@@ -111,7 +178,7 @@
 			L'algorithme de principe est le suivant:
 			\begin{code}
 				\begin{algo}[informal]
-					\ALGO{Principe du déplacement dans 1 tournée}
+					\ALGO{Principe du déplacement dans une tournée}
 					\BEGIN
 						\FORGEN{toutes les tournées t}
 							\FORGEN{toutes les positions possibles dans t}
@@ -132,7 +199,26 @@
 
 			Le mouvement de déplacement d'un mobile dans une autre tournée consiste à supprimer un mobile de sa tournée pour l'insérer dans une seconde tournée.
 
-\TODO{descriptif et algo déplacement d'un mobile dans une autre tournée.}
+			L'algorithme de principe est le suivant :
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe du déplacement dans deux tournées}
+					\BEGIN
+						\FORGEN{toutes les tournées t1}
+							\FORGEN{tous les mobiles m dans t1}
+								\FORGEN{toutes les tournées t2}
+									\FORGEN{toutes les positions dans t2}
+										\STATE{Calculer le nouveau temps d'interception de t2 avec l'insertion de m à la position p}
+										\STATE{Comparer le résultat obtenu avec le temps inital (avec arrêt de la recherche selon les politiques)}
+									\ENDFORGEN
+								\ENDFORGEN
+							\ENDFORGEN
+						\ENDFORGEN
+						\RETURN{vrai s'il y a eu amélioration, faux sinon}
+					\END
+				\end{algo}
+				\captionof{listing}{Algorithme de principe -- Déplacement d'un mobile au sein d'une autre tournée}
+			\end{code}
 
 			\begin{figure}[h!]
 			\begin{subfigure}[b]{.54\linewidth}
