@@ -1,0 +1,65 @@
+\umlclass[anchor=center]{Problem}{
+}{
+	+ Problem(string)\\
+	+ Problem(Problem)\\
+	+ nbMobiles() : int\\
+	+ nbInterceptors() : int\\
+	+ nbDepots() : int\\
+	+ mobiles() : vector<Mobile>\\
+	+ interceptors() : vector<Interceptor>\\
+	+ depots() : vector<Depot>\\
+	+ write(string) : void\\
+}
+
+\umlclass[x=8.5,y=-4.5,anchor=north]{Interceptor}{
+	-- id : int\\
+	-- position : Location\\
+	-- speed : Speed\\
+	-- range : Time\\
+	\umlstatic{+ INTERCEPTION\_TIME\_NO\_FUEL : Time}
+}{
+	+ Interceptor(Location, Speed, int, Time)\\
+	+ id() : int\\
+	+ position() : Location\\
+	+ speed() : Speed\\
+	+ range() : Time\\
+	+ depot() : Depot\\
+	+ position(Location) : void\\
+	+ speed(Speed) : void\\
+	+ range(Time) : void\\
+	+ computeInterception(Location, Mobile, Time) : Time\\
+	+ timeFromTo(Location, Location) : Time
+}
+
+\umlclass[y=-4.5,anchor=north]{Mobile}{
+	-- id : int\\
+	-- position : Location\\
+	-- direction : Direction\\
+}{
+	+ Mobile(Location, Direction, int)\\
+	+ id() : int\\
+	+ position() : Location\\
+	+ position(Time) : Location\\
+	+ direction() : Direction\\
+	+ speed() : Speed\\
+	+ position(Location) : void\\
+	+ direction(Direction) : void
+}
+
+\umlclass[x=8.5,anchor=center]{Depot}{
+	-- id : int\\
+	-- position : Location\\
+}{
+	+ Depot(Location, Direction, int)\\
+	+ id() : int\\
+	+ position() : Location\\
+	+ interceptors() : vector<Interceptor>\\
+	+ position(Location) : void\\
+	+ addInterceptor(Interceptor) : void
+}
+
+\umlunicompo[geometry=--,arg=depots, mult1=1, mult2=*]{Problem}{Depot}
+\umlunicompo[geometry=--,arg=mobiles, mult1=1, mult2=*]{Problem}{Mobile}
+\umlunicompo[geometry=--,arg=interceptors, mult1=1, mult2=*]{Problem}{Interceptor}
+\umluniaggreg[geometry=--,arg=interceptors, mult1=1, mult2=*,anchor1=-70, anchor2=70]{Depot}{Interceptor}
+\umluniaggreg[geometry=--,arg=depot, mult1=1, mult2=1,anchor1=110, anchor2=-110]{Interceptor}{Depot}
