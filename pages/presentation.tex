@@ -1,77 +1,77 @@
 \chapter{Présentation du sujet}
-    \section{Problème}
-    	Ce problème de tournées de véhicules correspond plus précisément à un STDVRP (\emph{Selective Time-Dependent Vehicle Routing Problem}), c'est-à-dire un problème où tous les clients ne sont pas nécessairement livrés (\emph{Selective}) et où les tournées ne peuvent excéder une certaine durée (Time-Dependent). Cette durée permet par ailleurs de modéliser une autonomie sur ces véhicules. Cela prend d'autant plus de sens si l'on souhaite appliquer ce problème sur une flotte de véhicules autonomes comme des drônes par exemple.
+	\section{Problème}
+		Ce problème de tournées de véhicules correspond plus précisément à un STDVRP (\emph{Selective Time-Dependent Vehicle Routing Problem}), c'est-à-dire un problème où tous les clients ne sont pas nécessairement livrés (\emph{Selective}) et où les tournées ne peuvent excéder une certaine durée (Time-Dependent). Cette durée permet par ailleurs de modéliser une autonomie sur ces véhicules. Cela prend d'autant plus de sens si l'on souhaite appliquer ce problème sur une flotte de véhicules autonomes comme des drônes par exemple.
 
-    	Afin de fixer certains paramètres nous avons déterminé la nécessité d'utiliser les unités suivantes:
-    	\begin{itemize}
-    		\item Unité de temps (u.t.), pour modéliser l'autonomie des véhicules et le temps des tournées,
-    		\item Unité de distance (u.d.), pour placer les véhicules et les clients,
-    		\item Unité de vitesse (u.v.), correspondant à une unité de distance par unité de temps, pour calculer les déplacements.
-    	\end{itemize}
+		Afin de fixer certains paramètres nous avons déterminé la nécessité d'utiliser les unités suivantes:
+		\begin{itemize}
+			\item Unité de temps (u.t.), pour modéliser l'autonomie des véhicules et le temps des tournées,
+			\item Unité de distance (u.d.), pour placer les véhicules et les clients,
+			\item Unité de vitesse (u.v.), correspondant à une unité de distance par unité de temps, pour calculer les déplacements.
+		\end{itemize}
 
-    	Nous avons également choisi d'employer certains termes plus en lien avec le sujet. Ainsi les véhicules sont nommés \emph{intercepteurs}, les clients sont nommés \emph{mobiles} et une livraison correspond à une \emph{interception}. Nous avons préféré choisir ces termes car les mobiles sont en mouvement et les intercepteurs doivent changer de direction pour les rejoindre en un même endroit à un même instant, aussi le terme d'interception fait plus de sens.
+		Nous avons également choisi d'employer certains termes plus en lien avec le sujet. Ainsi les véhicules sont nommés \emph{intercepteurs}, les clients sont nommés \emph{mobiles} et une livraison correspond à une \emph{interception}. Nous avons préféré choisir ces termes car les mobiles sont en mouvement et les intercepteurs doivent changer de direction pour les rejoindre en un même endroit à un même instant, aussi le terme d'interception fait plus de sens.
 
-    	Les calculs sont effectués dans le plan (et non dans l'espace). Les coordonnées de différentes entités sont à noter:
-    	\begin{itemize}
-    		\item \emph{mobiles}: position initiale (à l'instant $t=0$),
-    		\item \emph{dépôts}: position fixe
-    		\item \emph{intercepteurs}: à $t=0$, la position d'un intercepteur est celle du dépôt auquel il est rattaché.
-    	\end{itemize}
+		Les calculs sont effectués dans le plan (et non dans l'espace). Les coordonnées de différentes entités sont à noter:
+		\begin{itemize}
+			\item \emph{mobiles}: position initiale (à l'instant $t=0$),
+			\item \emph{dépôts}: position fixe
+			\item \emph{intercepteurs}: à $t=0$, la position d'un intercepteur est celle du dépôt auquel il est rattaché.
+		\end{itemize}
 
-    	Chaque mobile et chaque intercepteur avance à une vitesse qui lui est propre. Le mobile doit suivre une direction donnée, et l'intercepteur peut changer de direction après chaque interception.
+		Chaque mobile et chaque intercepteur avance à une vitesse qui lui est propre. Le mobile doit suivre une direction donnée, et l'intercepteur peut changer de direction après chaque interception.
 
-    	L'intercepteur doit rentrer à son dépôt dès la fin de sa tournée, et son autonomie doit lui permettre ce retour. Enfin, la date de fin d'une tournée correspond à la date d'interception du dernier mobile de cette tournée.
+		L'intercepteur doit rentrer à son dépôt dès la fin de sa tournée, et son autonomie doit lui permettre ce retour. Enfin, la date de fin d'une tournée correspond à la date d'interception du dernier mobile de cette tournée.
 
-    	Dans les schémas que nous utiliserons pour décrire nos approches, nous emploierons les symboles suivants:
-    	\begin{itemize}
-    		\item Pour un mobile: le symbole (\tikz[baseline=-0.65ex]{\node[mobile,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il est intercepté, ou (\tikz[baseline=-0.65ex]{\node[mobile,uncaught,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il ne l'est pas dans un schéma spatial, et le symbole (\tikz[baseline=-0.65ex]{\node[mobile,draw]{};}) dans un schéma de tournée. Un vecteur vitesse (\tikz[baseline=-0.65ex]{\draw[speed] (0,0) -- (1,0);}) indique sa direction ainsi que sa vitesse. Sa trajectoire est tracée par une ligne pointillée (\tikz[baseline=-0.65ex]{\draw[direction] (0,0) -- (1,0);}).
-    		
-    		\item Pour un dépôt, un symbole (\tikz[baseline=-0.65ex]{\node[interceptor,inner sep=0,outer sep=0]{\interceptor};}) indique sa position.
-    		
-    		\item Pour un intercepteur: son tracé est réalisé en traits pleins, et part d'un dépôt. Afin d'en faciliter la lecture, le retour au dépôt n'est pas représenté. Le tracé est ponctué de symboles (\tikz[baseline=-0.65ex]{\node[route,inner sep=0,outer sep=0]{\mobile};}) aux emplacements où l'interception d'un mobile a eu lieu. La date de fin d'une tournée est indiquée à proximité du dernier mobile intercepté.
-    	\end{itemize}
+		Dans les schémas que nous utiliserons pour décrire nos approches, nous emploierons les symboles suivants:
+		\begin{itemize}
+			\item Pour un mobile: le symbole (\tikz[baseline=-0.65ex]{\node[mobile,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il est intercepté, ou (\tikz[baseline=-0.65ex]{\node[mobile,uncaught,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il ne l'est pas dans un schéma spatial, et le symbole (\tikz[baseline=-0.65ex]{\node[mobile,draw]{};}) dans un schéma de tournée. Un vecteur vitesse (\tikz[baseline=-0.65ex]{\draw[speed] (0,0) -- (1,0);}) indique sa direction ainsi que sa vitesse. Sa trajectoire est tracée par une ligne pointillée (\tikz[baseline=-0.65ex]{\draw[direction] (0,0) -- (1,0);}).
 
-    	La figure \ref{fig:example} présente un schéma spatial et un schéma de tournée.
+			\item Pour un dépôt, un symbole (\tikz[baseline=-0.65ex]{\node[interceptor,inner sep=0,outer sep=0]{\interceptor};}) indique sa position.
 
-    	\begin{figure}
-    		\begin{subfigure}[b]{.45\linewidth}
-    			\centering
-    			\begin{tikzpicture}[scale=.5]
-    				\input{spatial_example}
-    			\end{tikzpicture}
-    			\subcaption{Représentation spatiale}
-    			\label{subfig:spatial}
-    		\end{subfigure}
-    		\hfill
-    		\begin{subfigure}[b]{.45\linewidth}
-    			\centering
-    			\vfill
-    			\begin{tikzpicture}[schema]
-    				\input{route_example}
-    			\end{tikzpicture}
-    			\vfill
-    			\null
-    			\subcaption{Représentation schématique d'une tournée}
-    		\end{subfigure}
-    		\caption{Exemples de schémas}
-    		\label{fig:example}
-    	\end{figure}
+			\item Pour un intercepteur: son tracé est réalisé en traits pleins, et part d'un dépôt. Afin d'en faciliter la lecture, le retour au dépôt n'est pas représenté. Le tracé est ponctué de symboles (\tikz[baseline=-0.65ex]{\node[route,inner sep=0,outer sep=0]{\mobile};}) aux emplacements où l'interception d'un mobile a eu lieu. La date de fin d'une tournée est indiquée à proximité du dernier mobile intercepté.
+		\end{itemize}
 
-    \section{Etat de l'art}
-    	\TODO{Demander à C. Duhamel l'avancée de la recherche dans ce domaine.}
+		La figure \ref{fig:example} présente un schéma spatial et un schéma de tournée.
 
-    	Le projet réalisé en première année permettait de travailler avec un seul intercepteur pour obtenir des résultats comme celui que l'on peut voir sur la figure \ref{subfig:spatial}. Le programme était écrit en langage C et prenait en entrée un fichier décrivant les données du problème. Le listing \ref{lst:old_input_file} correspond au fichier d'entrée menant au résultat de la figure \ref{subfig:spatial}.
+		\begin{figure}
+			\begin{subfigure}[b]{.45\linewidth}
+				\centering
+				\begin{tikzpicture}[scale=.5]
+					\input{spatial_example}
+				\end{tikzpicture}
+				\subcaption{Représentation spatiale}
+				\label{subfig:spatial}
+			\end{subfigure}
+			\hfill
+			\begin{subfigure}[b]{.45\linewidth}
+				\centering
+				\vfill
+				\begin{tikzpicture}[schema]
+					\input{route_example}
+				\end{tikzpicture}
+				\vfill
+				\null
+				\subcaption{Représentation schématique d'une tournée}
+			\end{subfigure}
+			\caption{Exemples de schémas}
+			\label{fig:example}
+		\end{figure}
 
-    	Ce fichier avait été conçu pour en faciliter l'évolution. Bien que le programme ne puisse travailler qu'avec un seul intercepteur, il était possible d'en renseigner plusieurs, ainsi que plusieurs dépôts. Nous avons donc conservé un format de fichier similaire pour notre projet, il sera présenté plus tard.
+	\section{Etat de l'art}
+		\TODO{Demander à C. Duhamel l'avancée de la recherche dans ce domaine.}
 
-    	\begin{code}
-    		\textfile{files/old_input_file.txt}
-    		\captionof{listing}{Fichier d'entrée original}
-    		\label{lst:old_input_file}
-    	\end{code}
+		Le projet réalisé en première année permettait de travailler avec un seul intercepteur pour obtenir des résultats comme celui que l'on peut voir sur la figure \ref{subfig:spatial}. Le programme était écrit en langage C et prenait en entrée un fichier décrivant les données du problème. Le listing \ref{lst:old_input_file} correspond au fichier d'entrée menant au résultat de la figure \ref{subfig:spatial}.
 
-    \section{Travail à réaliser}
-    	Notre projet avait pour objectif de réutiliser le travail initial en généralisant les heuristiques de construction pour qu'elles puissent fonctionner avec de multiples intercepteurs, ainsi que d'optimiser les résultats selon deux critères : le nombre de mobiles visités et le temps requis pour l'interception.
+		Ce fichier avait été conçu pour en faciliter l'évolution. Bien que le programme ne puisse travailler qu'avec un seul intercepteur, il était possible d'en renseigner plusieurs, ainsi que plusieurs dépôts. Nous avons donc conservé un format de fichier similaire pour notre projet, il sera présenté plus tard.
+
+		\begin{code}
+			\textfile{files/old_input_file.txt}
+			\captionof{listing}{Fichier d'entrée original}
+			\label{lst:old_input_file}
+		\end{code}
+
+	\section{Travail à réaliser}
+		Notre projet avait pour objectif de réutiliser le travail initial en généralisant les heuristiques de construction pour qu'elles puissent fonctionner avec de multiples intercepteurs, ainsi que d'optimiser les résultats selon deux critères : le nombre de mobiles visités et le temps requis pour l'interception.
 Plusieurs étapes étaient nécessaires pour réaliser ce projet.
 
 Tout d'abord, un travail de révision et d'optimisation était requis avant de pouvoir poursuivre ce qui avait été fait. Le code initial ayant été réalisé en langage C, il a été traduit en C++ dans une architecture adaptée et orientée objet. Puis le code obtenu a été adapté pour généraliser le problème à non plus un seul, mais plusieurs intercepteurs pouvant provenir de différents dépôts.
@@ -79,25 +79,25 @@ Tout d'abord, un travail de révision et d'optimisation était requis avant de p
 \TODO{diagramme de classes}
 \TODO{en cours de rédaction}
 
-    	\begin{enumerate}
-    		\item Porter le code existant (langage C) en C++ dans une architecture adaptée et orientée objet.
-    		\item Adapter le code pour travailler dans un contexte multi-intercepteurs.
-    		\item Optimiser ce code.
-    		\item Revoir les représentations graphiques.
-    		\item Définir les objectifs d'amélioration des solutions.
-    		\item Définir des opérations d'amélioration des résultats obtenus (Recherche Locale).
-    		\item Définir des combinaisons de mouvements améliorants intéressantes.
-    		\item Appliquer ces mouvements dans le cadre d'une métaheuristique.
-    		\item Tenir compte de paramètres supplémentaires pour plus de réalisme.
-    	\end{enumerate}
+		\begin{enumerate}
+			\item Porter le code existant (langage C) en C++ dans une architecture adaptée et orientée objet.
+			\item Adapter le code pour travailler dans un contexte multi-intercepteurs.
+			\item Optimiser ce code.
+			\item Revoir les représentations graphiques.
+			\item Définir les objectifs d'amélioration des solutions.
+			\item Définir des opérations d'amélioration des résultats obtenus (Recherche Locale).
+			\item Définir des combinaisons de mouvements améliorants intéressantes.
+			\item Appliquer ces mouvements dans le cadre d'une métaheuristique.
+			\item Tenir compte de paramètres supplémentaires pour plus de réalisme.
+		\end{enumerate}
 
-    	Notons que plusieurs mesures sont fixées pour faciliter les calculs:
-    	\begin{itemize}
-    		\item Les déplacements se font dans le plan (l'altitude n'a donc pas d'influence).
-    		\item Les trajectoires des mobiles sont rectilignes, et ils évoluent à vitesse constante.
-    		\item Les trajectoires des intercepteurs sont suivies à vitesse constante et rectilignes entre deux interceptions consécutives.
-    	\end{itemize}
+		Notons que plusieurs mesures sont fixées pour faciliter les calculs:
+		\begin{itemize}
+			\item Les déplacements se font dans le plan (l'altitude n'a donc pas d'influence).
+			\item Les trajectoires des mobiles sont rectilignes, et ils évoluent à vitesse constante.
+			\item Les trajectoires des intercepteurs sont suivies à vitesse constante et rectilignes entre deux interceptions consécutives.
+		\end{itemize}
 
-    	Pour assurer un suivi régulier du projet, nous avons planifié des réunions avec M. Duhamel chaque semaine dans la mesure du possible ou toutes les deux semaines.
+		Pour assurer un suivi régulier du projet, nous avons planifié des réunions avec M. Duhamel chaque semaine dans la mesure du possible ou toutes les deux semaines.
 
-    	Ainsi nous avons construit le diagramme de Gantt prévisionnel présenté sur la figure \TODO{FIGURE}.
+		Ainsi nous avons construit le diagramme de Gantt prévisionnel présenté sur la figure \TODO{FIGURE}.

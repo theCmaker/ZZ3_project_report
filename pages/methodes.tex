@@ -1,5 +1,5 @@
 \chapter{Méthodes}
-    \section{Heuristiques constructives}
+	\section{Heuristiques constructives}
 		Nous proposons deux heuristiques d'insertion. La première est pilotée par l'utilisateur, et la seconde est autonome.
 
 		Ces deux heuristiques servent à construire des solutions réalisables. L'optimalité de ces solutions n'est pas garantie et n'est pas un objectif. En effet, une heuristique est une étape de résolution qui vise seulement à produire une solution viable sur laquelle on pourra appliquer des modifications de manière itérative jusqu'à l'obtention d'un résultat répondant aux critères de qualité que l'on aura fixés.
@@ -34,7 +34,7 @@
 
 			Toutefois, cette heuristique doit être utilisée avec parcimonie en raison de son coût de calcul, mais aussi car elle n'est pas paramétrable et n'offre donc pas de capacités d'extension de ses possibilités, notamment le fait d'ignorer des mobiles ou de prioriser l'interception d'un mobile par rapport à un autre sur une décision arbitraire\ldots
 
-    \section{Recherche Locale et optimisation bi-critères}
+	\section{Recherche Locale et optimisation bi-critères}
 		La recherche locale vise à améliorer une solution en réalisant une succession de mutations simples. En effet, lorsque l'heuristique d'insertion se termine, deux cas se présentent:
 		\begin{itemize}
 			\item Tous les mobiles ont été interceptés,
@@ -102,14 +102,14 @@
 						\RETURN{vrai s'il y a eu amélioration, faux sinon}
 					\END
 				\end{algo}
-	    		\captionof{listing}{Algorithme de principe -- Déplacement au sein d'une tournée}
-	    	\end{code}
+				\captionof{listing}{Algorithme de principe -- Déplacement au sein d'une tournée}
+			\end{code}
 
 
-			Le mouvement de déplacement d'un mobile dans une autre tournée consiste à supprimer un mobile de sa tournée pour l'insérer dans une seconde tournée. 
+			Le mouvement de déplacement d'un mobile dans une autre tournée consiste à supprimer un mobile de sa tournée pour l'insérer dans une seconde tournée.
 
 \TODO{descriptif et algo déplacement d'un mobile dans une autre tournée.}
-			
+
 			\begin{figure}[h!]
 			\begin{subfigure}[b]{.54\linewidth}
 				\centering
@@ -151,9 +151,9 @@
 						\RETURN{vrai s'il y a eu amélioration, faux sinon}
 					\END
 				\end{algo}
-	    		\captionof{listing}{Algorithme de principe -- Interversion au sein d'une même tournée}
-	    	\end{code}
-		
+				\captionof{listing}{Algorithme de principe -- Interversion au sein d'une même tournée}
+			\end{code}
+
 			L'algorithme de principe pour l'interversion avec deux tournées est le suivant :
 			\begin{code}
 				\begin{algo}[informal]
@@ -173,8 +173,8 @@
 						\RETURN{vrai s'il y a eu amélioration, faux sinon}
 					\END
 				\end{algo}
-	    		\captionof{listing}{Algorithme de principe -- Interversion entre deux tournées}
-	    	\end{code}
+				\captionof{listing}{Algorithme de principe -- Interversion entre deux tournées}
+			\end{code}
 
 
 			\begin{figure}[h!]
@@ -221,9 +221,9 @@
 						\RETURN{vrai s'il y a eu amélioration, faux sinon}
 					\END
 				\end{algo}
-	    		\captionof{listing}{Algorithme de principe -- 2-Opt}
-	    	\end{code}
-			
+				\captionof{listing}{Algorithme de principe -- 2-Opt}
+			\end{code}
+
 			\begin{figure}[h!]
 			\centering
 			\begin{tikzpicture}[schema]
@@ -240,17 +240,20 @@
 			\label{subs:best_available_policy}
 
 
-    \section{Méta-heuristiques}
-    
-    La recherche locale permet d'obtenir de bonnes améliorations au sein d'une solution déterminée, mais les algorithmes génétiques ajoutent la possibilité d'étendre la recherche de la meilleure solution à une multitude de solutions possibles.
+	\section{Méta-heuristiques}
+
+	La recherche locale permet d'obtenir de bonnes améliorations au sein d'une solution déterminée, mais les algorithmes génétiques ajoutent la possibilité d'étendre la recherche de la meilleure solution à une multitude de solutions possibles.
+
 	Les algorithmes génétiques vont insérer une perturbation (mutation) dans la solution étudiée qui va déterminer une population sur laquelle on va appliquer la recherche locale. Seuls les meilleurs résultats sont conservés et on réitère l'opération autant de fois que désiré.
-	
-    	\subsection{Multi-Start Evolutionary Local Search}
-    	
-    	L'algorithme Multi-Start Evolutionary Local Search (ou MS-ELS) est le premier  à avoir été implémenté pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème sur lesquelles on va appliquer l'algorithme génétique ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
+
+		\subsection{Multi-Start Evolutionary Local Search}
+
+		L'algorithme \emph{Multi-Start Evolutionary Local Search} (ou MS-ELS) est le premier  à avoir été implémenté pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème et sur lesquelles on va appliquer une recherche local de type ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
+
 		Puis l'Evolutionary Local Search va, pour un nombre d'itérations donné, perturber la solution avant d'y appliquer la recherche locale. On va alors sélectionner le meilleur résultat local trouvé et relancer l'ELS à de multiples reprises pour déterminer un record parmi le meilleur local de chaque ELS.
+
 		À la fin, l'algorithme retourne la meilleure solution trouvée.
-		
+
 		Algorithme de principe :
 		\begin{code}
 				\begin{algo}[informal]
@@ -277,14 +280,16 @@
 						\RETURN{record}
 					\END
 				\end{algo}
-	    		\captionof{listing}{Algorithme de principe -- MS-ELS}
-	    	\end{code}
+				\captionof{listing}{Algorithme de principe -- MS-ELS}
+			\end{code}
 
 \TODO{Ajouter le schéma du MS-ELS de Duhamel}
 
-    	\subsection{Biased Random-Key Genetic Algorithm}
-    \section{Aspect gestion de projet}
-    
-	- Plateforme de gestion de projet
-	- Soucis de retard
-	- Organisation
+		\subsection{Biased Random-Key Genetic Algorithm}
+	\section{Aspect gestion de projet}
+
+	\begin{itemize}
+		\item Plateforme de gestion de projet
+		\item Soucis de retard
+		\item Organisation
+	\end{itemize}
