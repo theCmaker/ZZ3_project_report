@@ -1,0 +1,15 @@
+\draw[grided,step=1.0,thin] (0,0) grid (13,10);
+\draw[color=Gray] (0,0) -- coordinate (x axis mid) (13,0);
+\draw[color=Gray] (0,0) -- coordinate (x axis mid) (0,10);
+\foreach \x in {0,...,13}
+\draw[color=Gray] (\x,1pt) -- (\x,-3pt) node[anchor=north] {\x};
+\foreach \y in {0,...,10}
+\draw[color=Gray] (1pt,\y) -- (-3pt,\y) node[anchor=east] {\y};
+\draw[thick,color=Green](0,0) -| (1.51755,1) -| (1.73132,2) -| (2.6224,3) -| (3.31184,4) -| (5.15684,5) node[pos=1.0,mark size=5pt] {\pgfuseplotmark{star}};
+\draw[dashed,thick,color=Green](5.15684,4) -- (5.15684,0) node[anchor=north west, rotate=90] {$t_{1}=5.16$};
+\draw[thick,color=OrangeRed](0,0) -| (0.727136,1) -| (1.43753,2) -| (2.10416,3) -| (2.60203,4) -| (3.35262,5) -| (4.21061,6) -| (4.96927,7) -| (6.05742,8) -| (7.98504,9) -| (12.5556,10) node[pos=1.0,mark size=5pt] {\pgfuseplotmark{star}};
+\draw[dashed,thick,color=OrangeRed](12.5556,9) -- (12.5556,0) node[anchor=north west, rotate=90] {$t_{2}=12.56$};
+\draw[thick,color=Cyan](0,0) -| (2.37456,1) -| (4.72451,2) node[pos=1.0,mark size=5pt] {\pgfuseplotmark{star}};
+\draw[dashed,thick,color=Cyan](4.72451,1) -- (4.72451,0) node[anchor=north west, rotate=90] {$t_{3}=4.72$};
+\draw[thick,color=Purple](0,0) -| (0.558335,1) -| (1.82611,2) -| (3.20879,3) -| (7.98206,4) node[pos=1.0,mark size=5pt] {\pgfuseplotmark{star}};
+\draw[dashed,thick,color=Purple](7.98206,3) -- (7.98206,0) node[anchor=north west, rotate=90] {$t_{4}=7.98$};
