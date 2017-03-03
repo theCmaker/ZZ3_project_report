@@ -1,0 +1,32 @@
+\umlclass[anchor=center,type=abstract]{AvailablePolicy}{
+	\umlstatic{-- max\_acceptable\_time: Time}\\
+ 	\umlstatic{-- min\_acceptable\_count: int}
+}{
+	\umlstatic{+ maxAcceptableTime(): Time}\\
+   	\umlstatic{+ minAcceptableCount(): int}\\
+	\umlvirt{\umlstatic{+ keepOn(): bool}}\\
+   	\umlvirt{\umlstatic{+ reset() : void}}\\
+   	\umlvirt{\umlstatic{+ update(time, timeRecord) : bool}}\\
+   	\umlvirt{\umlstatic{+ update(time, timeRecord, count, countRecord) : bool}}\\
+}
+
+\umlclass[anchor=center, x=-4, y=-6]{BestAvailablePolicy}{
+	\umlstatic{-- keepOn: const bool = true}
+}{
+	\umlstatic{+ keepOn(): bool}\\
+   	\umlstatic{+ reset() : void}\\
+   	\umlstatic{+ update(time, timeRecord) : bool}\\
+   	\umlstatic{+ update(...) : bool}\\
+}
+
+\umlclass[anchor=center, x=4, y=-6]{FirstAvailablePolicy}{
+	\umlstatic{-- keepOn: bool}
+}{
+	\umlstatic{+ keepOn(): bool}\\
+   	\umlstatic{+ reset() : void}\\
+   	\umlstatic{+ update(time, timeRecord) : bool}\\
+   	\umlstatic{+ update(...) : bool}\\
+}
+
+\umlVHVinherit{BestAvailablePolicy}{AvailablePolicy};
+\umlVHVinherit{FirstAvailablePolicy}{AvailablePolicy};

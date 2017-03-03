@@ -1,0 +1,13 @@
+\umlclass[anchor=center,template={max\_itr}]{VND}{
+}{
+   + VND()\\
+   + VND(list: vector<Move>)\\
+   + movements(): vector<Move>\\
+   + run(s: Solution): void\\
+   + before(s: Solution): void\\
+   + after(s: Solution): void
+}
+
+\umlemptyclass[type=abstract, x=6]{Move}
+
+\umluniaggreg[geometry=--,arg=list, mult1=1, mult2=*]{VND}{Move}
