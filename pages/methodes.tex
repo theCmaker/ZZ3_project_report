@@ -343,11 +343,26 @@
 			\label{fig:move_2opt}
 			\end{figure}
 
-		\subsection{Politique du premier améliorant}
-			\label{subs:first_available_policy}
+		\subsection{Politiques d'amélioration}
+			Afin de rendre les recherches plus pertinentes ou plus rapides, nous avons proposé des politiques permettant de piloter la validation d'une solution comme étant satisfaisante et de commander l'arrêt ou la poursuite des recherches pour trouver un mouvement améliorant. Ces politiques s'appliquent donc à la recherche locale.
 
-		\subsection{Politique du meilleur améliorant}
-			\label{subs:best_available_policy}
+			Nous tenons compte, pour valider (ou invalider) un mouvement, de bornes entrant dans le cadre de l'optimisation bi-critères. Un mouvement est considéré comme valide s'il n'implique pas de dépassement de ces bornes. 
+
+			Les bornes concernent les deux critères \emph{nombre de mobiles interceptés} et \emph{date de fin de la pire tournée}. Elles sont gérées par l'utilisateur ou par le programme et peuvent être fixées pour atteindre ou dépasser un objectif non-négociable ou bien pour relaxer l'une ou l'autre, ou bien chacune des deux contraintes, jusqu'à un seuil choisi.
+
+			Le principe de validation d'un mouvement est simple: il suffit de fournir à la politique les nouvelles valeurs de l'évaluation ainsi que les références que l'on refuse de dépasser. Ces références peuvent dans un premier temps être initialisées aux bornes que nous venons d'évoquer. En cas d'amélioration valide, la politique met à jour les références. Toutefois, elle ne modifie pas les bornes.
+
+			\subsubsection{Politique du premier améliorant}
+				\label{subs:first_available_policy}
+				Cette politique demande l'arrêt des calculs dès lors qu'elle valide la première combinaison qui permet une amélioration au sens de l'optimisation bi-critères. 
+
+				Elle offre des performances intéressantes en termes de vitesse d'exécution car elle permet de fournir une solution réalisable et améliorante tout en évitant de tester de nombreuses autres combinaisons.
+
+			\subsubsection{Politique du meilleur améliorant}
+				\label{subs:best_available_policy}
+				Cette politique, contrairement à la précédente, nécessite de tester toutes les combinaisons possibles pour garder la meilleure. 
+
+				Elle ne demande donc jamais l'arrêt des calculs, mais valide chaque amélioration plus intéressante que la meilleure des précédentes. La recherche se termine quand toutes les combinaisons ont été testées. Dès lors, la meilleure combinaison possible est connue, si elle existe, et peut être validée.
 
 
 	\section{Méta-heuristiques}
@@ -366,34 +381,42 @@
 
 		Algorithme de principe :
 		\begin{code}
-				\begin{algo}[informal]
-					\ALGO{Principe du Multi-Start Evolutionary Local Search}
-					\BEGIN
-						\FOR{i}{1}{nombre max de générations}
-							\STATE{Créer une solution aléatoire}
-							\STATE{Record ← solution}
-							\FOR{j}{1}{nombre max d'itérations de l'ELS}
-								\STATE{Meilleur local ← solution}
-								\FOR{k}{1}{nombre max de copies}
-									\STATE{Créer une copie de solution}
-									\STATE{Créer une perturbation dans la copie (shake)}
-									\STATE{Lancer la VND pour la copie}
-									\IF{la copie donne un meilleur résultat}
-										\STATE{Meilleur local ← copie}
-									\ENDIF
-								\ENDFOR
-								\IF{le meilleur local donne un meilleur résultat que le record}
-									\STATE{Record ← meilleur local}
+			\begin{algo}[informal]
+				\ALGO{Principe du Multi-Start Evolutionary Local Search}
+				\BEGIN
+					\FOR{i}{1}{nombre max de générations}
+						\STATE{Créer une solution aléatoire}
+						\STATE{Record ← solution}
+						\FOR{j}{1}{nombre max d'itérations de l'ELS}
+							\STATE{Meilleur local ← solution}
+							\FOR{k}{1}{nombre max de copies}
+								\STATE{Créer une copie de solution}
+								\STATE{Créer une perturbation dans la copie (shake)}
+								\STATE{Lancer la VND pour la copie}
+								\IF{la copie donne un meilleur résultat}
+									\STATE{Meilleur local ← copie}
 								\ENDIF
 							\ENDFOR
+							\IF{le meilleur local donne un meilleur résultat que le record}
+								\STATE{Record ← meilleur local}
+							\ENDIF
 						\ENDFOR
-						\RETURN{record}
-					\END
-				\end{algo}
-				\captionof{listing}{Algorithme de principe -- MS-ELS}
-			\end{code}
+					\ENDFOR
+					\RETURN{record}
+				\END
+			\end{algo}
+			\captionof{listing}{Algorithme de principe -- MS-ELS}
+		\end{code}
 
-\TODO{Ajouter le schéma du MS-ELS de Duhamel}
+		\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}[node distance=1cm]
+				\input{logigram_ms_els}
+			\end{tikzpicture}
+			\caption{Logigramme pour le MS-ELS}
+			\label{fig:ms-els-logigram}
+		\end{figure}
+
 
 		\subsection{Biased Random-Key Genetic Algorithm}
 	\section{Aspect gestion de projet}
