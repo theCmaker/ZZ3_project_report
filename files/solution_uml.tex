@@ -1,0 +1,80 @@
+\umlclass[anchor=center]{Solution}{
+	-- first : int\\
+	-- last : int\\
+}{
+	+ Solution(Problem)\\
+	+ Solution(Solution)\\
+	+ operator=(Solution) : Solution\\
+	+ problem() : Problem\\
+	+ shake() : void\\
+	\umlstatic{+ random(Problem) : Solution}\\
+	+ append(Interceptor, Mobile, Time) : void\\
+	+ prepend(Interceptor, Mobile, Time) : void\\
+	+ insertAfter(Mobile, Interceptor, Mobile, Time) : void\\
+	+ appendSeq(Interceptor, Mobile) : void\\
+	+ remove(Mobile) : void\\
+	+ removeSeqFrom(Mobile) : void\\
+	+ recomputeFrom(Mobile) : Time\\
+	+ evaluate(...) : Time\\
+	+ worstInterceptionTime() : Time\\
+	+ worstRoute : Interceptor\\
+	+ lastInterceptionTime(Interceptor) : Time\\
+	+ bestInterceptionCount() : unsigned\\
+	+ totalInterceptionCount() : unsigned\\
+	+ first(): int\\
+	+ last() : int\\
+	+ firstOfRoute(Interceptor) : MobileNode\\
+	+ lastOfRoute(Interceptor) : MobileNode\\
+	+ operator[](unsigned) : InterceptorNode\\
+	+ isCaught(Mobile) : bool\\
+	+ catchPosition(Mobile) : Mobile\\
+	+ mobile(unsigned) : MobileNode\\
+	+ uncaughtMobiles() : vector<Mobile>\\
+	+ begin(Interceptor) : iterator\\
+	+ end(Interceptor) : iterator\\
+	+ begin(Interceptor) : const\_iterator\\
+	+ end(Interceptor) : const\_iterator\\
+	+ isEmpty(Interceptor) : bool\\
+	+ operator<(Solution) : bool\\
+}
+
+
+\umlclass[x=8.5,y=-3.5,anchor=north]{MobileNode}{
+	+ date : Time\\
+	+ prev : int\\
+	+ next : int\\
+}{
+	+ MobileNode(Mobile, Time, Interceptor)\\
+	+ MobileNode(Mobile)\\
+}
+
+\umlclass[x=9.5,y=5.5,anchor=north]{InterceptorNode}{
+	+ first : int\\
+	+ last : int\\
+	+ prev : int\\
+	+ next : int\\
+}{
+	+ InterceptorNode(Interceptor)\\
+}
+
+\umlemptyclass[x=8.5,y=7,anchor=center]{Problem}
+\umlemptyclass[x=6.5,y=0,anchor=north]{Mobile}
+\umlemptyclass[x=9.5,y=0,anchor=north]{Interceptor}
+\umlemptyclass[x=8.5,y=-8.5,anchor=north]{iterator}
+
+\umluniaggreg[arg=problem, mult1=1, mult2=1, anchor1=58]{Solution}{Problem}
+\umluniaggreg[arg=interceptors, mult1=1, mult2=*]{Solution}{InterceptorNode}
+\umluniaggreg[arg=sequence, mult=1, mult=*]{Solution}{MobileNode}
+
+\umluniaggreg[arg=mobile, mult1=1, mult2=1]{MobileNode}{Mobile}
+\umluniaggreg[arg=interceptor, mult1=1, mult2=1]{MobileNode}{Interceptor}
+
+\umluniaggreg[arg=interceptor, mult1=1, mult2=1]{InterceptorNode}{Interceptor}
+
+\umluniaggreg[arg=solution, mult1=1, mult2=1]{iterator}{MobileNode}
+
+\umlNarynode[x=0, y=-9.5, name=naryassoc, below]{provides}
+\umlassoc[]{naryassoc}{Solution}
+\umluniassoc[]{naryassoc}{iterator}
+\umlassoc[]{Interceptor}{naryassoc}
+
