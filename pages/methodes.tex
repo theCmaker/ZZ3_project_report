@@ -67,7 +67,7 @@
 
 		Dans le premier cas, le moyen le plus simple pour gagner du temps consiste à retirer un mobile, c'est le mouvement présenté dans la section \ref{subs:move_extract}. Dans le second cas, on peut essayer d'insérer les mobiles restants dans une tournée (section \ref{subs:move_insert}).
 
-		Egalement, il est possible de combiner ces deux mouvements élémentaires pour former quel\-ques mouvements plus complexes, par exemple enlever un mobile pour le déplacer dans une autre tournée, ou ailleurs dans la même tournée. Nous présentons donc plusieurs mouvements que nous jugeons pertinents dans les sections suivantes.
+		Il est également possible de combiner ces deux mouvements élémentaires pour former quel\-ques mouvements plus complexes, par exemple enlever un mobile pour le déplacer dans une autre tournée, ou ailleurs dans la même tournée. Nous présentons donc plusieurs mouvements que nous jugeons pertinents dans les sections suivantes.
 
 		Remarquons que les mouvements ainsi décrits doivent être appliqués stratégiquement, l'objectif est d'améliorer la solution et non de la détériorer. Il convient donc de fixer les limites d'une détérioration que l'on jugera acceptable. L'intérêt d'accepter une légère détérioration est que cette détérioration ne peut être que temporaire, pour permettre un autre mouvement qui laissera ensuite envisager une amélioration plus forte.
 
@@ -347,6 +347,8 @@
 
 		\subsection{Recherche locale à travers la VND}
 			\TODO{Rédiger}
+			
+			\TODO{Algo VND}
 
 			\begin{figure}[h!]
 				\TODO{utiliser références}
@@ -358,7 +360,8 @@
 				\caption[UML -- VND]{Vertical Neighbourhood Descent}
 				\label{uml:vnd}
 			\end{figure}
-
+			
+			\TODO{benchmark VND}
 
 		\subsection{Politiques d'amélioration}
 			Afin de rendre les recherches plus pertinentes ou plus rapides, nous avons proposé des politiques permettant de piloter la validation d'une solution comme étant satisfaisante et de commander l'arrêt ou la poursuite des recherches pour trouver un mouvement améliorant. Ces politiques s'appliquent donc à la recherche locale.
@@ -394,73 +397,72 @@
 
 	\section{Métaheuristiques}
 
-	La recherche locale permet d'obtenir de bonnes améliorations au sein d'une solution déterminée, mais les algorithmes génétiques ajoutent la possibilité d'étendre la recherche de la meilleure solution à une multitude de solutions possibles.
+		La recherche locale permet d'obtenir de bonnes améliorations au sein d'une solution déterminée, mais les \glspl{algorithme genetique} ajoutent la possibilité d'étendre la recherche de la meilleure solution à une multitude de solutions possibles.
 
-	Les algorithmes génétiques vont insérer une perturbation (mutation) dans la solution étudiée qui va déterminer une population sur laquelle on va appliquer la recherche locale. Seuls les meilleurs résultats sont conservés et on réitère l'opération autant de fois que désiré.
+		Les algorithmes génétiques vont insérer une perturbation (mutation) dans la solution étudiée qui va déterminer une population sur laquelle on va appliquer la recherche locale. Seuls les meilleurs résultats sont conservés et on réitère l'opération autant de fois que désiré.
 
 		\subsection{Multi-Start Evolutionary Local Search}
 
-		L'algorithme \emph{Multi-Start Evolutionary Local Search} (ou MS-ELS) est le premier  à avoir été implémenté pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème et sur lesquelles on va appliquer une recherche local de type ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
+			L'algorithme \emph{Multi-Start Evolutionary Local Search} (ou MS-ELS) est le premier  à avoir été implémenté pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème et sur lesquelles on va appliquer une recherche local de type ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
 
-		Puis l'Evolutionary Local Search va, pour un nombre d'itérations donné, perturber la solution avant d'y appliquer la recherche locale. On va alors sélectionner le meilleur résultat local trouvé et relancer l'ELS à de multiples reprises pour déterminer un record parmi le meilleur local de chaque ELS.
+			Puis l'Evolutionary Local Search va, pour un nombre d'itérations donné, perturber la solution avant d'y appliquer la recherche locale. On va alors sélectionner le meilleur résultat local trouvé et relancer l'ELS à de multiples reprises pour déterminer un record parmi le meilleur local de chaque ELS.
 
-		À la fin, l'algorithme retourne la meilleure solution trouvée.
+			À la fin, l'algorithme retourne la meilleure solution trouvée.
 
-		Algorithme de principe :
-		\begin{code}
-			\begin{algo}[informal]
-				\ALGO{Principe du Multi-Start Evolutionary Local Search}
-				\BEGIN
-					\FOR{i}{1}{nombre max de générations}
-						\STATE{Créer une solution aléatoire}
-						\STATE{Record ← solution}
-						\FOR{j}{1}{nombre max d'itérations de l'ELS}
-							\STATE{Meilleur local ← solution}
-							\FOR{k}{1}{nombre max de copies}
-								\STATE{Créer une copie de solution}
-								\STATE{Créer une perturbation dans la copie (shake)}
-								\STATE{Lancer la VND pour la copie}
-								\IF{la copie donne un meilleur résultat}
-									\STATE{Meilleur local ← copie}
+			Algorithme de principe :
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe du Multi-Start Evolutionary Local Search}
+					\BEGIN
+						\FOR{i}{1}{nombre max de générations}
+							\STATE{Créer une solution aléatoire}
+							\STATE{Record ← solution}
+							\FOR{j}{1}{nombre max d'itérations de l'ELS}
+								\STATE{Meilleur local ← solution}
+								\FOR{k}{1}{nombre max de copies}
+									\STATE{Créer une copie de solution}
+									\STATE{Créer une perturbation dans la copie (shake)}
+									\STATE{Lancer la VND pour la copie}
+									\IF{la copie donne un meilleur résultat}
+										\STATE{Meilleur local ← copie}
+									\ENDIF
+								\ENDFOR
+								\IF{le meilleur local donne un meilleur résultat que le record}
+									\STATE{Record ← meilleur local}
 								\ENDIF
 							\ENDFOR
-							\IF{le meilleur local donne un meilleur résultat que le record}
-								\STATE{Record ← meilleur local}
-							\ENDIF
 						\ENDFOR
-					\ENDFOR
-					\RETURN{record}
-				\END
-			\end{algo}
-			\captionof{listing}{Algorithme de principe -- MS-ELS}
-		\end{code}
+						\RETURN{record}
+					\END
+				\end{algo}
+				\captionof{listing}{Algorithme de principe -- MS-ELS}
+			\end{code}
 
-		\begin{figure}[h!]
-			\centering
-			\begin{tikzpicture}[node distance=1cm]
-				\input{logigram_ms_els}
-			\end{tikzpicture}
-			\caption{Logigramme pour le MS-ELS}
-			\label{fig:ms-els-logigram}
-		\end{figure}
+			\begin{figure}[h!]
+				\centering
+				\begin{tikzpicture}[node distance=1cm]
+					\input{logigram_ms_els}
+				\end{tikzpicture}
+				\caption{Logigramme pour le MS-ELS}
+				\label{fig:ms-els-logigram}
+			\end{figure}
 
-		\begin{figure}[h!]
-			\TODO{à référencer}
+			\begin{figure}[h!]
+				\TODO{à référencer}
 			
-			\centering
-			\begin{tikzpicture}
-				\input{ms_els_uml}
-			\end{tikzpicture}
-			\caption[UML -- Métaheuristique MS-ELS]{Classe MS-ELS}
-			\label{uml:ms-els}
-		\end{figure}
-
+				\centering
+				\begin{tikzpicture}
+					\input{ms_els_uml}
+				\end{tikzpicture}
+				\caption[UML -- Métaheuristique MS-ELS]{Classe MS-ELS}
+				\label{uml:ms-els}
+			\end{figure}
 
 		\subsection{Biased Random-Key Genetic Algorithm}
 	\section{Aspect gestion de projet}
 
-	\begin{itemize}
-		\item Plateforme de gestion de projet
-		\item Soucis de retard
-		\item Organisation
-	\end{itemize}
+		L'ensemble du projet a été géré à l'aide d'un tableau de bord répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requis et celui effectivement passé sur chaque tâche. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours un état général (tâches à faire, tâches en cours, tâches terminées). Le code source a été versionné à l'aide de git et a été reparti sur différentes branches au cours du développement, permettant ainsi d'avancer de manière sécurisée et de se répartir le travail plus facilement.
+		
+		Le développement du projet ne s'est pas toujours passé comme prévu et il a été parfois nécessaire de revoir l'implémentation de certains éléments, comme par exemple les mouvements dont le fonctionnement était crucial et constitue une brique essentielle dans l'obtention de solutions performantes.
+		
+		\TODO{Screen dashboard}
