@@ -49,8 +49,56 @@
 	
 \chapter{Calculs d'interception}
 
-	\TODO{Reprendre ce qui a été dit dans le rapport ZZ1}
-	
+	On modélise le déplacement de l'intercepteur par la fonction suivante : 
+	\[
+	\vect{i}(t,\alpha) = 
+	\left(
+	\begin{array}{c}
+	 x_1 + t \cdot v_1 \cdot \cos(\alpha)\\
+	 y_1 + t \cdot v_1 \cdot \sin(\alpha)
+	\end{array}
+	\right)
+	\]
+	avec $t \in \R^+$ et $\alpha \in \icc{-\pi}{\pi}$.
+
+	On modélise de même la même manière le déplacement du mobile :
+	\[
+	\vect{m}(t) = 
+	\left(
+	\begin{array}{c}
+	 x_0 + t \cdot v^{x}_0\\
+	 y_0 + t \cdot v^{y}_0
+	\end{array}
+	\right)
+	\]
+	avec $t \in \R^+$.
+
+	On doit donc résoudre le système d'équations suivant afin de calculer le temps d'interception d'un mobile:
+
+	\[
+	\left\{
+	\begin{array}{r c l}
+	x_1 + t \cdot v_1 \cdot \cos(\alpha) &=& x_0 + t \cdot v^{x}_0\\
+	y_1 + t \cdot v_1 \cdot \sin(\alpha) &=& y_0 + t \cdot v^{y}_0
+	\end{array}
+	\right.
+	\]
+
+	La valeur est donnée par la résolution de l'équation $a \cdot \cos(\alpha)+b \cdot \sin(\alpha) = c$ avec:
+	\[
+	\left\{
+	\begin{array}{r c l}
+	a &=& y_0 - y_1\\
+	b &=& x_1 - x_0\\
+	c &=& \displaystyle \frac{a \cdot v^{x}_0 +b \cdot v^{y}_0}{v_1}
+	\end{array}
+	\right.
+	\]
+
+	On obtient alors 2 possibilités pour la date t : 
+	\[ \frac{-b}{-v^{x}_0 + v_1 \cdot \cos(\alpha)}  \qqtext{et} \frac{a}{-v^{y}_0 + v_1 \cdot \sin(\alpha)} \]
+
+	La fonction d'interception teste alors les positions obtenues avec les deux dates et retient celle qui fonctionne et qui est minimale.\cite{projet-zz1}
 	
 \chapter{Résultats du benchmark de la VND}
 
