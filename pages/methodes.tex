@@ -381,9 +381,20 @@
 				\label{uml:vnd}
 			\end{figure}
 			
-			Pour que la \acrshort{vnd} soit la plus efficace possible, l'ordre dans lequel les mouvements sont appliqués est crucial. Il fut donc nécessaire d'effectuer un calibrage en testant des séquences aléatoires pour déterminer la meilleure combinaison de mouvements possible. Il n'était cependant pas possible de vérifier toutes les combinaisons, soit 16!, à cause de leur nombre trop élevé.
+			Pour que la \acrshort{vnd} soit la plus efficace possible, l'ordre dans lequel les mouvements sont appliqués est crucial. Il fut donc nécessaire d'effectuer un calibrage en testant des séquences aléatoires pour déterminer la meilleure combinaison de mouvements possible. Il n'était cependant pas possible de vérifier toutes les combinaisons, à cause de leur nombre trop élevé.
 			
-			\TODO{benchmark VND}
+			\subsubsection{Calibrage de la VND}
+				Nous nous sommes vite aperçus que la VND était sensible à l'ordre d'application des mouvements de la recherche locale. Par conséquent, nous avons jugé utile de réaliser un calibrage (ou \emph{benchmark}) afin de déterminer des combinaisons intéressantes en termes de vitesse de convergence et de qualité des résultats. Pour ce faire, nous avons défini les différentes possibilités: 8~mouvements différents, pilotables indépendamment par deux politiques (voir section suivante), soit 16 variantes. Nous avons décidé d'inclure systématiquement chaque mouvement. Cela donne une combinaison à 8 mouvements, chacun piloté par une politique. Le nombre de combinaisons possibles s'élève à $16 \times 14 \times 12 \times 10 \times 8 \times 6 \times 4 \times 2 = \np{10321920}$. Il est evidemment impossible de tester toutes ces combinaisons dans un temps raisonnable.
+
+				Nous avons donc opté pour une méthode non exhaustive, en générant aléatoirement des combinaisons. Afin de faciliter le codage, nous avons réalisé une structure proche d'une fabrique, sous forme d'un tableau de foncteurs. Ainsi, en associant à chaque mouvement un indice, il suffisait de mélanger aléatoirement ces indices pour obtenir un ordre, et à choisir aléatoirement une politique pour chaque mouvement.
+
+				A l'exécution, chaque combinaison aléatoirement générée est appliquée successivement sur plusieurs instances du problème, générées aléatoirement. Les résultats obtenus sont stockés et associés à la combinaison dont ils sont issus.
+
+				Finalement, les résultats sont triés et les combinaisons qui ont mené aux meilleurs d'entre-eux sont extraites. On peut alors analyser ces combinaisons et retenir celles qui apparaissent dans les meilleurs résultats d'un maximum d'instances.
+
+				Nous présentons quelques résultats dans l'annexe~\ref{ann:benchmark-vnd}.
+
+				Il s'agit d'un calibrage simple, qui n'est sans doute pas exempt de défauts. Par exemple les mouvements qui favorisent l'amélioration du critère \emph{nombre de mobiles} sont peu nombreux. En effet, seul le mouvement d'insertion permet une amélioration sur ce critère. Il pourrait alors être nécessaire de le faire apparaître plusieurs fois dans un autre type de combinaisons afin d'offrir un meilleur équilibre entre les deux critères.
 
 		\subsection{Politiques d'amélioration}
 			Afin de rendre les recherches plus pertinentes ou plus rapides, nous avons proposé des politiques permettant de piloter la validation d'une solution comme étant satisfaisante et de commander l'arrêt ou la poursuite des recherches pour trouver un mouvement améliorant. Ces politiques s'appliquent donc à la recherche locale.
