@@ -4,25 +4,29 @@
 
         \begin{table}[H]
             \centering
-            \begin{tabular}{l|r|r|l}
-            \cline{2-3}
-                                                                     & \multicolumn{1}{c|}{\textbf{Avec Cache}} & \multicolumn{1}{c|}{\textbf{Sans Cache}} &  \\ \cline{1-3}
-            \multicolumn{1}{|l|}{\textbf{instance A (10 mobiles)}}   & 32.291 µs                               & 53.106 µs                               &  \\ \cline{1-3}
-            \multicolumn{1}{|l|}{\textbf{instance B (20 mobiles)}}   & 137.305 µs                               & 274.566 µs                               &  \\ \cline{1-3}
-            \multicolumn{1}{|l|}{\textbf{instance C (30 mobiles)}}   & 268.857 µs                               & 760.437 µs                               &  \\ \cline{1-3}
-            \multicolumn{1}{|l|}{\textbf{instance D (40 mobiles)}}   & 487.622 µs                               & 1759.860 µs                               &  \\ \cline{1-3}
-            \multicolumn{1}{|l|}{\textbf{instance E (60 mobiles)}}   & 1212.790 µs                               & 6391.220 µs                               &  \\ \cline{1-3}
-            \multicolumn{1}{|l|}{\textbf{instance F (100 mobiles)}}  & 3038.210µs                                & 17595.600 µs                               &  \\ \cline{1-3}
-            \multicolumn{1}{|l|}{\textbf{instance G (1000 mobiles)}} & 486714.000 µs                                & 8.69975e+06 µs                           &  \\ \cline{1-3}
+            \begin{tabular}{l|r|r|r|l}
+            \cline{2-4}
+                                                                     & \multicolumn{1}{c|}{\textbf{Avec Cache}} & \multicolumn{1}{c|}{\textbf{Sans Cache}} & \multicolumn{1}{c|}{\textbf{Gain en temps}} &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance A (10 mobiles)}}   & 32.291 µs                               & 53.106 µs                               & 39\%                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance B (20 mobiles)}}   & 137.305 µs                               & 274.566 µs                               & 50\%                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance C (30 mobiles)}}   & 268.857 µs                               & 760.437 µs                               & 65\%                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance D (40 mobiles)}}   & 487.622 µs                               & 1759.860 µs                               & 72\%                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance E (60 mobiles)}}   & 1212.790 µs                               & 6391.220 µs                               & 81\%                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance F (100 mobiles)}}  & 3038.210µs                                & 17595.600 µs                               & 83\%                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance G (1000 mobiles)}} & 486714.000 µs                                & 8.69975e+06 µs                           & 94\%                               &  \\ \cline{1-4}
             \end{tabular}
             \caption{Performances du cache}
             \label{tab:cache-perf}
         \end{table}
-    	Résultats depuis le passage au C++, le gain en temps avec le cache, les corrections et améliorations des heuristiques de construction.
-    	Comparaison avec les résultats ZZ1.
+    	
+    	La mise en place de ce cache permet d'obtenir de très gros gains de temps, comme l'indique la troisième colonne du tableau~\ref{tab:cache-perf}. Il s'agit d'une amélioration importante puisque dans le cadre d'un problème NP-Difficile, le souci de gagner du temps dans l'exécution du programme se trouve au coeur du problème.
+    	
+    	Quelques corrections et améliorations ont aussi étaient apportées dans les heurisitiques de construction et notammment dans le calcul du temps d'interception, permettant d'accélérer les calculs. L'heuristique de construction par séquence est moins performante que celle d'insertion au plus tôt, mais elle permet de construire différentes solutions à la différence de la deuxième qui renverra toujours la même solution pour chaque problème donné.
+    	
     \section{Après améliorations}
     	\subsection{Résultats de la VND}
     	\subsection{Résultats du MS-ELS}
+
             \begin{table}[H]
                 \centering
                 \begin{tabular}{l|r|r|r|r|r|r|r|r|r|}
@@ -40,7 +44,11 @@
             \end{table} 
 
         \subsection{Résultats du BRKGA}
-
+			
+			Le \acrlong{brkga} a été exécuté sans l'utilisation de la \acrshort{vnd} pour obtenir différentes solutions à chaque insertion d'un mobile et définir un front de Pareto initial. Ensuite le programme est lancé sur une instance avec la VND intégrée et l'algorithme génétique va effectuer un certain nombre d'appels à celle-ci pour 100 itérations.
+			
+			En terme de performances, le BRKGA sans VND s'exécute très rapidement et avec VND dans un temps plutôt raisonnable, même pour des instances plus importantes. Le tableau~\ref{tab:brkga} présente les résultats obtenus sur quatre instances comportants un nombre différent de mobiles et d'intercepteurs.
+			
             \begin{table}[H]
                 \centering
                 \begin{tabular}{r|r|r|r|r|r|l}
@@ -55,23 +63,64 @@
                 \caption{Résultats et performance de BRKGA}
                 \label{tab:brkga}
             \end{table}
+            
+            Les graphiques suivants présentent les résultats obtenus par le BRKGA sans la VND puis avec la VND. Sur toutes les instances testées, on observe une réduction très nette de l'hypervolume, notamment concernant les solutions qui interceptent un grand nombre de mobiles (côté gauche), car elles parviennent à le faire dans un temps maximal beaucoup plus court que lors des premiers résultats obtenus.
+            
+            On peut donc en déduire que l'algorithme génétique nous permet d'obtenir de très bonnes améliorations en un temps raisonnable et qu'il démontre la possibilité de résoudre rapidement un problème de STDVRP.
+            
             \subsubsection{10m2i2d}
-                \input{brkga_10m2i2d_novnd_pareto}
                 
-                \input{brkga_10m2i2d_vnd_pareto}
+                \begin{figure}[H]
+                	\input{brkga_10m2i2d_novnd_pareto}
+                \caption{Résultat du BRKGA sans VND pour un problème avec 10 mobiles, 2 intercepteurs et 2 dépôts}
+				\label{fig:10m2i2d-sansvnd}
+				\end{figure}
+                
+                \begin{figure}[h!]
+                	\input{brkga_10m2i2d_vnd_pareto}
+                \caption{Résultat du BRKGA avec VND pour un problème avec 10 mobiles, 2 intercepteurs et 2 dépôts}
+				\label{fig:10m2i2d-avecvnd}
+				\end{figure}
+				
             \subsubsection{20m3i3d}
-                \input{brkga_20m3i3d_novnd_pareto}
+                \begin{figure}[h!]
+                	\input{brkga_20m3i3d_novnd_pareto}
+                \caption{Résultat du BRKGA sans VND pour un problème avec 20 mobiles, 3 intercepteurs et 3 dépôts}
+				\label{fig:20m3i3d-sansvnd}
+				\end{figure}
                 
-                \input{brkga_20m3i3d_vnd_pareto}
+                \begin{figure}[H]
+                	\input{brkga_20m3i3d_vnd_pareto}
+                \caption{Résultat du BRKGA avec VND pour un problème avec 20 mobiles, 3 intercepteurs et 3 dépôts}
+				\label{fig:20m3i3d-avecvnd}
+				\end{figure}
+				
             \subsubsection{30m4i3d}
-                \input{brkga_30m4i3d_novnd_pareto}
+           		\begin{figure}[h!]
+                	\input{brkga_30m4i3d_novnd_pareto}
+                \caption{Résultat du BRKGA sans VND pour un problème avec 30 mobiles, 4 intercepteurs et 3 dépôts}
+				\label{fig:30m4i3d-sansvnd}
+                \end{figure}
                 
-                \input{brkga_30m4i3d_vnd_pareto}
+                \begin{figure}[h!]
+                	\input{brkga_30m4i3d_vnd_pareto}
+                \caption{Résultat du BRKGA avec VND pour un problème avec 30 mobiles, 4 intercepteurs et 3 dépôts}
+				\label{fig:30m4i3d-avecvnd}
+				\end{figure}
+				
             \subsubsection{40m5i4d}
-                \input{brkga_40m5i4d_novnd_pareto}
+            	\begin{figure}[h!]
+                	\input{brkga_40m5i4d_novnd_pareto}
+                \caption{Résultat du BRKGA sans VND pour un problème avec 40 mobiles, 5 intercepteurs et 4 dépôts}
+				\label{fig:40m5i4d-sansvnd}
+                \end{figure}
                 
-                \input{brkga_40m5i4d_vnd_pareto}
-
+                \begin{figure}[h!]
+                	\input{brkga_40m5i4d_vnd_pareto}
+                \caption{Résultat du BRKGA avec VND pour un problème avec 40 mobiles, 5 intercepteurs et 4 dépôts}
+				\label{fig:40m5i4d-avecvnd}
+				\end{figure}
+				
 
     \section{Perspectives}
     
