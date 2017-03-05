@@ -460,16 +460,7 @@
 				\captionof{listing}{Algorithme de principe -- MS-ELS}
 			\end{code}
 
-			\begin{figure}[h!]
-				\centering
-				\begin{tikzpicture}[node distance=1cm]
-					\input{logigram_ms_els}
-				\end{tikzpicture}
-				\caption{Logigramme pour le MS-ELS}
-				\label{fig:ms-els-logigram}
-			\end{figure}
-
-			\begin{figure}[h!]
+			\begin{figure}[H]
 				\TODO{à référencer}
 			
 				\centering
@@ -480,7 +471,18 @@
 				\label{uml:ms-els}
 			\end{figure}
 
+			\begin{figure}[H]
+				\centering
+				\begin{tikzpicture}[node distance=1cm]
+					\input{logigram_ms_els}
+				\end{tikzpicture}
+				\caption{Logigramme pour le MS-ELS}
+				\label{fig:ms-els-logigram}
+			\end{figure}
+
 		\subsection{Biased Random-Key Genetic Algorithm}
+
+		\TODO{BRKGA}
 	\section{Aspect gestion de projet}
 
 		L'ensemble du projet a été géré à l'aide d'un tableau de bord répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requises et celui effectivement passé sur chacune des tâches. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours une vision générale de la situation (notamment les tâches à faire, les tâches en cours et les tâches terminées). Une réunion hebdomadaire avec le responsable du projet permettait de faire le point sur l'avancement, de se réorganiser si besoin ainsi que de remédier aux retards qui ont eu lieu à certaines étapes. 
@@ -490,3 +492,10 @@
 		Le développement du projet ne s'est pas toujours passé comme prévu et il a été parfois nécessaire de revoir l'implémentation de certains éléments, comme par exemple les mouvements dont le fonctionnement était crucial et qui constituent une brique essentielle dans l'obtention de solutions performantes.
 		
 		\TODO{Screen dashboard}
+
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[width=\linewidth]{dashboard}
+			\caption{Dashboard de gestion de projet de type Kanban}
+			\label{fig:dashboard}
+		\end{figure}

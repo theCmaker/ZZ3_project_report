@@ -1,0 +1,52 @@
+\begin{figure}[h!]
+	\shorthandoff{:!}
+	\centering
+	\begin{ganttchart}%
+		[y unit title=0.7cm,
+		x unit=0.05cm,
+		hgrid=true,
+		vgrid={*6{white},*1{gray,dotted}},%
+		title/.style={draw,fill=Red!30!white},
+		title label font=\scriptsize,
+		bar label font=\color{black!50},
+		group right shift=0,
+		group left shift=0,
+		group peaks width=2,
+		group peaks tip position=0,
+		group peaks height=.3,
+		bar left shift=0.01,
+		bar right shift=-.01,
+		bar incomplete/.append style={fill=Red},
+		progress label text={},
+		time slot format={isodate-yearmonth}]{2016-10}{2017-04}
+		%En-têtes
+		\gantttitlecalendar{year, month=shortname}\\
+		%Contenu
+		\ganttgroup{Lancement}{2016-10-20}{2016-12-05}\\
+		\ganttbar[progress=0,name=prisemain]{Prise en main du code existant}{2016-10-20}{2016-11-03} \\
+		\ganttbar[progress=0,name=cppconv]{Conversion en C++}{2016-10-20}{2016-11-09} \\
+		\ganttbar[progress=0,name=multii]{Adaptation multi-intercepteurs}{2016-11-03}{2016-11-23}\\
+		\ganttbar[progress=0,name=graph]{Rendu graphique}{2016-11-03}{2016-12-05} \\[grid]
+		%
+		\ganttgroup{Optimisation, robustesse}{2016-11-01}{2017-02-22}\\
+		\ganttbar[progress=0,name=tests]{Tests unitaires}{2016-11-01}{2017-02-22}\\
+		\ganttbar[progress=0,name=optim]{Optimisation de l'insertion}{2016-11-15}{2016-12-15}\\
+		\ganttbar[progress=0,name=doc]{Documentation}{2016-12-19}{2017-02-22}\\
+		%
+		\ganttgroup{Méta-Heuristiques}{2016-12-15}{2017-02-15}\\
+		\ganttbar[progress=0,name=rl]{Recherche locale}{2016-12-15}{2017-01-16}\\
+		\ganttbar[progress=0,name=policies]{Politiques de mouvement}{2017-01-01}{2017-01-25}\\
+		\ganttbar[progress=0,name=bic]{Bi-critères}{2017-01-20}{2017-02-10}\\
+		\ganttbar[progress=0,name=mh]{VND + BRKGA}{2017-01-01}{2017-02-15}\\
+		%
+		\ganttgroup{Aspect stochastique}{2017-02-15}{2017-03-05}\\
+		\ganttbar[progress=100,name=stochas]{Probabilité tps interception}{2017-02-15}{2017-02-25}\\
+		%
+		\ganttgroup{Résultats}{2017-02-15}{2017-03-05}\\
+		\ganttbar[progress=0,name=results]{Résultats}{2017-02-15}{2017-03-05}
+		%
+	\end{ganttchart}
+	\caption{Diagramme de Gantt prévisionnel}
+	\label{fig:gantt_previsionnel}
+	\shorthandon{:!}
+\end{figure}
