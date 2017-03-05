@@ -46,6 +46,25 @@
     	
     \section{Après améliorations}
     	\subsection{Résultats de la VND}
+
+        \begin{table}[H]
+            \centering
+            \begin{tabular}{l|r|r|r|}
+            \cline{2-4}
+            \multirow{2}{*}{}                         & \multicolumn{3}{c|}{\textbf{VND\textless30\textgreater}}                                                            \\ \cline{2-4} 
+                                                      & \multicolumn{1}{c|}{\textbf{Temps}} & \multicolumn{1}{c|}{\textbf{\#ratés}} & \multicolumn{1}{c|}{\textbf{tps max}} \\ \hline
+            \multicolumn{1}{|l|}{\textbf{instance A}} & 1258 µs                             & 0                                     & 12.5073                               \\ \hline
+            \multicolumn{1}{|l|}{\textbf{instance B}} & 28770 µs                            & 0                                     & 12.2847                               \\ \hline
+            \multicolumn{1}{|l|}{\textbf{instance C}} & 18097 µs                            & 2                                     & 13.8550                               \\ \hline
+            \multicolumn{1}{|l|}{\textbf{instance D}} & 49436 µs                            & 0                                     & 30.2055                               \\ \hline
+            \multicolumn{1}{|l|}{\textbf{instance E}} & 235459 µs                           & 0                                     & 28.4949                               \\ \hline
+            \multicolumn{1}{|l|}{\textbf{instance F}} & 938703 µs                           & 0                                     & 71.9546                               \\ \hline
+            \multicolumn{1}{|l|}{\textbf{instance G}} & 200 s                               & 0                                     & 288.2480                                       \\ \hline
+            \end{tabular}
+            \caption{Résultats et performances de la VND}
+            \label{tab:vnd-perf}
+        \end{table}
+
     	\subsection{Résultats du MS-ELS}
     	
     	Le tableau~\ref{tab:msels} présente les résultats obtenus avec la métaheuristique MS-ELS. Les résultats ne sont pas aussi bons qu'espérés, car le critère de sélection de la meilleure solution a tendance à privilégier le temps par rapport au nombre de mobiles interceptés. Il serait donc intéressant de revoir l'évalution des solutions pour obtenir de meilleurs résultats. De plus, la MS-ELS est un algorithme mono-objectif, ce qui le rend aussi moins avantageux, car on devra se contenter d'une agrégation entre les critères plutôt que d'une véritable recherche bi-objective.
