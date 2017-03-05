@@ -1,13 +1,13 @@
 \chapter{Méthodes}
 	\section{Heuristiques constructives}
-		Nous proposons deux heuristiques d'insertion. La première est pilotée par l'utilisateur, et la seconde est autonome.
+		Nous proposons deux heuristiques d'insertion. La première est pilotée par l'utilisateur et la seconde est autonome.
 
 		Ces deux heuristiques servent à construire des solutions réalisables. L'optimalité de ces solutions n'est pas garantie et n'est pas un objectif. En effet, une heuristique est une étape de résolution qui vise seulement à produire une solution viable sur laquelle on pourra appliquer des modifications de manière itérative jusqu'à l'obtention d'un résultat répondant aux critères de qualité que l'on aura fixés.
 
 		Il est très souvent plus facile d'améliorer un système dont on sait qu'il fonctionne que de chercher à rendre efficace un système défectueux.
 		\subsection{Interception selon une séquence}
 		\label{sub:heuristic_sequence}
-			Dans cette heuristique, l'utilisateur fournit une séquence de mobiles à intercepter dans l'ordre de la lecture de cette séquence. L'heuristique est alors chargée pour chaque mobile de cette séquence de déterminer l'intercepteur capable de l'intercepter dans les meilleurs délais. On garantit alors la propriété suivante pour chaque tournée $r$:
+			Dans cette heuristique, l'utilisateur fournit une séquence de mobiles à intercepter dans l'ordre de la lecture de cette séquence. L'heuristique est alors chargée pour chaque mobile de cette séquence de déterminer l'intercepteur capable de l'atteindre dans les meilleurs délais. On garantit alors la propriété suivante pour chaque tournée $r$:
 			\[
 				\forall i, j \qtext{t.q.}  i<j, \qtext{on a} \text{pos}(r_i) < \text{pos}(r_j)
 			\]
@@ -28,11 +28,11 @@
 
 		\subsection{Interception au plus tôt}
 		\label{sub:heuristic_fastest}
-			Dans cette heuristique, le calcul de chaque interception est piloté par le temps. L'heuristique calcule pour chaque insertion les meilleurs candidats (mobile et tournée). Il s'agit donc de déterminer quel est le mobile qui pourra être inseré dans la tournée réalisée par l'intercepteur capable de le rejoindre au plus tôt. Il s'agit d'une méthode plus gourmande en ressources mais qui permet d'obtenir des résultats généralement de meilleure qualité que l'insertion par séquence.
+			Dans cette heuristique, le calcul de chaque interception est piloté par le temps. L'heuristique calcule pour chaque insertion les meilleurs candidats (mobile et tournée). Il s'agit donc de déterminer quel est le mobile qui pourra être inseré dans la tournée réalisée par l'intercepteur capable de le rejoindre au plus tôt. Il s'agit d'une méthode plus gourmande en ressources, mais qui permet d'obtenir des résultats généralement de meilleure qualité que l'insertion par séquence.
 
-			Afin d'optimiser les performances, nous avons développé une politique de \gls{cache} permettant de conserver une matrice des durées nécessaires pour atteindre chaque mobile à partir de chaque intercepteur. Ainsi lorsqu'un mobile est intercepté, seules les durées relatives à l'intercepteur candidat sont faussées et doivent être recalculées, les durées nécessaires aux autres intercepteurs pour atteindre les autres mobiles restent identiques. Nous décrivons plus en détail ce mécanisme dans l'annexe~\ref{app:cache}.
+			Afin d'optimiser les performances, nous avons développé une politique de \gls{cache} permettant de conserver une matrice des durées nécessaires pour atteindre chaque mobile à partir de chaque intercepteur. Ainsi, lorsqu'un mobile est intercepté, seules les durées relatives à l'intercepteur candidat sont faussées et doivent être recalculées, les durées nécessaires aux autres intercepteurs pour atteindre les autres mobiles restent identiques. Nous décrivons plus en détail ce mécanisme dans l'annexe~\ref{app:cache}.
 
-			Toutefois, cette heuristique doit être utilisée avec parcimonie en raison de son coût de calcul, mais aussi car elle n'est pas paramétrable et n'offre donc pas de capacités d'extension de ses possibilités, notamment le fait d'ignorer des mobiles ou de prioriser l'interception d'un mobile par rapport à un autre sur une décision arbitraire\ldots
+			Toutefois, cette heuristique doit être utilisée avec parcimonie en raison de son coût de calcul, mais aussi car elle n'est pas paramétrable et n'offre donc pas de capacités d'extension de ses possibilités, notamment le fait d'ignorer des mobiles ou de prioriser l'interception d'un mobile par rapport à un autre sur une décision arbitraire.
 
 			\begin{figure}[h!]
 				\begin{subfigure}[t]{.5\linewidth}
@@ -69,14 +69,14 @@
 
 		Il est également possible de combiner ces deux mouvements élémentaires pour former quel\-ques mouvements plus complexes, par exemple enlever un mobile pour le déplacer dans une autre tournée, ou ailleurs dans la même tournée. Nous présentons donc plusieurs mouvements que nous jugeons pertinents dans les sections suivantes.
 
-		Remarquons que les mouvements ainsi décrits doivent être appliqués stratégiquement, l'objectif est d'améliorer la solution et non de la détériorer. Il convient donc de fixer les limites d'une détérioration que l'on jugera acceptable. L'intérêt d'accepter une légère détérioration est que cette détérioration ne peut être que temporaire, pour permettre un autre mouvement qui laissera ensuite envisager une amélioration plus forte.
+		Il est cependant nécessaire de veiller à ce que les mouvements ainsi décrits soient appliqués stratégiquement, car l'objectif est d'améliorer la solution et non de la détériorer. Il convient donc de fixer les limites d'une détérioration que l'on jugera acceptable. L'intérêt d'autoriser une légère détérioration est que celle-ci ne peut être que temporaire, pour permettre la validation d'un autre mouvement qui laissera ensuite envisager une amélioration plus forte.
 
-		Les objectifs de qualité pour une solution sont le nombre de mobiles interceptés et la date de fin de la tournée la plus longue (en termes de durée). C'est la raison pour laquelle nous avons défini des politiques d'amélioration visant à atteindre ces objectifs qui sont mutuellement contradictoires, tout en garantissant que les limites de détérioration ne sont pas dépassées. Ces politiques définissent quelle est la solution à choisir et valident (ou invalides) des propositions de modifications. Elles sont décrites dans les sections \ref{subs:first_available_policy} et \ref{subs:best_available_policy}.
+		Les objectifs de qualité pour une solution sont le nombre de mobiles interceptés et la date de fin de la tournée la plus longue (en termes de durée). C'est la raison pour laquelle nous avons défini des politiques d'amélioration visant à atteindre ces objectifs qui sont mutuellement contradictoires, tout en garantissant que les limites de détérioration ne soient pas dépassées. Ces politiques définissent quelle est la solution à choisir et valident (ou invalident) des propositions de modification. Elles sont décrites dans les sections \ref{subs:first_available_policy} et \ref{subs:best_available_policy}.
 
 		\subsection{Mouvements améliorants}
 
 		\subsubsection{Mouvement d'extraction}
-			Le mouvement d'extraction permet de retirer un mobile dans une tournée afin d'améliorer le plus grand temps d'interception. Pour cela, seule la suppression d'un mobile dans la tournée la plus longue en temps sera validée, car une extraction dans les autres tournées n'apporterait pas d'amélioration à la solution globale. Afin que ce mouvement ne vide pas successivement les tournées jusqu'à aboutir à une solution où aucun mobile n'est intercepté (solution triviale pour la minimisation du le temps), une politique a été ajoutée pour considérer le problème avec le critère de temps, mais aussi celui du nombre de mobiles. Un minimum est donc fixé pour ne pas aller en-dessous d'un certain seuil.
+			Le mouvement d'extraction permet de retirer un mobile dans une tournée afin d'améliorer le pire temps d'interception. Pour cela, seule la suppression d'un mobile dans la tournée la plus longue en temps sera validée, car une extraction dans les autres tournées n'apporterait pas d'amélioration globale à la solution. Afin que ce mouvement ne vide pas successivement les tournées jusqu'à aboutir à une solution où aucun mobile n'est intercepté (solution triviale pour la minimisation du temps), une politique a été ajoutée pour considérer le problème avec le critère de temps, mais aussi celui du nombre de mobiles. Un minimum est donc fixé pour ne pas aller en-dessous d'un certain seuil.
 			
 			
 			L'algorithme de principe est le suivant :
@@ -109,7 +109,7 @@
 			\end{figure}
 
 		\subsubsection{Mouvement d'insertion}
-			Le mouvement d'insertion permet d'ajouter un mobile à une tournée. Il est donc forcément améliorant en terme de mobiles, mais il peut impacter le temps maximum d'interception. Ce mouvement sera donc validé uniquement s'il ne l'augmente pas.
+			Le mouvement d'insertion permet d'ajouter un mobile à une tournée. Il est donc forcément améliorant en terme de mobiles, mais il peut alors impacter le temps maximum d'interception. Ce mouvement sera donc validé uniquement s'il ne l'augmente pas.
 			
 			L'algorithme de principe est le suivant :
 			\begin{code}
@@ -144,7 +144,7 @@
 			\end{figure}
 
 		\subsubsection{Mouvement de substitution (ou remplacement)}
-				Le mouvement de substitution permet d'insérer un mobile à la place d'un autre mobile dans une tournée. Il s''agit donc d'un mouvement de suppression suivi d'un mouvement d'insertion. Comme le nombre de mobile ne change pas, seul le gain de temps est considéré pour valider ou non l'opération.
+				Le mouvement de substitution permet d'insérer un mobile à la place d'un autre mobile dans une tournée. Il s'agit donc d'un mouvement de suppression suivi d'un mouvement d'insertion. Comme le nombre de mobile ne change pas, seul le gain de temps est considéré pour valider ou non l'opération.
 				
 				L'algorithme de principe est le suivant :
 				\begin{code}
@@ -153,7 +153,7 @@
 						\BEGIN
 							\FORGEN{tous les mobiles non interceptés m}
 								\FORGEN{toutes les tournées t}
-									\FORGEN{tous les mobiles m' dans t'}
+									\FORGEN{tous les mobiles m' dans t}
 										\STATE{Calculer le temps d'interception en remplaçant m' par m dans t}
 										\STATE{Comparer le résultat obtenu avec le temps initial (avec arrêt de la recherche selon les politiques)}
 									\ENDFORGEN
@@ -183,7 +183,7 @@
 					\ALGO{Principe du déplacement dans une tournée}
 					\BEGIN
 						\FORGEN{toutes les tournées t}
-							\FORGEN{toutes les positions possibles dans t}
+							\FORGEN{toutes les positions p possibles dans t}
 								\FORGEN{tous les mobiles m}
 									\IF{le déplacement existe}
 										\STATE{Calculer le nouveau temps d'interception de t avec le déplacement de m dans la tournée.}
@@ -269,7 +269,7 @@
 			L'algorithme de principe pour l'interversion avec deux tournées est le suivant :
 			\begin{code}
 				\begin{algo}[informal]
-					\ALGO{Principe de l'interversion entre 2 tournées}
+					\ALGO{Principe de l'interversion entre deux tournées}
 					\BEGIN
 						\FORGEN{toutes les tournées t1 sauf la dernière}
 							\FORGEN{toutes les tournées t2 après t1}
@@ -347,7 +347,7 @@
 
 		\subsection{Recherche locale à travers la VND}
 
-			La mise en place d'une \acrlong{vnd} permet d'automatiser l'utilisation de chacun des mouvements qui ont été définis précédemment sur une solution déjà construite. Le principe est de tester chaque mouvement sur la solution pour voir si des améliorations sont possibles et les appliquer le cas échéant. Si l'on ne trouve pas d'amélioration pour un mouvement, on passe alors au mouvement suivant, mais si on trouve une amélioration, on reprend alors la liste des mouvements depuis le début, car il est tout à fait possible que certains mouvements qui n'étaient pas réalisables le soient désormais. 
+			La mise en place d'une \acrlong{vnd} permet d'automatiser l'utilisation de chacun des mouvements qui ont été définis précédemment sur une solution déjà construite. Le principe consiste à tester chaque mouvement sur la solution pour voir si des améliorations sont possibles et les appliquer le cas échéant. Si l'on ne trouve pas d'amélioration pour un mouvement, on passe alors au mouvement suivant, mais si on trouve une amélioration, on reprend dans ce cas la liste des mouvements depuis le début, car il est tout à fait possible que certains mouvements qui n'étaient pas réalisables le soient désormais. 
 			
 			\begin{code}
 				\begin{algo}[informal]
@@ -381,7 +381,7 @@
 				\label{uml:vnd}
 			\end{figure}
 			
-			Afin que la \acrshort{vnd} soit la plus efficace possible, l'ordre dans lequel les mouvements sont appliqués est crucial. Il fut donc nécessaire d'effectuer un calibrage en testant des séquences aléatoires pour déterminer la meilleure combinaison de mouvements possible. Il n'était cependant pas possible de vérifier toutes les combinaisons, soit 16!, à cause de leur nombre trop élevé.
+			Pour que la \acrshort{vnd} soit la plus efficace possible, l'ordre dans lequel les mouvements sont appliqués est crucial. Il fut donc nécessaire d'effectuer un calibrage en testant des séquences aléatoires pour déterminer la meilleure combinaison de mouvements possible. Il n'était cependant pas possible de vérifier toutes les combinaisons, soit 16!, à cause de leur nombre trop élevé.
 			
 			\TODO{benchmark VND}
 
@@ -398,11 +398,11 @@
 				\label{subs:first_available_policy}
 				Cette politique demande l'arrêt des calculs dès lors qu'elle valide la première combinaison qui permet une amélioration au sens de l'optimisation bi-critères. 
 
-				Elle offre des performances intéressantes en termes de vitesse d'exécution car elle permet de fournir une solution réalisable et améliorante tout en évitant de tester de nombreuses autres combinaisons.
+				Elle offre des performances intéressantes en termes de vitesse d'exécution, car elle permet de fournir une solution réalisable et améliorante tout en évitant de tester de nombreuses autres combinaisons.
 
 			\subsubsection{Politique du meilleur améliorant}
 				\label{subs:best_available_policy}
-				Cette politique, contrairement à la précédente, nécessite de tester toutes les combinaisons possibles pour garder la meilleure. 
+				Cette politique, contrairement à la précédente, nécessite de tester toutes les combinaisons possibles pour ne garder que la meilleure. 
 
 				Elle ne demande donc jamais l'arrêt des calculs, mais valide chaque amélioration plus intéressante que la meilleure des précédentes. La recherche se termine quand toutes les combinaisons ont été testées. Dès lors, la meilleure combinaison possible est connue, si elle existe, et peut être validée.
 
@@ -425,11 +425,11 @@
 
 		\subsection{Multi-Start Evolutionary Local Search}
 
-			L'algorithme \acrlong{msels} (ou MS-ELS) est le premier  à avoir été implémenté pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème et sur lesquelles on va appliquer une recherche local de type ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
+			L'algorithme \acrlong{msels} (ou MS-ELS) est la première métaheuristique à avoir été implémentée pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème et sur lesquelles on va appliquer une recherche locale de type ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
 
 			Puis l'Evolutionary Local Search va, pour un nombre d'itérations donné, perturber la solution avant d'y appliquer la recherche locale. On va alors sélectionner le meilleur résultat local trouvé et relancer l'ELS à de multiples reprises pour déterminer un record parmi le meilleur local de chaque ELS.
 
-			À la fin, l'algorithme retourne la meilleure solution trouvée.
+			À la fin des itérations du Multi-Start et de l'ELS, l'algorithme retourne la meilleure solution trouvée.
 
 			Algorithme de principe :
 			\begin{code}
@@ -483,7 +483,8 @@
 		\subsection{Biased Random-Key Genetic Algorithm}
 	\section{Aspect gestion de projet}
 
-		L'ensemble du projet a été géré à l'aide d'un tableau de bord répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requises et celui effectivement passé sur chaque tâche. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours un état général de la situation (tâches à faire, tâches en cours, tâches terminées). Une réunion hebdomadaire avec le responsable du projet permettait de faire le point sur l'avancement, de se réorganiser si besoin ainsi que constater les retards qui ont eu lieu à certaines étapes. 
+		L'ensemble du projet a été géré à l'aide d'un tableau de bord répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requises et celui effectivement passé sur chacune des tâches. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours une vision générale de la situation (notamment les tâches à faire, les tâches en cours et les tâches terminées). Une réunion hebdomadaire avec le responsable du projet permettait de faire le point sur l'avancement, de se réorganiser si besoin ainsi que de remédier aux retards qui ont eu lieu à certaines étapes. 
+		
 		Le code source a été versionné à l'aide de git et a été reparti sur différentes branches au cours du développement, permettant ainsi d'avancer de manière sécurisée et de se répartir le travail plus facilement.
 		
 		Le développement du projet ne s'est pas toujours passé comme prévu et il a été parfois nécessaire de revoir l'implémentation de certains éléments, comme par exemple les mouvements dont le fonctionnement était crucial et qui constituent une brique essentielle dans l'obtention de solutions performantes.

@@ -16,30 +16,30 @@
 		\subsection{Vocabulaire}
 			Nous avons également choisi d'employer certains termes plus en lien avec le sujet. Ainsi les véhicules sont nommés \emph{intercepteurs}, les clients sont nommés \emph{mobiles} et une livraison correspond à une \emph{interception}.
 
-			Nous avons préféré choisir ces termes car les mobiles sont en mouvement et les intercepteurs doivent changer de direction pour les rejoindre en un même endroit à un même instant, aussi le terme d'interception fait plus de sens.
+			Nous avons préféré choisir ces termes, car les mobiles sont en mouvement et les intercepteurs doivent changer de direction pour les rejoindre en un même endroit, à un même instant, aussi le terme d'interception fait plus de sens.
 
 		\subsection{Propriétés et contraintes}
 			Les calculs sont effectués dans le plan (et non dans l'espace). Les coordonnées de différentes entités sont à noter:
 			\begin{itemize}
 				\item \emph{mobiles}: position initiale (à l'instant $t=0$),
-				\item \emph{dépôts}: position fixe
+				\item \emph{dépôts}: position fixe,
 				\item \emph{intercepteurs}: à $t=0$, la position d'un intercepteur est celle du dépôt auquel il est rattaché.
 			\end{itemize}
 
 			Ces trois entités définissent les données d'un problème. Elles sont décrites plus loin sous forme d'un ensemble de classes UML (figure~\ref{fig:problem-uml} page~\pageref{fig:problem-uml}).
 
-			Chaque mobile et chaque intercepteur avance à une vitesse qui lui est propre. Le mobile doit suivre une direction donnée, et l'intercepteur peut changer de direction après chaque interception.
+			Chaque mobile et chaque intercepteur avance à une vitesse qui lui est propre. Le mobile doit suivre une direction donnée et l'intercepteur peut changer de direction après chaque interception.
 
-			L'intercepteur doit rentrer à son dépôt dès la fin de sa tournée, et son autonomie doit lui permettre ce retour. Enfin, la date de fin d'une tournée correspond à la date d'interception du dernier mobile de cette tournée.
+			L'intercepteur doit rentrer à son dépôt dès la fin de sa tournée et son autonomie doit lui permettre ce retour. Enfin, la date de fin d'une tournée correspond à la date d'interception du dernier mobile de cette tournée.
 
 		\subsection{Représentations}
 			Dans les schémas et représentations spatiales que nous utiliserons pour décrire nos approches, nous emploierons les symboles suivants:
 			\begin{itemize}
-				\item Pour un mobile: le symbole (\tikz[baseline=-0.65ex]{\node[mobile,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il est intercepté, ou (\tikz[baseline=-0.65ex]{\node[mobile,uncaught,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il ne l'est pas dans un schéma spatial, et le symbole (\tikz[baseline=-0.65ex]{\node[mobile,draw]{};}) dans un schéma de tournée. Un vecteur vitesse (\tikz[baseline=-0.65ex]{\draw[speed] (0,0) -- (1,0);}) indique sa direction ainsi que sa vitesse. Sa trajectoire est tracée par une ligne pointillée (\tikz[baseline=-0.65ex]{\draw[direction] (0,0) -- (1,0);}).
+				\item Pour un mobile: le symbole (\tikz[baseline=-0.65ex]{\node[mobile,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il est intercepté ou (\tikz[baseline=-0.65ex]{\node[mobile,uncaught,inner sep=0,outer sep=0]{\mobile};}) lorsqu'il ne l'est pas dans un schéma spatial et le symbole (\tikz[baseline=-0.65ex]{\node[mobile,draw]{};}) dans un schéma de tournée. Un vecteur vitesse (\tikz[baseline=-0.65ex]{\draw[speed] (0,0) -- (1,0);}) indique sa direction ainsi que sa vitesse. Sa trajectoire est tracée par une ligne pointillée (\tikz[baseline=-0.65ex]{\draw[direction] (0,0) -- (1,0);}).
 
 				\item Pour un dépôt, un symbole (\tikz[baseline=-0.65ex]{\node[interceptor,inner sep=0,outer sep=0]{\interceptor};}) indique sa position.
 
-				\item Pour un intercepteur: son tracé est réalisé en traits pleins, et part d'un dépôt. Afin d'en faciliter la lecture, le retour au dépôt n'est pas représenté. Le tracé est ponctué de symboles (\tikz[baseline=-0.65ex]{\node[route,inner sep=0,outer sep=0]{\mobile};}) aux emplacements où l'interception d'un mobile a eu lieu. La date de fin d'une tournée est indiquée à proximité du dernier mobile intercepté.
+				\item Pour un intercepteur : son tracé est réalisé en traits pleins et part d'un dépôt. Afin d'en faciliter la lecture, le retour au dépôt n'est pas représenté. Le tracé est ponctué de symboles (\tikz[baseline=-0.65ex]{\node[route,inner sep=0,outer sep=0]{\mobile};}) aux emplacements où l'interception d'un mobile a eu lieu. La date de fin d'une tournée est indiquée à proximité du dernier mobile intercepté.
 			\end{itemize}
 			Les figures~\ref{subfig:spatial} et~\ref{subfig:schema} présentent un schéma spatial et un schéma de tournée.
 
@@ -77,9 +77,9 @@
 				\label{fig:example}
 			\end{figure}
 
-			Nous avons également entrevu la nécessité de proposer une représentation temporelle pour décrire les tournées. En effet, ce type de représentation permet d'observer la répartition de la charge sur les tournées. La notion de distance disparaît, et avec elle la notion de vitesse. On peut ainsi lire plus facilement des indicateurs comme la durée nécessaire pour réaliser une partie d'une tournée ou pour atteindre le $n$\ieme{} client.
+			Nous avons également entrevu la nécessité de proposer une représentation temporelle pour décrire les tournées. En effet, ce type de représentation permet d'observer la répartition de la charge sur les tournées. La notion de distance disparaît et avec elle la notion de vitesse. On peut ainsi lire plus facilement des indicateurs comme la durée nécessaire pour réaliser une partie d'une tournée ou pour atteindre le $n$\ieme{} client.
 
-			Dans ce cas, la représentation prend la forme d'une frise chronologique où l'on fait correspondre à chaque tournée une courbe en escaliers franchissant un palier à chaque date correspondant à une interception. Ainsi on lit le temps en abscisse et le nombre de mobiles interceptés en ordonnée. Pour repérer plus facilement la fin d'une tournée, un marqueur est apposé et sa position est projetée sur l'axe des abscisses pour faciliter la lecture de la date. Un exemple est proposé sur la figure~\ref{subfig:example-temporal}.
+			Dans ce cas, la représentation prend la forme d'une frise chronologique où l'on fait correspondre à chaque tournée une courbe en escaliers franchissant un palier à chaque date correspondant à une interception. Ainsi, on lit le temps en abscisse et le nombre de mobiles interceptés en ordonnée. Pour repérer plus facilement la fin d'une tournée, un marqueur est apposé et sa position est projetée sur l'axe des abscisses pour faciliter la lecture de la date. Un exemple est proposé sur la figure~\ref{subfig:example-temporal}.
 
 		
 
@@ -100,9 +100,9 @@
 		Notre projet avait pour but de réutiliser le travail initial en généralisant les heuristiques de construction pour qu'elles puissent fonctionner avec de multiples intercepteurs, ainsi que d'optimiser les résultats selon deux critères : le nombre de mobiles visités et le temps requis pour l'interception.
 		Plusieurs étapes étaient nécessaires pour la réalisation ce projet.
 
-		Tout d'abord, un travail de révision et d'optimisation était requis avant de pouvoir poursuivre ce qui avait été fait. Le code initial ayant été réalisé en langage C, il devait être traduit en C++ dans une architecture adaptée et orientée objet. Puis le code obtenu a été adapté pour généraliser le problème non plus à un seul, mais à plusieurs intercepteurs pouvant provenir de différents dépôts. Une optimisation a été apportée dans les fonctions de calcul d'interception et les heuritisques de construction. Il était aussi nécessaire de revoir les schémas, notamment en ajoutant une représentation temporelle en plus de la représentation spatiale déjà existante, que l'on a adaptée au contexte.
+		Tout d'abord, un travail de révision et d'optimisation était requis avant de pouvoir poursuivre ce qui avait été fait. Le code initial ayant été réalisé en langage C, il devait être traduit en C++ dans une architecture adaptée et orientée objet. Puis le code obtenu a été modifé pour généraliser le problème non plus à un seul, mais à plusieurs intercepteurs pouvant provenir de différents dépôts. Une optimisation a été apportée dans les fonctions de calcul d'interception et les heuritisques de construction. Il était aussi nécessaire de revoir les schémas, notamment en ajoutant une représentation temporelle en plus de la représentation spatiale déjà existante, que l'on a adaptée au contexte.
 
-		Ensuite, les objectifs d'amélioration des solutions ont été définis tout au long du projet, en suivant les étapes qui ont été réalisées. La mise en place d'une recherche locale a permis de générer les premières améliorations d'une solution avec la mise en place d'opération d'insertion et d'extraction de mobiles. Ces mouvements simples ont ensuite été combinés pour apporter à la recherche locale de nombreuses possibilités afin d'optimiser la solution courante. Ces mouvements ont finalement été appliqués dans le cadre d'une métaheuristique.
+		Ensuite, les objectifs d'amélioration des solutions ont été définis tout au long du projet, en suivant les étapes qui ont été réalisées. La mise en place d'une recherche locale a permis de générer les premières améliorations d'une solution avec la mise en place d'opérations d'insertion et d'extraction de mobiles. Ces mouvements simples ont ensuite été combinés pour apporter à la recherche locale de nombreuses possibilités afin d'optimiser la solution courante. Ces mouvements ont finalement été appliqués dans le cadre d'une métaheuristique.
 		
 		Il est aussi important de tenir compte de paramètres supplémentaires pour apporter plus de réalisme tels que l'autonomie d'un intercepteur et l'aspect stochastique sur la date d'interception. Ce dernier point permettrait la modélisation d'un délai supplémentaire pour valider l'interception: la durée nécessaire à une identification formelle.
 		
@@ -117,26 +117,6 @@
 			\caption{Classes définissant un problème}
 			\label{fig:problem-uml}
 		\end{figure}
-		
-
-		%\begin{enumerate}
-			%\item Porter le code existant (langage C) en C++ dans une architecture adaptée et orientée objet.
-			%\item Adapter le code pour travailler dans un contexte multi-intercepteurs.
-			%\item Optimiser ce code.
-			%\item Revoir les représentations graphiques.
-			%\item Définir les objectifs d'amélioration des solutions.
-			%\item Définir des opérations d'amélioration des résultats obtenus (Recherche Locale).
-			%\item Définir des combinaisons de mouvements améliorants intéressantes.
-			%\item Appliquer ces mouvements dans le cadre d'une métaheuristique.
-			%\item Tenir compte de paramètres supplémentaires pour plus de réalisme.
-		%\end{enumerate}
-
-		%Notons que plusieurs mesures sont fixées pour faciliter les calculs:
-		%\begin{itemize}
-			%\item Les déplacements se font dans le plan (l'altitude n'a donc pas d'influence).
-			%\item Les trajectoires des mobiles sont rectilignes, et ils évoluent à vitesse constante.
-			%\item Les trajectoires des intercepteurs sont suivies à vitesse constante et rectilignes entre deux interceptions consécutives.
-		%\end{itemize}
 
 		Pour assurer un suivi régulier du projet, nous avons planifié des réunions avec M. Duhamel chaque semaine dans la mesure du possible ou toutes les deux semaines.
 
