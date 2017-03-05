@@ -73,8 +73,8 @@
 
 \umluniaggreg[arg=solution, mult1=1, mult2=1]{iterator}{MobileNode}
 
-\umlNarynode[x=0, y=-9.5, name=naryassoc, below]{provides}
+\umlNarynode[x=0, y=-9.5, name=naryassoc, above right]{provides}
 \umlassoc[]{naryassoc}{Solution}
 \umluniassoc[]{naryassoc}{iterator}
-\umlassoc[]{Interceptor}{naryassoc}
+\draw (naryassoc.south) |- ($ (MobileNode.east |- iterator.south) + (.5,-1) $) |- (Interceptor.east);
 
