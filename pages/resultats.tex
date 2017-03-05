@@ -1,4 +1,25 @@
 \chapter{Résultats}
+
+	Pour les générer les résultats de nos algorithmes, nous avons utilisé les instances présentées dans le tableau~\ref{tab:instances}.
+	
+	\begin{table}[h!]
+		\centering
+		\begin{tabular}{l|r|r|r|l}
+		\cline{2-4}
+                                                                     & \multicolumn{1}{c|}{\textbf{Mobiles}} & \multicolumn{1}{c|}{\textbf{Intercepteurs}} & \multicolumn{1}{c|}{\textbf{Dépôts}} &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance A}}   & 10                               & 2                               & 2                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance B}}   & 20                               & 3                               & 3                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance C}}   & 30                               & 4                               & 3                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance D}}   & 40                               & 5                               & 4                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance E}}   & 60                               & 8                               & 4                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance F}}  & 100                                & 8                               & 5                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance G}} & 1000                                & 40                           & 30                               &  \\ \cline{1-4}
+            \end{tabular}
+            \caption{Instances utilisées}
+            \label{tab:instances}
+        \end{table}
+		
+
     \section{Avant améliorations}
         Nous avons comparé les performances de l'heuristique d'insertion au plus tôt dans les cas où elle fonctionne avec ou sans cache. Cela nous a permis de justifier de l'intérêt de ce cache, surtout sur de grosses instances. Nous avons donc mesuré les temps de calcul de l'heuristique sur différentes instances. Les résultats sont obtenus par moyennage sur 100 exécutions et sont présentés dans le tableau~\ref{tab:cache-perf}.
 
@@ -26,7 +47,11 @@
     \section{Après améliorations}
     	\subsection{Résultats de la VND}
     	\subsection{Résultats du MS-ELS}
-
+    	
+    	Le tableau~\ref{tab:msels} présente les résultats obtenus avec la métaheuristique MS-ELS. Les résultats ne sont pas aussi bons qu'espérés, car le critère de sélection de la meilleure solution a tendance à privilégier le temps par rapport au nombre de mobiles interceptés. Il serait donc intéressant de revoir l'évalution des solutions pour obtenir de meilleurs résultats. De plus, la MS-ELS est un algorithme mono-objectif, ce qui le rend aussi moins avantageux, car on devra se contenter d'une agrégation entre les critères plutôt que d'une véritable recherche bi-objective.
+    	
+    C'est pour cette raison que nous n'avons pas concentré notre travail sur l'amélioration de cette métaheurisque et qu'à la place, nous avons implémenté un algorithme génétique fondé sur la recherche d'un ensemble de solutions qui répondraient à la fois au critère de temps et à celui du nombre de mobiles interceptés.
+    	
             \begin{table}[H]
                 \centering
                 \begin{tabular}{l|r|r|r|r|r|r|r|r|r|}
@@ -76,14 +101,14 @@
 				\label{fig:10m2i2d-sansvnd}
 				\end{figure}
                 
-                \begin{figure}[h!]
+                \begin{figure}[H]
                 	\input{brkga_10m2i2d_vnd_pareto}
                 \caption{Résultat du BRKGA avec VND pour un problème avec 10 mobiles, 2 intercepteurs et 2 dépôts}
 				\label{fig:10m2i2d-avecvnd}
 				\end{figure}
 				
             \subsubsection{20m3i3d}
-                \begin{figure}[h!]
+                \begin{figure}[H]
                 	\input{brkga_20m3i3d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour un problème avec 20 mobiles, 3 intercepteurs et 3 dépôts}
 				\label{fig:20m3i3d-sansvnd}
@@ -96,26 +121,26 @@
 				\end{figure}
 				
             \subsubsection{30m4i3d}
-           		\begin{figure}[h!]
+           		\begin{figure}[H]
                 	\input{brkga_30m4i3d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour un problème avec 30 mobiles, 4 intercepteurs et 3 dépôts}
 				\label{fig:30m4i3d-sansvnd}
                 \end{figure}
                 
-                \begin{figure}[h!]
+                \begin{figure}[H]
                 	\input{brkga_30m4i3d_vnd_pareto}
                 \caption{Résultat du BRKGA avec VND pour un problème avec 30 mobiles, 4 intercepteurs et 3 dépôts}
 				\label{fig:30m4i3d-avecvnd}
 				\end{figure}
 				
             \subsubsection{40m5i4d}
-            	\begin{figure}[h!]
+            	\begin{figure}[H]
                 	\input{brkga_40m5i4d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour un problème avec 40 mobiles, 5 intercepteurs et 4 dépôts}
 				\label{fig:40m5i4d-sansvnd}
                 \end{figure}
                 
-                \begin{figure}[h!]
+                \begin{figure}[H]
                 	\input{brkga_40m5i4d_vnd_pareto}
                 \caption{Résultat du BRKGA avec VND pour un problème avec 40 mobiles, 5 intercepteurs et 4 dépôts}
 				\label{fig:40m5i4d-avecvnd}
