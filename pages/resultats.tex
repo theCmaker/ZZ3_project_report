@@ -23,7 +23,23 @@
     \section{Après améliorations}
     	\subsection{Résultats de la VND}
     	\subsection{Résultats du MS-ELS}
-    	\subsection{Résultats du BRKGA}
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{l|r|r|r|r|r|r|r|r|r|}
+                \cline{2-10}
+                                                                       & \multicolumn{3}{c|}{\textbf{MS\_ELS\textless5,5,10,VND\textless30\textgreater\textgreater}}                                           & \multicolumn{3}{c|}{\textbf{MS\_ELS\textless2,5,25,VND\textless30\textgreater\textgreater}}                                           & \multicolumn{3}{c|}{\textbf{MS\_ELS\textless5,5,10,MY\_VND\textgreater}}                                                              \\ \cline{2-10} 
+                                                                       & \multicolumn{1}{c|}{\textbf{Temps}} & \multicolumn{1}{c|}{\textbf{\#ratés}} & \multicolumn{1}{c|}{\textbf{tps max}} & \multicolumn{1}{c|}{\textbf{Temps}} & \multicolumn{1}{c|}{\textbf{\#ratés}} & \multicolumn{1}{c|}{\textbf{tps max}} & \multicolumn{1}{c|}{\textbf{Temps}} & \multicolumn{1}{c|}{\textbf{\#ratés}} & \multicolumn{1}{c|}{\textbf{tps max}} \\ \hline
+                \multicolumn{1}{|l|}{\textbf{instance A}} & 0.2543 s                            & 0                                             & 7.0879                                          & 0.1808 s                            & 0                                             & 7.0879                                          & 0.1851 s                            & 0                                             & 8.1061                                          \\ \hline
+                \multicolumn{1}{|l|}{\textbf{instance B}} & 4.01897 s                           & 0                                             & 15.3857                                         & 3.6432 s                            & 0                                             & 15.3857                                         & 2.3309 s                            & 0                                             & 16.2300                                         \\ \hline
+                \multicolumn{1}{|l|}{\textbf{instance C}} & 3.10806 s                           & 7                                             & 10.5255                                         & 2.2898 s                            & 5                                             & 16.9429                                         & 1.2665 s                            & 7                                             & 9.7625                                          \\ \hline
+                \multicolumn{1}{|l|}{\textbf{instance D}} & 12.8920 s                           & 9                                             & 12.5229                                         & 13.2740 s                           & 10                                            & 15.7405                                         & 6.1521 s                            & 10                                            & 18.7669                                         \\ \hline
+                \multicolumn{1}{|l|}{\textbf{instance E}} & 60.8356 s                           & 0                                             & 15.2699                                         & 60.4432 s                           & 0                                             & 15.7747                                         & 18.1701 s                           & 0                                             & 13.4661                                         \\ \hline
+                \end{tabular}
+                \caption{Résultats et performances du MS-ELS}
+                \label{tab:msels}
+            \end{table} 
+
+        \subsection{Résultats du BRKGA}
 
             \begin{table}[H]
                 \centering
