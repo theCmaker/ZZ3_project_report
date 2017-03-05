@@ -3,9 +3,24 @@
     	Résultats depuis le passage au C++, le gain en temps avec le cache, les corrections et améliorations des heuristiques de construction.
     	Comparaison avec les résultats ZZ1.
     \section{Après améliorations}
-    	Résultats de la VND
-    	Résultats du MS-ELS
+    	\subsection{Résultats de la VND}
+    	\subsection{Résultats du MS-ELS}
     	\subsection{Résultats du BRKGA}
+
+            \begin{table}[H]
+                \centering
+                \begin{tabular}{r|r|r|r|r|r|l}
+                \cline{2-6}
+                \multicolumn{1}{l|}{\multirow{2}{*}{}}                 & \multicolumn{2}{c|}{\textbf{BRKGA -- SANS VND}}                                  & \multicolumn{3}{c|}{\textbf{BRKGA -- AVEC VND}}                                                                                &  \\ \cline{2-6}
+                \multicolumn{1}{l|}{}                                  & \multicolumn{1}{c|}{\textit{temps}} & \multicolumn{1}{c|}{\textit{\# solutions}} & \multicolumn{1}{c|}{\textit{temps}} & \multicolumn{1}{c|}{\textit{\# solutions}} & \multicolumn{1}{c|}{\textit{\# appels VND}} &  \\ \cline{1-6}
+                \multicolumn{1}{|l|}{\textbf{instance A (10 mobiles)}} & 1.30s                               & 10                                         & 367.37s                             & 18                                         & 247729                                      &  \\ \cline{1-6}
+                \multicolumn{1}{|l|}{\textbf{instance B (20 mobiles)}} & 1.34s                               & 20                                         & 1046.95s                            & 20                                         & 336071                                      &  \\ \cline{1-6}
+                \multicolumn{1}{|l|}{\textbf{instance C (30 mobiles)}} & 1.98s                               & 22                                         & 339.88s                             & 6                                          & 183920                                      &  \\ \cline{1-6}
+                \multicolumn{1}{|l|}{\textbf{instance D (40 mobiles)}} & 8.93s                               & 34                                         & 5656.13s                            & 20                                         & 382957                                      &  \\ \cline{1-6}
+                \end{tabular}
+                \caption{Résultats et performance de BRKGA}
+                \label{tab:brkga}
+            \end{table}
             \subsubsection{10m2i2d}
                 \input{brkga_10m2i2d_novnd_pareto}
                 
