@@ -481,8 +481,21 @@
 			\end{figure}
 
 		\subsection{Biased Random-Key Genetic Algorithm}
+			\Gls{brkga} est un \gls{algorithme genetique} basé sur un système de vecteurs de clés aléatoires. Un vecteur est un chromosome constitué de $n$ allèles. BRKGA dispose d'une population de $m$ chromosomes. Par l'intermédiaire d'un décodeur, on transforme ces chromosomes en solutions répondant à un problème. Ces solutions sont ensuite évaluées et la valeur obtenue décrit la pertinence du chromosome. Les meilleurs chromosomes sont considérés comme l'élite de la population. BRKGA fait évoluer sa population de chromosomes au cours du temps: plusieurs opérations sont possibles comme la conservation à l'identique, la mutation, ou encore le remplacement par un autre chromosome. A terme, on obtient un ensemble de bons chromosomes qui mènent à des solutions de bonne qualité. On peut également choisir de ne retenir que le meilleur chromosome.
 
-		\TODO{BRKGA}
+			Dans notre cas, il s'agissait de générer des solutions d'interceptions à un problème donné. Nous avons donc réutilisé l'heuristique d'insertion par séquence, en conservant toutes les étapes de construction, pour générer un ensemble de solutions pour chaque chromosome.
+			Le décodage du chromosome en une séquence d'interception se fait de la manière suivante (les clés du chromosome sont des réels entre 0 et 1):
+			\begin{itemize}
+				\item On trie le chromosome par ordre croissant,
+				\item On associe à chaque mobile du problème la valeur située à la même position dans le chromosome trié,
+				\item On place chaque mobile dans la séquence selon l'ordre initial du chromosome.
+			\end{itemize}
+			Cela implique que la taille d'un chromosome doit être identique au nombre de mobiles du problème.
+
+			Pour évaluer la pertinence d'un chromosome, nous observons les solutions qui lui correspondent. Il s'agit donc d'un ensemble de compromis entre nombre de mobiles interceptés et temps nécessaire pour la tournée la plus longue. Nous sommes par conséquent dans un contexte bi-critères, ce qui permet de travailler sur des fronts de Pareto pour conserver les meilleurs compromis. L'évaluation du front de Pareto caractérise donc le chromosome. La valeur caractéristique de ce front est son hypervolume. Les solutions que proposera BRKGA à la fin de son exécution correspondront donc aux solutions qui ont mené aux fronts de Pareto ayant le meilleur hypervolume.
+
+			Afin de gagner du temps, nous avons réutilisé un projet réalisé en 2\ieme{} année à l'ISIMA concernant le calcul de Fronts de Pareto \cite{projet-zz2} pour calculer nos fronts de Pareto et générer les graphiques présentés dans la section Résultats.
+
 	\section{Aspect gestion de projet}
 
 		L'ensemble du projet a été géré à l'aide d'un tableau de bord répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requises et celui effectivement passé sur chacune des tâches. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours une vision générale de la situation (notamment les tâches à faire, les tâches en cours et les tâches terminées). Une réunion hebdomadaire avec le responsable du projet permettait de faire le point sur l'avancement, de se réorganiser si besoin ainsi que de remédier aux retards qui ont eu lieu à certaines étapes. 
