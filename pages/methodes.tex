@@ -346,9 +346,29 @@
 			\end{figure}
 
 		\subsection{Recherche locale à travers la VND}
-			\TODO{Rédiger}
+
+			La mise en place d'une \acrlong{vnd} permet d'automatiser l'utilisation de chacun des mouvements qui ont été définis précédemment sur une solution déjà construite. Le principe est de tester chaque mouvement sur la solution pour voir si des améliorations sont possibles et les appliquer le cas échéant. Si l'on ne trouve pas d'amélioration pour un mouvement, on passe alors au mouvement suivant, mais si on trouve une amélioration, on reprend alors la liste des mouvements depuis le début, car il est tout à fait possible que certains mouvements qui n'étaient pas réalisables le soient désormais. 
 			
-			\TODO{Algo VND}
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe de la VND}
+					\VAR
+						\DECLVAR{list}{vector<Move *>}
+					\ENDVAR
+					\BEGIN
+						\STATE{unsigned k=0}
+						\REPEAT
+							\IF{list[k].scan(solution) == true}
+								\STATE{list[k].commit(solution)}
+								\STATE{k=0}
+							\ELSE
+								\STATE{++k}
+							\ENDIF
+						\ENDREPEAT{k < list.size()}
+					\END
+				\end{algo}
+				\captionof{listing}{Algorithme de principe -- VND}
+			\end{code}
 
 			\begin{figure}[h!]
 				\TODO{utiliser références}
@@ -360,6 +380,8 @@
 				\caption[UML -- VND]{Vertical Neighbourhood Descent}
 				\label{uml:vnd}
 			\end{figure}
+			
+			Afin que la \acrshort{vnd} soit la plus efficace possible, l'ordre dans lequel les mouvements sont appliqués est crucial. Il fut donc nécessaire d'effectuer un calibrage en testant des séquences aléatoires pour déterminer la meilleure combinaison de mouvements possible. Il n'était cependant pas possible de vérifier toutes les combinaisons, soit 16!, à cause de leur nombre trop élevé.
 			
 			\TODO{benchmark VND}
 
@@ -399,11 +421,11 @@
 
 		La recherche locale permet d'obtenir de bonnes améliorations au sein d'une solution déterminée, mais les \glspl{algorithme genetique} ajoutent la possibilité d'étendre la recherche de la meilleure solution à une multitude de solutions possibles.
 
-		Les algorithmes génétiques vont insérer une perturbation (mutation) dans la solution étudiée qui va déterminer une population sur laquelle on va appliquer la recherche locale. Seuls les meilleurs résultats sont conservés et on réitère l'opération autant de fois que désiré.
+		Les \glspl{algorithme genetique} vont insérer une perturbation (mutation) dans la solution étudiée qui va déterminer une population sur laquelle on va appliquer la recherche locale. Seuls les meilleurs résultats sont conservés et on réitère l'opération autant de fois que désiré.
 
 		\subsection{Multi-Start Evolutionary Local Search}
 
-			L'algorithme \emph{Multi-Start Evolutionary Local Search} (ou MS-ELS) est le premier  à avoir été implémenté pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème et sur lesquelles on va appliquer une recherche local de type ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
+			L'algorithme \acrlong{msels} (ou MS-ELS) est le premier  à avoir été implémenté pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème et sur lesquelles on va appliquer une recherche local de type ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
 
 			Puis l'Evolutionary Local Search va, pour un nombre d'itérations donné, perturber la solution avant d'y appliquer la recherche locale. On va alors sélectionner le meilleur résultat local trouvé et relancer l'ELS à de multiples reprises pour déterminer un record parmi le meilleur local de chaque ELS.
 
@@ -461,8 +483,9 @@
 		\subsection{Biased Random-Key Genetic Algorithm}
 	\section{Aspect gestion de projet}
 
-		L'ensemble du projet a été géré à l'aide d'un tableau de bord répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requis et celui effectivement passé sur chaque tâche. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours un état général (tâches à faire, tâches en cours, tâches terminées). Le code source a été versionné à l'aide de git et a été reparti sur différentes branches au cours du développement, permettant ainsi d'avancer de manière sécurisée et de se répartir le travail plus facilement.
+		L'ensemble du projet a été géré à l'aide d'un tableau de bord répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requises et celui effectivement passé sur chaque tâche. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours un état général de la situation (tâches à faire, tâches en cours, tâches terminées). Une réunion hebdomadaire avec le responsable du projet permettait de faire le point sur l'avancement, de se réorganiser si besoin ainsi que constater les retards qui ont eu lieu à certaines étapes. 
+		Le code source a été versionné à l'aide de git et a été reparti sur différentes branches au cours du développement, permettant ainsi d'avancer de manière sécurisée et de se répartir le travail plus facilement.
 		
-		Le développement du projet ne s'est pas toujours passé comme prévu et il a été parfois nécessaire de revoir l'implémentation de certains éléments, comme par exemple les mouvements dont le fonctionnement était crucial et constitue une brique essentielle dans l'obtention de solutions performantes.
+		Le développement du projet ne s'est pas toujours passé comme prévu et il a été parfois nécessaire de revoir l'implémentation de certains éléments, comme par exemple les mouvements dont le fonctionnement était crucial et qui constituent une brique essentielle dans l'obtention de solutions performantes.
 		
 		\TODO{Screen dashboard}
