@@ -124,3 +124,12 @@
 
 		\input{gantt_previsionnel}
 		\input{gantt_reel}
+		
+		\clearpage
+		Dès le début du projet, nous avons pu déterminer les principales étapes à réaliser telles que la conversion et l'optimisation du code, l'implémentation d'une recherche locale et de métaheuristiques ainsi que la nécessité de tester régulièrement notre travail. Cela nous a permis d'avoir une bonne vision du projet dans son ensemble et de répartir les tâches sur les mois dédiés à la réalisation de celui-ci. Avec le diagramme de Gantt réel, on peut constater que le temps estimé pour les tâches était plutôt cohérent et que presque la totalité d'entre elles ont pu être achevées. Seul l'ajout d'une incertitude sur le temps d'interception (qui ne serait plus une date, mais une probabilité) n'a pas pu être réalisé.
+		
+		Quelques ralentissements ont affecté l'avancement du projet, notamment au mois de décembre et au cours du développement des mouvements pour la recherche locale dont l'implémentation s'est avérée plus complexe que prévue. Ces retards ont cependant pu être rattrapés pendant les mois de janvier et de février grâce à un travail un peu plus condensé sur chaque semaine.
+		
+		Nous avons aussi dû légèrement réviser la modélisation du problème pour le rendre plus réaliste en ajoutant une autonomie à chaque intercepteur. En effet, nous ne considérions à l'origine aucun retour au dépôt après la dernière interception. Désormais, la validité d'une interception dépend aussi de la capacité de l'intercepteur à revenir à son point de départ, même si ce temps de retour n'est pas compté dans le temps total d'une tournée. La bonne conception des classes et des méthodes a permis de rajouter rapidement et sans grosses modifications ce changement dans les règles du problème.
+		
+		L'obtention des résultats a aussi été un peu plus longue que prévue, car elle a permis de mettre en évidence quelques bugs et erreurs de programmation, notamment dans la validation d'un mouvement. La correction de ces erreurs nous a permis néanmoins d'assurer des résultats plus fiables.
