@@ -105,7 +105,201 @@
 	
 \chapter{Résultats du benchmark de la VND}
 \label{ann:benchmark-vnd}
+	Nous présentons nos résultats pour quelques instances. Dans les tableaux, la colonne \emph{Sequence} correspond à la combinaison de mouvements. Les équivalences sont les suivantes:
+
+	\begin{tabular}{ll}
+		0: \texttt{Insert<BestAvailable>} & 1: \texttt{Extract<BestAvailable>}\\
+		2: \texttt{Move1Route<BestAvailable>} &	3: \texttt{Move2Routes<BestAvailable>}\\
+		4: \texttt{Swap1Route<BestAvailable>} & 5: \texttt{Swap2Routes<BestAvailable>}\\
+		6: \texttt{Replace<BestAvailable>} & 7: \texttt{2Opt<BestAvailable>}\\
+		8: \texttt{Insert<FirstAvailable>} & 9: \texttt{Extract<FirstAvailable>}\\
+		10: \texttt{Move1Route<FirstAvailable>} & 11: \texttt{Move2Routes<FirstAvailable>}\\
+		12: \texttt{Swap1Route<FirstAvailable>} & 13: \texttt{Swap2Routes<FirstAvailable>}\\
+		14: \texttt{Replace<FirstAvailable>} & 15: \texttt{2Opt<FirstAvailable>} \\
+	\end{tabular}
+
+	\section*{Instance D}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.8\linewidth]{benchmark_40m5i4d}
+		\caption{Positionnement des meilleures séquences (instance D)}
+		\label{fig:best-seq-instanceD}
+	\end{figure}
 
 
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|l|l|l|}
+		\hline
+		Sequence             & Time    & Mobiles \\ \hline
+		1 0 15 3 4 2 14 5    & 17.9825 & 38      \\ \hline
+		3 1 14 4 5 10 0 15   & 17.9825 & 38      \\ \hline
+		14 15 1 11 5 4 2 8   & 18.087  & 38      \\ \hline
+		0 12 11 13 6 1 2 7   & 18.087  & 38      \\ \hline
+		5 1 14 0 15 11 12 2  & 18.087  & 38      \\ \hline
+		4 15 6 11 1 13 2 0   & 18.087  & 38      \\ \hline
+		6 4 3 1 13 2 7 0     & 18.087  & 38      \\ \hline
+		6 4 15 1 13 11 0 10  & 18.087  & 38      \\ \hline
+		4 11 1 6 13 2 8 15   & 18.087  & 38      \\ \hline
+		4 5 14 3 15 1 10 8   & 18.087  & 38      \\ \hline
+		7 13 1 4 11 10 8 14  & 18.087  & 38      \\ \hline
+		4 6 0 15 1 11 13 10  & 18.087  & 38      \\ \hline
+		0 11 5 1 15 14 2 12  & 20.0344 & 38      \\ \hline
+		15 11 1 8 2 4 14 5   & 20.0344 & 38      \\ \hline
+		11 14 1 7 2 5 4 0    & 20.0344 & 38      \\ \hline
+		6 15 11 12 8 5 1 2   & 20.2842 & 39      \\ \hline
+		3 0 1 14 5 10 7 4    & 21.1011 & 38      \\ \hline
+		1 11 2 13 15 4 0 6   & 21.3335 & 38      \\ \hline
+		14 0 4 9 15 11 5 10  & 21.8098 & 38      \\ \hline
+		3 0 2 7 5 12 9 14    & 21.8896 & 39      \\ \hline
+		3 2 12 6 9 15 13 8   & 21.8896 & 39      \\ \hline
+		3 5 2 14 1 4 7 0     & 21.9837 & 39      \\ \hline
+		12 5 7 3 2 6 0 1     & 22.0176 & 39      \\ \hline
+		14 12 3 15 0 13 10 1 & 22.0176 & 39      \\ \hline
+		4 5 3 2 1 6 15 8     & 22.0176 & 39      \\ \hline
+		13 11 7 14 12 1 8 2  & 22.0675 & 39      \\ \hline
+		11 6 4 2 7 0 5 9     & 22.0675 & 39      \\ \hline
+		3 0 4 13 6 2 9 15    & 22.728  & 39      \\ \hline
+		6 3 0 12 13 15 9 10  & 22.7461 & 38      \\ \hline
+		3 10 9 8 7 4 13 6    & 23.4357 & 39      \\ \hline
+		3 6 9 7 10 12 13 0   & 23.4357 & 38      \\ \hline
+		13 7 1 4 2 11 14 0   & 23.4669 & 38      \\ \hline
+		0 6 11 5 4 1 10 15   & 26.11   & 39      \\ \hline
+		15 1 2 14 5 8 11 12  & 26.2378 & 38      \\ \hline
+		13 1 2 3 7 14 0 4    & 26.2378 & 38      \\ \hline
+		11 7 1 12 13 0 10 14 & 26.7904 & 38      \\ \hline
+		5 7 14 11 9 10 4 8   & 27.3375 & 38      \\ \hline
+		12 1 7 10 13 14 11 0 & 27.8347 & 38      \\ \hline
+		0 15 13 11 9 6 2 12  & 28.016  & 40      \\ \hline
+		0 7 6 11 13 9 4 10   & 28.016  & 40      \\ \hline
+		15 4 3 8 9 5 2 14    & 28.1546 & 40      \\ \hline
+		13 12 8 1 7 6 2 11   & 28.2959 & 40      \\ \hline
+		\end{tabular}
+		\caption{Meilleures séquences pour l'instance D}
+		\label{tab:best-seq-instanceD}
+	\end{table}
 
-	\TODO{Ajouter tableaux et graphes des résultats}
+
+	\section*{Instance E}
+
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|l|l|l|}
+		\hline
+		Sequence             & Time    & Mobiles \\ \hline
+		3 1 14 4 5 10 0 15   & 18.9738 & 60      \\ \hline
+		9 14 3 12 2 7 0 13   & 18.9738 & 60      \\ \hline
+		6 3 0 12 13 15 9 10  & 18.9738 & 60      \\ \hline
+		3 0 4 13 6 2 9 15    & 18.9738 & 60      \\ \hline
+		7 13 1 4 11 10 8 14  & 18.9738 & 60      \\ \hline
+		12 5 7 3 2 6 0 1     & 19.1491 & 60      \\ \hline
+		14 12 3 15 0 13 10 1 & 19.1491 & 60      \\ \hline
+		15 4 3 8 9 5 2 14    & 19.1491 & 60      \\ \hline
+		6 4 3 1 13 2 7 0     & 19.1491 & 60      \\ \hline
+		4 5 3 2 1 6 15 8     & 19.1491 & 60      \\ \hline
+		12 7 13 3 14 9 0 10  & 19.1491 & 60      \\ \hline
+		8 4 9 5 15 14 3 10   & 19.1491 & 60      \\ \hline
+		12 8 9 5 3 14 15 10  & 19.1491 & 60      \\ \hline
+		4 5 14 3 15 1 10 8   & 19.1491 & 60      \\ \hline
+		0 12 11 13 6 1 2 7   & 19.3372 & 60      \\ \hline
+		1 0 15 3 4 2 14 5    & 19.3372 & 60      \\ \hline
+		4 15 6 11 1 13 2 0   & 19.3372 & 60      \\ \hline
+		4 11 1 6 13 2 8 15   & 19.3372 & 60      \\ \hline
+		5 15 3 4 14 10 9 8   & 19.3372 & 60      \\ \hline
+		0 6 11 5 4 1 10 15   & 19.3372 & 60      \\ \hline
+		1 13 6 7 3 8 12 2    & 19.3372 & 60      \\ \hline
+		0 7 6 11 13 9 4 10   & 19.3372 & 60      \\ \hline
+		12 11 7 14 0 5 10 9  & 19.3946 & 60      \\ \hline
+		14 0 4 9 15 11 5 10  & 19.3946 & 60      \\ \hline
+		6 4 15 1 13 11 0 10  & 19.3946 & 60      \\ \hline
+		4 6 0 15 1 11 13 10  & 19.3946 & 60      \\ \hline
+		3 10 9 8 7 4 13 6    & 19.685  & 60      \\ \hline
+		3 0 2 7 5 12 9 14    & 19.685  & 60      \\ \hline
+		3 0 1 14 5 10 7 4    & 19.685  & 60      \\ \hline
+		3 6 9 7 10 12 13 0   & 19.685  & 60      \\ \hline
+		3 2 12 6 9 15 13 8   & 19.685  & 60      \\ \hline
+		3 5 2 14 1 4 7 0     & 19.685  & 60      \\ \hline
+		13 7 12 9 8 6 3 2    & 20.4026 & 60      \\ \hline
+		13 7 1 4 2 11 14 0   & 20.6814 & 60      \\ \hline
+		6 7 12 8 2 5 1 11    & 20.6814 & 60      \\ \hline
+		7 10 13 6 12 9 0 3   & 20.6814 & 60      \\ \hline
+		13 0 7 6 10 9 11 4   & 20.6814 & 60      \\ \hline
+		13 7 10 1 11 6 0 4   & 20.6814 & 60      \\ \hline
+		0 7 13 4 10 11 1 14  & 20.7688 & 60      \\ \hline
+		9 13 0 7 4 14 10 3   & 20.7688 & 60      \\ \hline
+		8 7 4 10 13 6 3 9    & 20.7688 & 60      \\ \hline
+		0 15 13 11 9 6 2 12  & 20.9227 & 60      \\ \hline
+		\end{tabular}
+		\caption{Meilleures séquences pour l'instance E}
+		\label{tab:best-seq-instanceE}
+	\end{table}
+
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.8\linewidth]{benchmark_60m8i4d}
+		\caption{Positionnement des meilleures séquences (instance E)}
+		\label{fig:best-seq-instanceE}
+	\end{figure}
+
+
+	\section*{Instance F}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=.8\linewidth]{benchmark_100m8i5d}
+		\caption{Positionnement des meilleures séquences (instance F)}
+		\label{fig:best-seq-instanceF}
+	\end{figure}
+
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|l|l|l|}
+		\hline
+		Sequence             & Time    & Mobiles \\ \hline
+		12 11 7 14 0 5 10 9  & 14.2699 & 100     \\ \hline
+		14 12 3 15 0 13 10 1 & 14.2699 & 100     \\ \hline
+		12 8 9 5 3 14 15 10  & 14.2699 & 100     \\ \hline
+		4 5 14 3 15 1 10 8   & 14.2699 & 100     \\ \hline
+		6 3 0 12 13 15 9 10  & 14.2699 & 100     \\ \hline
+		4 8 15 13 2 9 6 11   & 14.7525 & 100     \\ \hline
+		14 15 1 11 5 4 2 8   & 14.7525 & 100     \\ \hline
+		5 0 12 14 15 9 2 11  & 14.7525 & 100     \\ \hline
+		13 7 1 4 2 11 14 0   & 14.7525 & 100     \\ \hline
+		1 0 15 3 4 2 14 5    & 14.7525 & 100     \\ \hline
+		5 1 14 0 15 11 12 2  & 14.7525 & 100     \\ \hline
+		6 7 12 8 2 5 1 11    & 14.7525 & 100     \\ \hline
+		13 12 8 1 7 6 2 11   & 14.7525 & 100     \\ \hline
+		12 5 7 3 2 6 0 1     & 14.7525 & 100     \\ \hline
+		4 15 6 11 1 13 2 0   & 14.7525 & 100     \\ \hline
+		14 0 4 9 15 11 5 10  & 14.7525 & 100     \\ \hline
+		15 4 3 8 9 5 2 14    & 14.7525 & 100     \\ \hline
+		11 7 1 12 13 0 10 14 & 14.7525 & 100     \\ \hline
+		6 4 15 1 13 11 0 10  & 14.7525 & 100     \\ \hline
+		6 15 11 12 8 5 1 2   & 14.7525 & 100     \\ \hline
+		13 11 7 14 12 1 8 2  & 14.7525 & 100     \\ \hline
+		12 7 13 3 14 9 0 10  & 14.7525 & 100     \\ \hline
+		0 7 13 4 10 11 1 14  & 14.7525 & 100     \\ \hline
+		5 15 3 4 14 10 9 8   & 14.7525 & 100     \\ \hline
+		8 4 9 5 15 14 3 10   & 14.7525 & 100     \\ \hline
+		9 13 0 7 4 14 10 3   & 14.7525 & 100     \\ \hline
+		13 7 12 9 8 6 3 2    & 14.7525 & 100     \\ \hline
+		1 13 6 7 3 8 12 2    & 14.7525 & 100     \\ \hline
+		9 12 15 0 6 13 2 3   & 14.7525 & 100     \\ \hline
+		8 7 4 10 13 6 3 9    & 14.7525 & 100     \\ \hline
+		15 4 9 13 2 11 8 6   & 14.7525 & 100     \\ \hline
+		7 13 1 4 11 10 8 14  & 14.7525 & 100     \\ \hline
+		4 6 0 15 1 11 13 10  & 14.7525 & 100     \\ \hline
+		12 1 7 10 13 14 11 0 & 14.7525 & 100     \\ \hline
+		0 7 6 11 13 9 4 10   & 14.7525 & 100     \\ \hline
+		13 11 1 4 14 8 10 7  & 16.1354 & 100     \\ \hline
+		11 6 4 2 7 0 5 9     & 16.1354 & 100     \\ \hline
+		0 6 11 5 4 1 10 15   & 16.1354 & 100     \\ \hline
+		15 10 6 3 1 4 0 5    & 16.5785 & 100     \\ \hline
+		5 7 14 11 9 10 4 8   & 16.5785 & 100     \\ \hline
+		15 1 2 14 5 8 11 12  & 16.5785 & 100     \\ \hline
+		0 15 13 11 9 6 2 12  & 16.5785 & 100     \\ \hline
+		\end{tabular}
+		\caption{Meilleures séquences pour l'instance F}
+		\label{tab:best-seq-instanceF}
+	\end{table}

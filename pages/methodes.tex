@@ -392,6 +392,8 @@
 
 				Finalement, les résultats sont triés et les combinaisons qui ont mené aux meilleurs d'entre-eux sont extraites. On peut alors analyser ces combinaisons et retenir celles qui apparaissent dans les meilleurs résultats d'un maximum d'instances.
 
+				Nous avons remarqué à l'issue de ce calibrage que le nombre d'itérations de la VND n'avait pas toujours besoin d'être important. Généralement, de bonnes solutions sont obtenues en 30 à 50 itérations, c'est la raison pour laquelle nous avons défini la valeur par défaut de ce maximum à 30, mais elle reste personnalisable (template C++).
+
 				Nous présentons quelques résultats dans l'annexe~\ref{ann:benchmark-vnd}.
 
 				Il s'agit d'un calibrage simple, qui n'est sans doute pas exempt de défauts. Par exemple les mouvements qui favorisent l'amélioration du critère \emph{nombre de mobiles} sont peu nombreux. En effet, seul le mouvement d'insertion permet une amélioration sur ce critère. Il pourrait alors être nécessaire de le faire apparaître plusieurs fois dans un autre type de combinaisons afin d'offrir un meilleur équilibre entre les deux critères.
