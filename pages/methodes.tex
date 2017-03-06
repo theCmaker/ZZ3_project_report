@@ -78,7 +78,7 @@
 		\subsubsection{Mouvement d'extraction}
 			Le mouvement d'extraction permet de retirer un mobile dans une tournée afin d'améliorer le pire temps d'interception. Pour cela, seule la suppression d'un mobile dans la tournée la plus longue en temps sera validée, car une extraction dans les autres tournées n'apporterait pas d'amélioration globale à la solution. Afin que ce mouvement ne vide pas successivement les tournées jusqu'à aboutir à une solution où aucun mobile n'est intercepté (solution triviale pour la minimisation du temps), une politique a été ajoutée pour considérer le problème avec le critère de temps, mais aussi celui du nombre de mobiles. Un minimum est donc fixé pour ne pas aller en-dessous d'un certain seuil.
 			
-			
+			\newpage
 			L'algorithme de principe est le suivant :
 			\begin{code}
 				\begin{algo}[informal]
@@ -176,8 +176,9 @@
 
 		\subsubsection{Mouvements de déplacement}
 			Le mouvement de déplacement d'un mobile dans une tournée consiste à changer de position l'un des mobiles au sein de la même tournée. L'objectif est de trouver une meilleure organisation de la tournée et donc d'obtenir un gain de temps sur la date d'interception finale.
+			Le mouvement de déplacement d'un mobile dans une autre tournée consiste à supprimer un mobile de sa tournée pour l'insérer dans une seconde tournée.
 
-			L'algorithme de principe est le suivant:
+			Les algorithmes de principe sont les suivants:
 			\begin{code}
 				\begin{algo}[informal]
 					\ALGO{Principe du déplacement dans une tournée}
@@ -187,7 +188,7 @@
 								\FORGEN{tous les mobiles m}
 									\IF{le déplacement existe}
 										\STATE{Calculer le nouveau temps d'interception de t avec le déplacement de m dans la tournée.}
-										\STATE{Comparer le résultat obtenu avec le temps initial (avec arrêt de la recherche selon les politiques)}
+										\STATE{Comparer le résultat obtenu avec le temps initial (politiques)}
 									\ENDIF
 								\ENDFORGEN
 							\ENDFORGEN
@@ -198,10 +199,6 @@
 				\captionof{listing}{Algorithme de principe -- Déplacement au sein d'une tournée}
 			\end{code}
 
-
-			Le mouvement de déplacement d'un mobile dans une autre tournée consiste à supprimer un mobile de sa tournée pour l'insérer dans une seconde tournée.
-
-			L'algorithme de principe est le suivant :
 			\begin{code}
 				\begin{algo}[informal]
 					\ALGO{Principe du déplacement dans deux tournées}
@@ -211,7 +208,7 @@
 								\FORGEN{toutes les tournées t2}
 									\FORGEN{toutes les positions dans t2}
 										\STATE{Calculer le nouveau temps d'interception de t2 avec l'insertion de m à la position p}
-										\STATE{Comparer le résultat obtenu avec le temps inital (avec arrêt de la recherche selon les politiques)}
+										\STATE{Comparer le résultat obtenu avec le temps inital (politiques)}
 									\ENDFORGEN
 								\ENDFORGEN
 							\ENDFORGEN
@@ -266,29 +263,6 @@
 				\captionof{listing}{Algorithme de principe -- Interversion au sein d'une même tournée}
 			\end{code}
 
-			L'algorithme de principe pour l'interversion avec deux tournées est le suivant :
-			\begin{code}
-				\begin{algo}[informal]
-					\ALGO{Principe de l'interversion entre deux tournées}
-					\BEGIN
-						\FORGEN{toutes les tournées t1 sauf la dernière}
-							\FORGEN{toutes les tournées t2 après t1}
-								\FORGEN{tous les mobiles m1 dans t1}
-									\FORGEN{tous les mobiles m2 dans t2}
-										\STATE{Calculer le nouveau temps d'interception de t1 avec m2 à la place de m1}
-										\STATE{Calculer le nouveau temps d'interception de t2 avec m1 à la place de m2}
-										\STATE{Comparer les résultats obtenus avec les temps initiaux (avec arrêt de la recherche selon les politiques)}
-									\ENDFORGEN
-								\ENDFORGEN
-							\ENDFORGEN
-						\ENDFORGEN
-						\RETURN{vrai s'il y a eu amélioration, faux sinon}
-					\END
-				\end{algo}
-				\captionof{listing}{Algorithme de principe -- Interversion entre deux tournées}
-			\end{code}
-
-
 			\begin{figure}[h!]
 			\begin{subfigure}[b]{.54\linewidth}
 				\centering
@@ -311,9 +285,42 @@
 			\label{fig:move_swap}
 			\end{figure}
 
+			\newpage
+			L'algorithme de principe pour l'interversion avec deux tournées est le suivant :
+			\begin{code}
+				\begin{algo}[informal]
+					\ALGO{Principe de l'interversion entre deux tournées}
+					\BEGIN
+						\FORGEN{toutes les tournées t1 sauf la dernière}
+							\FORGEN{toutes les tournées t2 après t1}
+								\FORGEN{tous les mobiles m1 dans t1}
+									\FORGEN{tous les mobiles m2 dans t2}
+										\STATE{Calculer le nouveau temps d'interception de t1 avec m2 à la place de m1}
+										\STATE{Calculer le nouveau temps d'interception de t2 avec m1 à la place de m2}
+										\STATE{Comparer les résultats obtenus avec les temps initiaux (avec arrêt de la recherche selon les politiques)}
+									\ENDFORGEN
+								\ENDFORGEN
+							\ENDFORGEN
+						\ENDFORGEN
+						\RETURN{vrai s'il y a eu amélioration, faux sinon}
+					\END
+				\end{algo}
+				\captionof{listing}{Algorithme de principe -- Interversion entre deux tournées}
+			\end{code}
+
 		\subsubsection{Mouvement d'interversion de fins de tournées (ou 2-Opt)}
 			Le mouvement d'interversion de fin de tournée ou 2-Opt consiste à échanger deux séquences de mobiles dans deux tournées différentes. Les séquences considérées sont une suite de mobiles tels qu'ils ont été définis au sein d'une tournée, qu'il s'agisse de la tournée entière ou d'un ensemble à partir d'un mobile donné jusqu'à la fin de la tournée. Comme pour le mouvement d'interversion, le nombre de mobiles ne sera jamais réduit, seul le gain en temps est donc considéré. Un cas particulier de ce mouvement consiste à changer les intercepteurs de chaque tournée.
 
+			\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}[schema]
+				\input{move_2opt}
+			\end{tikzpicture}
+			\caption{Schéma d'interversion de fins de tournées}
+			\label{fig:move_2opt}
+			\end{figure}
+
+			\newpage
 			L'algorithme de principe pour le mouvement 2-Opt est le suivant :
 			\begin{code}
 				\begin{algo}[informal]
@@ -336,19 +343,20 @@
 				\captionof{listing}{Algorithme de principe -- 2-Opt}
 			\end{code}
 
-			\begin{figure}[h!]
-			\centering
-			\begin{tikzpicture}[schema]
-				\input{move_2opt}
-			\end{tikzpicture}
-			\caption{Schéma d'interversion de fins de tournées}
-			\label{fig:move_2opt}
-			\end{figure}
 
 		\subsection{Recherche locale à travers la VND}
 
-			La mise en place d'une \acrlong{vnd} permet d'automatiser l'utilisation de chacun des mouvements qui ont été définis précédemment sur une solution déjà construite. Le principe consiste à tester chaque mouvement sur la solution pour voir si des améliorations sont possibles et les appliquer le cas échéant. Si l'on ne trouve pas d'amélioration pour un mouvement, on passe alors au mouvement suivant, mais si on trouve une amélioration, on reprend dans ce cas la liste des mouvements depuis le début, car il est tout à fait possible que certains mouvements qui n'étaient pas réalisables le soient désormais. 
+			La mise en place d'une \acrlong{vnd} permet d'automatiser l'utilisation de chacun des mouvements qui ont été définis précédemment sur une solution déjà construite (figure~\ref{uml:vnd}). Le principe consiste à tester chaque mouvement sur la solution pour voir si des améliorations sont possibles et les appliquer le cas échéant. Si l'on ne trouve pas d'amélioration pour un mouvement, on passe alors au mouvement suivant, mais si on trouve une amélioration, on reprend dans ce cas la liste des mouvements depuis le début, car il est tout à fait possible que certains mouvements qui n'étaient pas réalisables le soient désormais. 
 			
+			\begin{figure}[h!]
+				\centering
+				\begin{tikzpicture}
+					\input{vnd_uml}
+				\end{tikzpicture}
+				\caption[UML -- VND]{Vertical Neighbourhood Descent}
+				\label{uml:vnd}
+			\end{figure}
+
 			\begin{code}
 				\begin{algo}[informal]
 					\ALGO{Principe de la VND}
@@ -369,17 +377,6 @@
 				\end{algo}
 				\captionof{listing}{Algorithme de principe -- VND}
 			\end{code}
-
-			\begin{figure}[h!]
-				\TODO{utiliser références}
-
-				\centering
-				\begin{tikzpicture}
-					\input{vnd_uml}
-				\end{tikzpicture}
-				\caption[UML -- VND]{Vertical Neighbourhood Descent}
-				\label{uml:vnd}
-			\end{figure}
 			
 			Pour que la \acrshort{vnd} soit la plus efficace possible, l'ordre dans lequel les mouvements sont appliqués est crucial. Il fut donc nécessaire d'effectuer un calibrage en testant des séquences aléatoires pour déterminer la meilleure combinaison de mouvements possible. Il n'était cependant pas possible de vérifier toutes les combinaisons, à cause de leur nombre trop élevé.
 			
@@ -399,7 +396,7 @@
 				Il s'agit d'un calibrage simple, qui n'est sans doute pas exempt de défauts. Par exemple les mouvements qui favorisent l'amélioration du critère \emph{nombre de mobiles} sont peu nombreux. En effet, seul le mouvement d'insertion permet une amélioration sur ce critère. Il pourrait alors être nécessaire de le faire apparaître plusieurs fois dans un autre type de combinaisons afin d'offrir un meilleur équilibre entre les deux critères.
 
 		\subsection{Politiques d'amélioration}
-			Afin de rendre les recherches plus pertinentes ou plus rapides, nous avons proposé des politiques permettant de piloter la validation d'une solution comme étant satisfaisante et de commander l'arrêt ou la poursuite des recherches pour trouver un mouvement améliorant. Ces politiques s'appliquent donc à la recherche locale.
+			Afin de rendre les recherches plus pertinentes ou plus rapides, nous avons proposé des politiques permettant de piloter la validation d'une solution comme étant satisfaisante et de commander l'arrêt ou la poursuite des recherches pour trouver un mouvement améliorant. Ces politiques s'appliquent donc à la recherche locale et sont décrites sur le diagramme UML de la figure~\ref{uml:available-policies}.
 
 			Nous tenons compte, pour valider (ou invalider) un mouvement, de bornes entrant dans le cadre de l'optimisation bi-critères. Un mouvement est considéré comme valide s'il n'implique pas de dépassement de ces bornes. 
 
@@ -420,7 +417,6 @@
 				Elle ne demande donc jamais l'arrêt des calculs, mais valide chaque amélioration plus intéressante que la meilleure des précédentes. La recherche se termine quand toutes les combinaisons ont été testées. Dès lors, la meilleure combinaison possible est connue, si elle existe, et peut être validée.
 
 				\begin{figure}[h!]
-					\TODO{utiliser références}
 					\centering
 					\begin{tikzpicture}
 						\input{available_policies_uml}
@@ -440,11 +436,13 @@
 
 			L'algorithme \acrlong{msels} (ou MS-ELS) est la première métaheuristique à avoir été implémentée pour notre solution. Le Multi-Start consiste à créer un certain nombre de solutions aléatoires à partir du problème et sur lesquelles on va appliquer une recherche locale de type ELS. La génération des solutions se fait à partir de l'heuristique de construction séquentielle dont la séquence des mobiles donnée va être aléatoire.
 
-			Puis l'Evolutionary Local Search va, pour un nombre d'itérations donné, perturber la solution avant d'y appliquer la recherche locale. On va alors sélectionner le meilleur résultat local trouvé et relancer l'ELS à de multiples reprises pour déterminer un record parmi le meilleur local de chaque ELS.
+			Puis l'Evolutionary Local Search va, pour un nombre d'itérations donné, perturber la solution avant d'y appliquer la recherche locale. On va alors sélectionner le meilleur résultat local trouvé et relancer l'ELS à de multiples reprises pour déterminer un record parmi le meilleur résultat local de chaque ELS.
 
 			À la fin des itérations du Multi-Start et de l'ELS, l'algorithme retourne la meilleure solution trouvée.
 
-			Algorithme de principe :
+			Nous avons implémenté cette métaheuristique de manière générique (figure~\ref{uml:ms-els}) de manière à ce qu'elle soit réutilisable.
+
+			Algorithme de principe:
 			\begin{code}
 				\begin{algo}[informal]
 					\ALGO{Principe du Multi-Start Evolutionary Local Search}
@@ -472,17 +470,7 @@
 				\end{algo}
 				\captionof{listing}{Algorithme de principe -- MS-ELS}
 			\end{code}
-
-			\begin{figure}[H]
-				\TODO{à référencer}
-			
-				\centering
-				\begin{tikzpicture}
-					\input{ms_els_uml}
-				\end{tikzpicture}
-				\caption[UML -- Métaheuristique MS-ELS]{Classe MS-ELS}
-				\label{uml:ms-els}
-			\end{figure}
+			\newpage
 
 			\begin{figure}[H]
 				\centering
@@ -491,6 +479,15 @@
 				\end{tikzpicture}
 				\caption{Logigramme pour le MS-ELS}
 				\label{fig:ms-els-logigram}
+			\end{figure}
+
+			\begin{figure}[H]			
+				\centering
+				\begin{tikzpicture}
+					\input{ms_els_uml}
+				\end{tikzpicture}
+				\caption[UML -- Métaheuristique MS-ELS]{Classe MS-ELS}
+				\label{uml:ms-els}
 			\end{figure}
 
 		\subsection{Biased Random-Key Genetic Algorithm}
@@ -511,13 +508,18 @@
 
 	\section{Aspect gestion de projet}
 
-		L'ensemble du projet a été géré à l'aide d'un tableau de bord répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requises et celui effectivement passé sur chacune des tâches. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours une vision générale de la situation (notamment les tâches à faire, les tâches en cours et les tâches terminées). Une réunion hebdomadaire avec le responsable du projet permettait de faire le point sur l'avancement, de se réorganiser si besoin ainsi que de remédier aux retards qui ont eu lieu à certaines étapes. 
+		L'ensemble du projet a été géré à l'aide d'un tableau de bord (figure~\ref{fig:dashboard}) répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requises et celui effectivement passé sur chacune des tâches. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours une vision générale de la situation (notamment les tâches à faire, les tâches en cours et les tâches terminées). Une réunion hebdomadaire avec le responsable du projet permettait de faire le point sur l'avancement, de se réorganiser si besoin ainsi que de remédier aux retards qui ont eu lieu à certaines étapes. 
 		
-		Le code source a été versionné à l'aide de git et a été reparti sur différentes branches au cours du développement, permettant ainsi d'avancer de manière sécurisée et de se répartir le travail plus facilement.
+		Le code source a été versionné à l'aide de git et a été reparti sur différentes branches au cours du développement (figure~\ref{fig:git}), permettant ainsi d'avancer de manière sécurisée et de se répartir le travail plus facilement.
 		
 		Le développement du projet ne s'est pas toujours passé comme prévu et il a été parfois nécessaire de revoir l'implémentation de certains éléments, comme par exemple les mouvements dont le fonctionnement était crucial et qui constituent une brique essentielle dans l'obtention de solutions performantes.
 		
-		\TODO{Screen dashboard}
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[width=\linewidth]{git}
+			\caption{Gestion de branches avec Git}
+			\label{fig:git}
+		\end{figure}
 
 		\begin{figure}[h!]
 			\centering
@@ -525,3 +527,4 @@
 			\caption{Dashboard de gestion de projet de type Kanban}
 			\label{fig:dashboard}
 		\end{figure}
+

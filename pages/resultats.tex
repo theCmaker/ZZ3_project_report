@@ -42,7 +42,7 @@
     	
     	La mise en place de ce cache permet d'obtenir de très gros gains de temps, comme l'indique la troisième colonne du tableau~\ref{tab:cache-perf}. Il s'agit d'une amélioration importante puisque dans le cadre d'un problème NP-Difficile, le souci de gagner du temps dans l'exécution du programme se trouve au coeur du problème.
     	
-    	Quelques corrections et améliorations ont aussi étaient apportées dans les heurisitiques de construction et notammment dans le calcul du temps d'interception, permettant d'accélérer les calculs. L'heuristique de construction par séquence est moins performante que celle d'insertion au plus tôt, mais elle permet de construire différentes solutions à la différence de la deuxième qui renverra toujours la même solution pour chaque problème donné.
+    	Quelques corrections et améliorations ont aussi été apportées dans les heurisitiques de construction et notammment dans le calcul du temps d'interception, permettant d'accélérer les calculs. L'heuristique de construction par séquence est moins performante que celle d'insertion au plus tôt, mais elle permet de construire différentes solutions à la différence de la deuxième qui renverra toujours la même solution pour chaque problème donné.
     	
     \section{Après améliorations}
     	\subsection{Résultats de la VND}
@@ -81,11 +81,11 @@
                 \cline{2-10}
                                                                        & \multicolumn{3}{c|}{\textbf{MS\_ELS\textless5,5,10,VND\textless30\textgreater\textgreater}}                                           & \multicolumn{3}{c|}{\textbf{MS\_ELS\textless2,5,25,VND\textless30\textgreater\textgreater}}                                           & \multicolumn{3}{c|}{\textbf{MS\_ELS\textless5,5,10,MY\_VND\textgreater}}                                                              \\ \cline{2-10} 
                                                                        & \multicolumn{1}{c|}{\textbf{Temps}} & \multicolumn{1}{c|}{\textbf{\#ratés}} & \multicolumn{1}{c|}{\textbf{tps max}} & \multicolumn{1}{c|}{\textbf{Temps}} & \multicolumn{1}{c|}{\textbf{\#ratés}} & \multicolumn{1}{c|}{\textbf{tps max}} & \multicolumn{1}{c|}{\textbf{Temps}} & \multicolumn{1}{c|}{\textbf{\#ratés}} & \multicolumn{1}{c|}{\textbf{tps max}} \\ \hline
-                \multicolumn{1}{|l|}{\textbf{instance A}} & 0.2543 s                            & 0                                             & 7.0879                                          & 0.1808 s                            & 0                                             & 7.0879                                          & 0.1851 s                            & 0                                             & 8.1061                                          \\ \hline
-                \multicolumn{1}{|l|}{\textbf{instance B}} & 4.01897 s                           & 0                                             & 15.3857                                         & 3.6432 s                            & 0                                             & 15.3857                                         & 2.3309 s                            & 0                                             & 16.2300                                         \\ \hline
-                \multicolumn{1}{|l|}{\textbf{instance C}} & 3.10806 s                           & 7                                             & 10.5255                                         & 2.2898 s                            & 5                                             & 16.9429                                         & 1.2665 s                            & 7                                             & 9.7625                                          \\ \hline
-                \multicolumn{1}{|l|}{\textbf{instance D}} & 12.8920 s                           & 9                                             & 12.5229                                         & 13.2740 s                           & 10                                            & 15.7405                                         & 6.1521 s                            & 10                                            & 18.7669                                         \\ \hline
-                \multicolumn{1}{|l|}{\textbf{instance E}} & 60.8356 s                           & 0                                             & 15.2699                                         & 60.4432 s                           & 0                                             & 15.7747                                         & 18.1701 s                           & 0                                             & 13.4661                                         \\ \hline
+                \multicolumn{1}{|l|}{\textbf{inst. A}} & 0.2543 s                            & 0                                             & 7.0879                                          & 0.1808 s                            & 0                                             & 7.0879                                          & 0.1851 s                            & 0                                             & 8.1061                                          \\ \hline
+                \multicolumn{1}{|l|}{\textbf{inst. B}} & 4.01897 s                           & 0                                             & 15.3857                                         & 3.6432 s                            & 0                                             & 15.3857                                         & 2.3309 s                            & 0                                             & 16.2300                                         \\ \hline
+                \multicolumn{1}{|l|}{\textbf{inst. C}} & 3.10806 s                           & 7                                             & 10.5255                                         & 2.2898 s                            & 5                                             & 16.9429                                         & 1.2665 s                            & 7                                             & 9.7625                                          \\ \hline
+                \multicolumn{1}{|l|}{\textbf{inst. D}} & 12.8920 s                           & 9                                             & 12.5229                                         & 13.2740 s                           & 10                                            & 15.7405                                         & 6.1521 s                            & 10                                            & 18.7669                                         \\ \hline
+                \multicolumn{1}{|l|}{\textbf{inst. E}} & 60.8356 s                           & 0                                             & 15.2699                                         & 60.4432 s                           & 0                                             & 15.7747                                         & 18.1701 s                           & 0                                             & 13.4661                                         \\ \hline
                 \end{tabular}
                 \caption{Résultats et performances du MS-ELS}
                 \label{tab:msels}
@@ -95,7 +95,7 @@
 			
 			Le \acrlong{brkga} a été exécuté sans l'utilisation de la \acrshort{vnd} pour obtenir différentes solutions à chaque insertion d'un mobile et définir un front de Pareto initial. Ensuite le programme est lancé sur une instance avec la VND intégrée et l'algorithme génétique va effectuer un certain nombre d'appels à celle-ci pour 100 itérations.
 			
-			En terme de performances, le BRKGA sans VND s'exécute très rapidement et avec VND dans un temps plutôt raisonnable, même pour des instances plus importantes. Le tableau~\ref{tab:brkga} présente les résultats obtenus sur quatre instances comportants un nombre différent de mobiles et d'intercepteurs.
+			En termes de performances, le BRKGA sans VND s'exécute très rapidement et avec VND dans un temps plutôt raisonnable, même pour des instances plus importantes. Le tableau~\ref{tab:brkga} présente les résultats obtenus sur quatre instances comportants un nombre différent de mobiles et d'intercepteurs.
 			
             \begin{table}[H]
                 \centering
@@ -108,15 +108,17 @@
                 \multicolumn{1}{|l|}{\textbf{instance C (30 mobiles)}} & 1.98s                               & 22                                         & 339.88s                             & 6                                          & 183920                                      &  \\ \cline{1-6}
                 \multicolumn{1}{|l|}{\textbf{instance D (40 mobiles)}} & 8.93s                               & 34                                         & 5656.13s                            & 20                                         & 382957                                      &  \\ \cline{1-6}
                 \end{tabular}
-                \caption{Résultats et performances de BRKGA}
+                \caption{Résultats et performances du BRKGA}
                 \label{tab:brkga}
             \end{table}
             
             Les graphiques suivants présentent les résultats obtenus par le BRKGA sans la VND puis avec la VND. Sur toutes les instances testées, on observe une réduction très nette de l'hypervolume, notamment concernant les solutions qui interceptent un grand nombre de mobiles (côté gauche), car elles parviennent à le faire dans un temps maximal beaucoup plus court que lors des premiers résultats obtenus.
             
             On peut donc en déduire que l'algorithme génétique nous permet d'obtenir de très bonnes améliorations en un temps raisonnable et qu'il démontre la possibilité de résoudre rapidement un problème de STDVRP.
+
+            Le front de Pareto est représenté en bleu et l'hypervolume correspond à la surface en rouge.
             
-            \subsubsection{10m2i2d}
+            \subsubsection{Instance A}
                 
                 \begin{figure}[H]
                 	\input{brkga_10m2i2d_novnd_pareto}
@@ -130,7 +132,7 @@
 				\label{fig:10m2i2d-avecvnd}
 				\end{figure}
 				
-            \subsubsection{20m3i3d}
+            \subsubsection{Instance B}
                 \begin{figure}[H]
                 	\input{brkga_20m3i3d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour un problème avec 20 mobiles, 3 intercepteurs et 3 dépôts}
@@ -143,7 +145,7 @@
 				\label{fig:20m3i3d-avecvnd}
 				\end{figure}
 				
-            \subsubsection{30m4i3d}
+            \subsubsection{Instance C}
            		\begin{figure}[H]
                 	\input{brkga_30m4i3d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour un problème avec 30 mobiles, 4 intercepteurs et 3 dépôts}
@@ -156,7 +158,7 @@
 				\label{fig:30m4i3d-avecvnd}
 				\end{figure}
 				
-            \subsubsection{40m5i4d}
+            \subsubsection{Instance D}
             	\begin{figure}[H]
                 	\input{brkga_40m5i4d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour un problème avec 40 mobiles, 5 intercepteurs et 4 dépôts}
@@ -169,7 +171,7 @@
 				\label{fig:40m5i4d-avecvnd}
 				\end{figure}
 				
-
+    \newpage
     \section{Perspectives}
 
         Nous sommes parvenus à implémenter des méthodes qui fournissent des résultats intéressants mais parfois instables. C'est notamment le cas du MS-ELS, qui favorise trop le temps par rapport au nombre de mobiles à intercepter. Les résultats s'en voient détériorés. Une amélioration est donc possible pour une meilleure gestion du facteur bi-critères. En effet, l'algorithme a un fonctionnement proche de celui que l'on pourrait obtenir en ne considérant qu'un seul critère, il est donc perfectible.

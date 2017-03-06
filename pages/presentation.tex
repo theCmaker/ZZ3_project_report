@@ -81,7 +81,14 @@
 
 			Dans ce cas, la représentation prend la forme d'une frise chronologique où l'on fait correspondre à chaque tournée une courbe en escaliers franchissant un palier à chaque date correspondant à une interception. Ainsi, on lit le temps en abscisse et le nombre de mobiles interceptés en ordonnée. Pour repérer plus facilement la fin d'une tournée, un marqueur est apposé et sa position est projetée sur l'axe des abscisses pour faciliter la lecture de la date. Un exemple est proposé sur la figure~\ref{subfig:example-temporal}.
 
-		
+		\begin{figure}[h!]
+			\centering
+			\begin{tikzpicture}
+				\input{problem_uml}
+			\end{tikzpicture}
+			\caption{Classes définissant un problème}
+			\label{fig:problem-uml}
+		\end{figure}
 
 	\section{Etat de l'art}
 		Comme pour tous les problèmes de tournées de véhicules (ou \acrlong{vrp}), il s'agit d'un problème NP-Difficile et il n'est donc pas possible d'obtenir une solution optimale dans un temps raisonnable par la force brute, c'est-à-dire en calculant toutes les combinaisons existantes. Il est alors nécessaire de mettre en place des méthodes d'approximation itératives pour déterminer la meilleure solution.
@@ -108,15 +115,6 @@
 		
 		
 		Plusieurs mesures ont été fixées afin de faciliter les calculs. Les déplacements des mobiles et des intercepteurs se font systématiquement dans le plan (l'altitude n'aura donc pas d'influence). Les trajectoires des mobiles doivent aussi être rectilignes et leur vitesse constante. Il n'y a pas de variation de vitesse ni de direction pour les intercepteurs entre deux interceptions consécutives.
-
-		\begin{figure}[h!]
-			\centering
-			\begin{tikzpicture}
-				\input{problem_uml}
-			\end{tikzpicture}
-			\caption{Classes définissant un problème}
-			\label{fig:problem-uml}
-		\end{figure}
 
 		Pour assurer un suivi régulier du projet, nous avons planifié des réunions avec M. Duhamel chaque semaine dans la mesure du possible ou toutes les deux semaines.
 
