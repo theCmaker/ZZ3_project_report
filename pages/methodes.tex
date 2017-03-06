@@ -1,6 +1,6 @@
 \chapter{Méthodes}
 	\section{Heuristiques constructives}
-		Nous proposons deux heuristiques d'insertion. La première est pilotée par l'utilisateur et la seconde est autonome.
+		Nous proposons deux heuristiques d'insertion. La première est pilotable par l'utilisateur et la seconde est autonome.
 
 		Ces deux heuristiques servent à construire des solutions réalisables. L'optimalité de ces solutions n'est pas garantie et n'est pas un objectif. En effet, une heuristique est une étape de résolution qui vise seulement à produire une solution viable sur laquelle on pourra appliquer des modifications de manière itérative jusqu'à l'obtention d'un résultat répondant aux critères de qualité que l'on aura fixés.
 
@@ -32,14 +32,14 @@
 
 			Afin d'optimiser les performances, nous avons développé une politique de \gls{cache} permettant de conserver une matrice des durées nécessaires pour atteindre chaque mobile à partir de chaque intercepteur. Ainsi, lorsqu'un mobile est intercepté, seules les durées relatives à l'intercepteur candidat sont faussées et doivent être recalculées, les durées nécessaires aux autres intercepteurs pour atteindre les autres mobiles restent identiques. Nous décrivons plus en détail ce mécanisme dans l'annexe~\ref{app:cache}.
 
-			Toutefois, cette heuristique doit être utilisée avec parcimonie en raison de son coût de calcul, mais aussi car elle n'est pas paramétrable et n'offre donc pas de capacités d'extension de ses possibilités, notamment le fait d'ignorer des mobiles ou de prioriser l'interception d'un mobile par rapport à un autre sur une décision arbitraire.
+			Toutefois, cette heuristique doit être utilisée avec parcimonie en raison de son coût de calcul, mais aussi car elle n'est pas paramétrable et n'offre donc pas de capacité d'extension de ses possibilités, notamment le fait d'ignorer des mobiles ou de prioriser l'interception d'un mobile par rapport à un autre sur une décision arbitraire.
 
 			\begin{figure}[h!]
 				\begin{subfigure}[t]{.5\linewidth}
 					\centering
 					\caption{Au plus tôt}
 					\label{subfig:fastest_demo}
-					\begin{tikzpicture}[scale=.5,baseline]
+					\begin{tikzpicture}[scale=.5,baseline,transform shape]
 						\input{test_5m_2i_graph_fastest}
 					\end{tikzpicture}
 				\end{subfigure}
@@ -48,7 +48,7 @@
 					\centering
 					\caption{Par séquence}
 					\label{subfig:_sequence_demo}
-					\begin{tikzpicture}[scale=.5,baseline]
+					\begin{tikzpicture}[scale=.5,baseline,transform shape]
 						\tikzset{interceptor/.style = {thick, color=OrangeRed}}
 						\input{test_5m_2i_graph_sequence}
 					\end{tikzpicture}
@@ -65,21 +65,24 @@
 			\item Il reste un ou plusieurs mobiles non-interceptés.
 		\end{itemize}
 
-		Dans le premier cas, le moyen le plus simple pour gagner du temps consiste à retirer un mobile, c'est le mouvement présenté dans la section \ref{subs:move_extract}. Dans le second cas, on peut essayer d'insérer les mobiles restants dans une tournée (section \ref{subs:move_insert}).
+		Dans le premier cas, le moyen le plus simple pour gagner du temps consiste à retirer un mobile, ce mouvement est présenté plus bas. Dans le second cas, on peut essayer d'insérer les mobiles restants dans une tournée (page~\pageref{subs:move_insert}).
 
 		Il est également possible de combiner ces deux mouvements élémentaires pour former quel\-ques mouvements plus complexes, par exemple enlever un mobile pour le déplacer dans une autre tournée, ou ailleurs dans la même tournée. Nous présentons donc plusieurs mouvements que nous jugeons pertinents dans les sections suivantes.
 
 		Il est cependant nécessaire de veiller à ce que les mouvements ainsi décrits soient appliqués stratégiquement, car l'objectif est d'améliorer la solution et non de la détériorer. Il convient donc de fixer les limites d'une détérioration que l'on jugera acceptable. L'intérêt d'autoriser une légère détérioration est que celle-ci ne peut être que temporaire, pour permettre la validation d'un autre mouvement qui laissera ensuite envisager une amélioration plus forte.
 
-		Les objectifs de qualité pour une solution sont le nombre de mobiles interceptés et la date de fin de la tournée la plus longue (en termes de durée). C'est la raison pour laquelle nous avons défini des politiques d'amélioration visant à atteindre ces objectifs qui sont mutuellement contradictoires, tout en garantissant que les limites de détérioration ne soient pas dépassées. Ces politiques définissent quelle est la solution à choisir et valident (ou invalident) des propositions de modification. Elles sont décrites dans les sections \ref{subs:first_available_policy} et \ref{subs:best_available_policy}.
+		Les objectifs de qualité pour une solution sont le nombre de mobiles interceptés et la date de fin de la tournée la plus longue (en termes de durée). C'est la raison pour laquelle nous avons défini des politiques d'amélioration visant à atteindre ces objectifs qui sont mutuellement contradictoires, tout en garantissant que les limites de détérioration ne soient pas dépassées. Ces politiques définissent quelle est la solution à choisir et valident (ou invalident) des propositions de modification. Elles sont décrites dans la section \ref{subs:first_available_policy}.
 
 		\subsection{Mouvements améliorants}
 
+		Nous présentons ici les mouvements que nous proposons. Ils sont notamment détaillés sur des schémas sur lesquels nous faisons apparaître avec des flèches pleines rouges le mouvement souhaité, et en pointillés les opérations nécessaires (numérotées au besoin).
+
 		\subsubsection{Mouvement d'extraction}
-			Le mouvement d'extraction permet de retirer un mobile dans une tournée afin d'améliorer le pire temps d'interception. Pour cela, seule la suppression d'un mobile dans la tournée la plus longue en temps sera validée, car une extraction dans les autres tournées n'apporterait pas d'amélioration globale à la solution. Afin que ce mouvement ne vide pas successivement les tournées jusqu'à aboutir à une solution où aucun mobile n'est intercepté (solution triviale pour la minimisation du temps), une politique a été ajoutée pour considérer le problème avec le critère de temps, mais aussi celui du nombre de mobiles. Un minimum est donc fixé pour ne pas aller en-dessous d'un certain seuil.
+			Le mouvement d'extraction permet de retirer un mobile dans une tournée afin d'améliorer le pire temps d'interception. Pour cela, seule la suppression d'un mobile dans la tournée la plus longue en temps sera validée, car une extraction dans les autres tournées n'apporterait pas d'amélioration globale à la solution. De plus, la pire tournée ne sera pas toujours la même au cours des améliorations successives, donc ce mouvement pourra être appliqué à différentes tournées. 
+
+			Afin que le mouvement ne vide pas successivement les tournées jusqu'à aboutir à une solution où aucun mobile n'est intercepté (solution triviale pour la minimisation du temps), une politique a été ajoutée pour considérer le problème avec le critère de temps, mais aussi celui du nombre de mobiles. Un minimum est donc fixé pour ne pas aller en-dessous d'un certain seuil.
 			
 			\newpage
-			L'algorithme de principe est le suivant :
 			\begin{code}
 				\begin{algo}[informal]
 					\ALGO{Principe d'extraction d'un mobile dans une tournée}
@@ -95,7 +98,7 @@
 						\RETURN{Amélioration}
 					\END
 				\end{algo}
-				\captionof{listing}{Algorithme de principe -- Extraction d'un mobile dans une tournée}
+				\captionof{listing}{Algorithme de principe -- Extraction d'un mobile hors d'une tournée}
 			\end{code}
 			
 			\label{subs:move_extract}
@@ -109,9 +112,8 @@
 			\end{figure}
 
 		\subsubsection{Mouvement d'insertion}
-			Le mouvement d'insertion permet d'ajouter un mobile à une tournée. Il est donc forcément améliorant en terme de mobiles, mais il peut alors impacter le temps maximum d'interception. Ce mouvement sera donc validé uniquement s'il ne l'augmente pas.
+			Le mouvement d'insertion permet d'ajouter un mobile à une tournée. Il est donc forcément améliorant en termes de mobiles, mais il peut alors impacter le temps maximum d'interception. Ce mouvement sera donc validé uniquement s'il ne l'augmente pas au-delà des limites autorisées.
 			
-			L'algorithme de principe est le suivant :
 			\begin{code}
 				\begin{algo}[informal]
 					\ALGO{Principe d'insertion d'un mobile dans une tournée}
@@ -144,7 +146,7 @@
 			\end{figure}
 
 		\subsubsection{Mouvement de substitution (ou remplacement)}
-				Le mouvement de substitution permet d'insérer un mobile à la place d'un autre mobile dans une tournée. Il s'agit donc d'un mouvement de suppression suivi d'un mouvement d'insertion. Comme le nombre de mobile ne change pas, seul le gain de temps est considéré pour valider ou non l'opération.
+				Le mouvement de substitution permet d'insérer un mobile à la place d'un autre mobile dans une tournée. Il s'agit donc d'un mouvement de suppression suivi d'un mouvement d'insertion. Comme le nombre de mobiles ne change pas, seul le gain de temps est considéré pour valider ou non l'opération.
 				
 				L'algorithme de principe est le suivant :
 				\begin{code}
@@ -216,7 +218,7 @@
 						\RETURN{vrai s'il y a eu amélioration, faux sinon}
 					\END
 				\end{algo}
-				\captionof{listing}{Algorithme de principe -- Déplacement d'un mobile au sein d'une autre tournée}
+				\captionof{listing}{Algorithme de principe -- Déplacement d'un mobile vers une autre tournée}
 			\end{code}
 
 			\begin{figure}[h!]
@@ -237,12 +239,12 @@
 				\subcaption{Entre deux tournées}
 				\label{subfig:move_move2routes}
 			\end{subfigure}
-			\caption{Schéma de déplacement d'un mobile}
+			\caption{Schémas de déplacement d'un mobile}
 			\label{fig:move_move}
 			\end{figure}
 
 		\subsubsection{Mouvements d'interversion (ou swap)}
-			Le mouvement d'interversion ou swap consiste à échanger deux mobiles déjà présents dans une tournée. Il existe deux variantes de ce mouvement : lorsque les deux mobiles appartiennent à la même tournée ou lorsque les tournées sont différentes. Étant donné que ce mouvement ne peut pas diminuer le nombre de mobiles traités, le critère d'amélioration porte uniquement sur la réduction du temps final de la ou l'une des tournées considérées.
+			Le mouvement d'interversion ou \emph{swap} consiste à échanger deux mobiles déjà présents dans une tournée. Il existe deux variantes de ce mouvement : lorsque les deux mobiles appartiennent à la même tournée ou lorsque les tournées sont différentes. Étant donné que ce mouvement ne peut pas diminuer le nombre de mobiles traités, le critère d'amélioration porte uniquement sur la réduction du temps cumulé des tournées considérées, sous réserve de ne pas excéder pour chacune le temps de la pire tournée.
 
 			L'algorithme de principe pour l'interversion dans une même tournée est le suivant:
 			\begin{code}
@@ -252,7 +254,7 @@
 						\FORGEN{toutes les tournées t}
 							\FORGEN{tous les mobiles m1 dans t}
 								\FORGEN{tous les mobiles m2 après m1 dans t}
-									\STATE{Calculer le nouveau temps d'interception de t avec m2 à la place de m1}
+									\STATE{Calculer la nouvelle date finale de t avec m2 à la place de m1}
 									\STATE{Comparer le résultat obtenu avec le temps initial (avec arrêt de la recherche selon les politiques)}
 								\ENDFORGEN
 							\ENDFORGEN
@@ -281,7 +283,7 @@
 				\subcaption{Entre deux tournées}
 				\label{subfig:move_swap2routes}
 			\end{subfigure}
-			\caption{Schéma d'interversion de deux mobiles}
+			\caption{Schémas d'interversion de deux mobiles}
 			\label{fig:move_swap}
 			\end{figure}
 
@@ -309,7 +311,7 @@
 			\end{code}
 
 		\subsubsection{Mouvement d'interversion de fins de tournées (ou 2-Opt)}
-			Le mouvement d'interversion de fin de tournée ou 2-Opt consiste à échanger deux séquences de mobiles dans deux tournées différentes. Les séquences considérées sont une suite de mobiles tels qu'ils ont été définis au sein d'une tournée, qu'il s'agisse de la tournée entière ou d'un ensemble à partir d'un mobile donné jusqu'à la fin de la tournée. Comme pour le mouvement d'interversion, le nombre de mobiles ne sera jamais réduit, seul le gain en temps est donc considéré. Un cas particulier de ce mouvement consiste à changer les intercepteurs de chaque tournée.
+			Le mouvement d'interversion de fins de tournées ou 2-Opt consiste à échanger deux séquences de mobiles dans deux tournées différentes. Les séquences considérées sont une suite de mobiles tels qu'ils ont été définis au sein d'une tournée, qu'il s'agisse de la tournée entière ou d'un ensemble à partir d'un mobile donné jusqu'à la fin de la tournée. Comme pour le mouvement d'interversion, le nombre de mobiles ne sera jamais réduit, seul le gain en temps est donc considéré. Un cas particulier de ce mouvement consiste à changer les intercepteurs de chaque tournée.
 
 			\begin{figure}[h!]
 			\centering
@@ -346,7 +348,7 @@
 
 		\subsection{Recherche locale à travers la VND}
 
-			La mise en place d'une \acrlong{vnd} permet d'automatiser l'utilisation de chacun des mouvements qui ont été définis précédemment sur une solution déjà construite (figure~\ref{uml:vnd}). Le principe consiste à tester chaque mouvement sur la solution pour voir si des améliorations sont possibles et les appliquer le cas échéant. Si l'on ne trouve pas d'amélioration pour un mouvement, on passe alors au mouvement suivant, mais si on trouve une amélioration, on reprend dans ce cas la liste des mouvements depuis le début, car il est tout à fait possible que certains mouvements qui n'étaient pas réalisables le soient désormais. 
+			La mise en place d'une \acrlong{vnd} permet d'automatiser l'utilisation de chacun des mouvements qui ont été définis précédemment sur une solution déjà construite (figure~\ref{uml:vnd}). Le principe consiste à tester chaque mouvement sur la solution pour voir si des améliorations sont possibles et les appliquer le cas échéant. Si l'on ne trouve pas d'amélioration pour un mouvement, on passe alors au mouvement suivant, mais si l'on trouve une amélioration, on reprend dans ce cas la liste des mouvements depuis le début, car il est tout à fait possible que certains mouvements qui n'étaient pas réalisables le soient désormais. 
 			
 			\begin{figure}[h!]
 				\centering
@@ -378,12 +380,10 @@
 				\captionof{listing}{Algorithme de principe -- VND}
 			\end{code}
 			
-			Pour que la \acrshort{vnd} soit la plus efficace possible, l'ordre dans lequel les mouvements sont appliqués est crucial. Il fut donc nécessaire d'effectuer un calibrage en testant des séquences aléatoires pour déterminer la meilleure combinaison de mouvements possible. Il n'était cependant pas possible de vérifier toutes les combinaisons, à cause de leur nombre trop élevé.
-			
 			\subsubsection{Calibrage de la VND}
-				Nous nous sommes vite aperçus que la VND était sensible à l'ordre d'application des mouvements de la recherche locale. Par conséquent, nous avons jugé utile de réaliser un calibrage (ou \emph{benchmark}) afin de déterminer des combinaisons intéressantes en termes de vitesse de convergence et de qualité des résultats. Pour ce faire, nous avons défini les différentes possibilités: 8~mouvements différents, pilotables indépendamment par deux politiques (voir section suivante), soit 16 variantes. Nous avons décidé d'inclure systématiquement chaque mouvement. Cela donne une combinaison à 8 mouvements, chacun piloté par une politique. Le nombre de combinaisons possibles s'élève à $16 \times 14 \times 12 \times 10 \times 8 \times 6 \times 4 \times 2 = \np{10321920}$. Il est evidemment impossible de tester toutes ces combinaisons dans un temps raisonnable.
+				Nous nous sommes vite aperçus que la \acrshort{vnd} était sensible à l'ordre d'application des mouvements de la recherche locale. Par conséquent, nous avons jugé utile de réaliser un calibrage (ou \emph{benchmark}) afin de déterminer des combinaisons intéressantes en termes de vitesse de convergence et de qualité des résultats. Pour ce faire, nous avons défini les différentes possibilités: 8~mouvements différents, pilotables indépendamment par deux politiques (voir section suivante), soit 16 variantes. Nous avons décidé d'inclure systématiquement chaque mouvement. Cela donne une combinaison à 8 mouvements, chacun piloté par une politique. Le nombre de combinaisons possibles s'élève à $16 \times 14 \times 12 \times 10 \times 8 \times 6 \times 4 \times 2 = \np{10321920}$. Il est évidemment impossible de tester toutes ces combinaisons dans un temps raisonnable.
 
-				Nous avons donc opté pour une méthode non exhaustive, en générant aléatoirement des combinaisons. Afin de faciliter le codage, nous avons réalisé une structure proche d'une fabrique, sous forme d'un tableau de foncteurs. Ainsi, en associant à chaque mouvement un indice, il suffisait de mélanger aléatoirement ces indices pour obtenir un ordre, et à choisir aléatoirement une politique pour chaque mouvement.
+				Nous avons donc opté pour une méthode non exhaustive, en générant aléatoirement des combinaisons. Afin de faciliter le codage, nous avons réalisé une structure proche d'une fabrique, sous forme d'un tableau de foncteurs. Ainsi, en associant à chaque mouvement un indice, il suffit de mélanger aléatoirement ces indices pour obtenir un ordre et de choisir aléatoirement une politique pour chaque mouvement.
 
 				A l'exécution, chaque combinaison aléatoirement générée est appliquée successivement sur plusieurs instances du problème, générées aléatoirement. Les résultats obtenus sont stockés et associés à la combinaison dont ils sont issus.
 
@@ -400,7 +400,7 @@
 
 			Nous tenons compte, pour valider (ou invalider) un mouvement, de bornes entrant dans le cadre de l'optimisation bi-critères. Un mouvement est considéré comme valide s'il n'implique pas de dépassement de ces bornes. 
 
-			Les bornes concernent les deux critères \emph{nombre de mobiles interceptés} et \emph{date de fin de la pire tournée}. Elles sont gérées par l'utilisateur ou par le programme et peuvent être fixées pour atteindre ou dépasser un objectif non-négociable ou bien pour relaxer l'une ou l'autre, ou bien chacune des deux contraintes, jusqu'à un seuil choisi.
+			Les bornes concernent les deux critères suivants: \emph{nombre de mobiles interceptés} et \emph{date de fin de la pire tournée}. Elles sont gérées par l'utilisateur ou par le programme et peuvent être fixées pour atteindre ou dépasser un objectif non-négociable ou bien pour relaxer l'une ou l'autre, ou bien chacune des deux contraintes, jusqu'à un seuil choisi.
 
 			Le principe de validation d'un mouvement est simple: il suffit de fournir à la politique les nouvelles valeurs de l'évaluation ainsi que les références que l'on refuse de dépasser. Ces références peuvent dans un premier temps être initialisées aux bornes que nous venons d'évoquer. En cas d'amélioration valide, la politique met à jour les références. Toutefois, elle ne modifie pas les bornes.
 
@@ -430,7 +430,7 @@
 
 		La recherche locale permet d'obtenir de bonnes améliorations au sein d'une solution déterminée, mais les \glspl{algorithme genetique} ajoutent la possibilité d'étendre la recherche de la meilleure solution à une multitude de solutions possibles.
 
-		Les \glspl{algorithme genetique} vont insérer une perturbation (mutation) dans la solution étudiée qui va déterminer une population sur laquelle on va appliquer la recherche locale. Seuls les meilleurs résultats sont conservés et on réitère l'opération autant de fois que désiré.
+		Les \glspl{algorithme genetique} vont provoquer une perturbation (mutation) dans la solution étudiée, perturbation qui va définir une population sur laquelle on va appliquer la recherche locale. Seuls les meilleurs résultats sont conservés et on réitère l'opération autant de fois que désiré.
 
 		\subsection{Multi-Start Evolutionary Local Search}
 
@@ -502,9 +502,9 @@
 			\end{itemize}
 			Cela implique que la taille d'un chromosome doit être identique au nombre de mobiles du problème.
 
-			Pour évaluer la pertinence d'un chromosome, nous observons les solutions qui lui correspondent. Il s'agit donc d'un ensemble de compromis entre nombre de mobiles interceptés et temps nécessaire pour la tournée la plus longue. Nous sommes par conséquent dans un contexte bi-critères, ce qui permet de travailler sur des fronts de Pareto pour conserver les meilleurs compromis. L'évaluation du front de Pareto caractérise donc le chromosome. La valeur caractéristique de ce front est son hypervolume. Les solutions que proposera BRKGA à la fin de son exécution correspondront donc aux solutions qui ont mené aux fronts de Pareto ayant le meilleur hypervolume.
+			Pour évaluer la pertinence d'un chromosome, nous observons les solutions qui lui correspondent. Il s'agit donc d'un ensemble de compromis entre nombre de mobiles interceptés et temps nécessaire pour la tournée la plus longue. Nous sommes par conséquent dans un contexte bi-critères, ce qui permet de travailler sur des fronts de Pareto pour conserver les meilleurs compromis. L'évaluation du front de Pareto caractérise donc le chromosome. La valeur caractéristique de ce front est son hypervolume. Les solutions que propose BRKGA à la fin de son exécution correspondent donc aux solutions qui ont mené aux fronts de Pareto ayant le meilleur hypervolume.
 
-			Afin de gagner du temps, nous avons réutilisé un projet réalisé en 2\ieme{} année à l'ISIMA concernant le calcul de Fronts de Pareto \cite{projet-zz2} pour calculer nos fronts de Pareto et générer les graphiques présentés dans la section Résultats.
+			Afin de gagner du temps, nous avons réutilisé un projet réalisé en 2\ieme{} année à l'ISIMA concernant le calcul de Fronts de Pareto \cite{projet-zz2} pour calculer nos fronts de Pareto et générer les graphiques présentés dans la section Résultats, page \pageref{chap:resultats}.
 
 	\section{Aspect gestion de projet}
 

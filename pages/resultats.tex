@@ -1,4 +1,5 @@
 \chapter{Résultats}
+\label{chap:resultats}
 
 	Pour les générer les résultats de nos algorithmes, nous avons utilisé les instances présentées dans le tableau~\ref{tab:instances}.
 	
@@ -34,7 +35,7 @@
             \multicolumn{1}{|l|}{\textbf{instance D (40 mobiles)}}   & 487.622 µs                               & 1759.860 µs                               & 72\%                               &  \\ \cline{1-4}
             \multicolumn{1}{|l|}{\textbf{instance E (60 mobiles)}}   & 1212.790 µs                               & 6391.220 µs                               & 81\%                               &  \\ \cline{1-4}
             \multicolumn{1}{|l|}{\textbf{instance F (100 mobiles)}}  & 3038.210µs                                & 17595.600 µs                               & 83\%                               &  \\ \cline{1-4}
-            \multicolumn{1}{|l|}{\textbf{instance G (1000 mobiles)}} & 486714.000 µs                                & 8.69975e+06 µs                           & 94\%                               &  \\ \cline{1-4}
+            \multicolumn{1}{|l|}{\textbf{instance G (1000 mobiles)}} & 0.486 s                                & 8.699 s                           & 94\%                               &  \\ \cline{1-4}
             \end{tabular}
             \caption{Performances du cache}
             \label{tab:cache-perf}
@@ -42,7 +43,7 @@
     	
     	La mise en place de ce cache permet d'obtenir de très gros gains de temps, comme l'indique la troisième colonne du tableau~\ref{tab:cache-perf}. Il s'agit d'une amélioration importante puisque dans le cadre d'un problème NP-Difficile, le souci de gagner du temps dans l'exécution du programme se trouve au coeur du problème.
     	
-    	Quelques corrections et améliorations ont aussi été apportées dans les heurisitiques de construction et notammment dans le calcul du temps d'interception, permettant d'accélérer les calculs. L'heuristique de construction par séquence est moins performante que celle d'insertion au plus tôt, mais elle permet de construire différentes solutions à la différence de la deuxième qui renverra toujours la même solution pour chaque problème donné.
+    	Quelques corrections et améliorations ont aussi été apportées dans les heuristiques de construction et notammment dans le calcul du temps d'interception, permettant d'accélérer les calculs. L'heuristique de construction par séquence est moins pertinente que celle d'insertion au plus tôt, mais elle permet de construire différentes solutions à la différence de la deuxième qui renverra toujours la même solution pour chaque problème donné.
     	
     \section{Après améliorations}
     	\subsection{Résultats de la VND}
@@ -71,7 +72,7 @@
 
     	\subsection{Résultats du MS-ELS}
     	
-    	Le tableau~\ref{tab:msels} présente les résultats obtenus avec la métaheuristique MS-ELS. Les résultats ne sont pas aussi bons qu'espérés, car le critère de sélection de la meilleure solution a tendance à privilégier le temps par rapport au nombre de mobiles interceptés. Il serait donc intéressant de revoir l'évaluation des solutions pour obtenir de meilleurs résultats. De plus, la MS-ELS est un algorithme mono-objectif, ce qui le rend aussi moins avantageux, car on devra se contenter d'une agrégation entre les critères plutôt que d'une véritable recherche bi-objective.
+    	Le tableau~\ref{tab:msels} présente les résultats obtenus avec la métaheuristique MS-ELS. Les résultats ne sont pas aussi bons qu'espérés, car le critère de sélection de la meilleure solution a tendance à privilégier le temps par rapport au nombre de mobiles interceptés. Il serait donc intéressant de revoir l'évaluation des solutions pour obtenir de meilleurs résultats. De plus, la MS-ELS est un algorithme mono-objectif, ce qui le rend aussi moins avantageux, car on doit se contenter d'une agrégation entre les critères plutôt que d'une véritable recherche bi-objective.
     	
     C'est pour cette raison que nous n'avons pas concentré notre travail sur l'amélioration de cette métaheurisque et qu'à la place, nous avons implémenté un algorithme génétique fondé sur la recherche d'un ensemble de solutions qui répondraient à la fois au critère de temps et à celui du nombre de mobiles interceptés.
     	
@@ -93,15 +94,15 @@
 
         \subsection{Résultats du BRKGA}
 			
-			Le \acrlong{brkga} a été exécuté sans l'utilisation de la \acrshort{vnd} pour obtenir différentes solutions à chaque insertion d'un mobile et définir un front de Pareto initial. Ensuite le programme applique la VND après l'heuristique de construction et l'algorithme génétique va effectuer un certain nombre d'appels à cette VND. Dans nos tests, BRKGA itère 100 fois (mutations de la population).
+			Le \acrlong{brkga} a été exécuté sans l'utilisation de la \acrshort{vnd} pour obtenir différentes solutions à chaque insertion d'un mobile et définir un front de Pareto initial. Ensuite le programme applique la VND après l'heuristique de construction et l'algorithme génétique va effectuer un certain nombre d'appels à cette VND. Dans nos tests, BRKGA itère 100 fois (mutations de la population). Sa population contient 128 chromosomes. La VND appliquée est fixée à 20 itérations au maximum.
 			
-			En termes de performances, le BRKGA sans VND s'exécute très rapidement et avec VND dans un temps plutôt raisonnable, même pour des instances plus importantes. Le tableau~\ref{tab:brkga} présente les résultats obtenus sur quatre instances comportants un nombre différent de mobiles et d'intercepteurs.
+			En termes de performances, le BRKGA sans VND s'exécute très rapidement et avec VND dans un temps plutôt raisonnable, même pour des instances plus importantes. Le tableau~\ref{tab:brkga} présente les résultats obtenus sur quatre instances comportant un nombre différent de mobiles et d'intercepteurs.
 			
             \begin{table}[H]
                 \centering
                 \begin{tabular}{r|r|r|r|r|r|l}
                 \cline{2-6}
-                \multicolumn{1}{l|}{\multirow{2}{*}{}}                 & \multicolumn{2}{c|}{\textbf{BRKGA -- SANS VND}}                                  & \multicolumn{3}{c|}{\textbf{BRKGA -- AVEC VND}}                                                                                &  \\ \cline{2-6}
+                \multicolumn{1}{l|}{\multirow{2}{*}{}}                 & \multicolumn{2}{c|}{\textbf{BRKGA -- SANS VND}}                                  & \multicolumn{3}{c|}{\textbf{BRKGA -- AVEC VND<20>}}                                                                                &  \\ \cline{2-6}
                 \multicolumn{1}{l|}{}                                  & \multicolumn{1}{c|}{\textit{temps}} & \multicolumn{1}{c|}{\textit{\# solutions}} & \multicolumn{1}{c|}{\textit{temps}} & \multicolumn{1}{c|}{\textit{\# solutions}} & \multicolumn{1}{c|}{\textit{\# appels VND}} &  \\ \cline{1-6}
                 \multicolumn{1}{|l|}{\textbf{instance A (10 mobiles)}} & 1.30s                               & 10                                         & 367.37s                             & 18                                         & 247729                                      &  \\ \cline{1-6}
                 \multicolumn{1}{|l|}{\textbf{instance B (20 mobiles)}} & 1.34s                               & 20                                         & 1046.95s                            & 20                                         & 336071                                      &  \\ \cline{1-6}
@@ -122,60 +123,60 @@
                 
                 \begin{figure}[H]
                 	\input{brkga_10m2i2d_novnd_pareto}
-                \caption{Résultat du BRKGA sans VND pour un problème avec 10 mobiles, 2 intercepteurs et 2 dépôts}
+                \caption{Résultat du BRKGA sans VND pour l'instance A}
 				\label{fig:10m2i2d-sansvnd}
 				\end{figure}
                 
                 \begin{figure}[H]
                 	\input{brkga_10m2i2d_vnd_pareto}
-                \caption{Résultat du BRKGA avec VND pour un problème avec 10 mobiles, 2 intercepteurs et 2 dépôts}
+                \caption{Résultat du BRKGA avec VND pour l'instance A}
 				\label{fig:10m2i2d-avecvnd}
 				\end{figure}
 				
             \subsubsection{Instance B}
                 \begin{figure}[H]
                 	\input{brkga_20m3i3d_novnd_pareto}
-                \caption{Résultat du BRKGA sans VND pour un problème avec 20 mobiles, 3 intercepteurs et 3 dépôts}
+                \caption{Résultat du BRKGA sans VND pour l'instance B}
 				\label{fig:20m3i3d-sansvnd}
 				\end{figure}
                 
                 \begin{figure}[H]
                 	\input{brkga_20m3i3d_vnd_pareto}
-                \caption{Résultat du BRKGA avec VND pour un problème avec 20 mobiles, 3 intercepteurs et 3 dépôts}
+                \caption{Résultat du BRKGA avec VND pour l'instance B}
 				\label{fig:20m3i3d-avecvnd}
 				\end{figure}
 				
             \subsubsection{Instance C}
            		\begin{figure}[H]
                 	\input{brkga_30m4i3d_novnd_pareto}
-                \caption{Résultat du BRKGA sans VND pour un problème avec 30 mobiles, 4 intercepteurs et 3 dépôts}
+                \caption{Résultat du BRKGA sans VND pour l'instance C}
 				\label{fig:30m4i3d-sansvnd}
                 \end{figure}
                 
                 \begin{figure}[H]
                 	\input{brkga_30m4i3d_vnd_pareto}
-                \caption{Résultat du BRKGA avec VND pour un problème avec 30 mobiles, 4 intercepteurs et 3 dépôts}
+                \caption{Résultat du BRKGA avec VND pour l'instance C}
 				\label{fig:30m4i3d-avecvnd}
 				\end{figure}
 				
             \subsubsection{Instance D}
             	\begin{figure}[H]
                 	\input{brkga_40m5i4d_novnd_pareto}
-                \caption{Résultat du BRKGA sans VND pour un problème avec 40 mobiles, 5 intercepteurs et 4 dépôts}
+                \caption{Résultat du BRKGA sans VND pour l'instance D}
 				\label{fig:40m5i4d-sansvnd}
                 \end{figure}
                 
                 \begin{figure}[H]
                 	\input{brkga_40m5i4d_vnd_pareto}
-                \caption{Résultat du BRKGA avec VND pour un problème avec 40 mobiles, 5 intercepteurs et 4 dépôts}
+                \caption{Résultat du BRKGA avec VND pour l'instance D}
 				\label{fig:40m5i4d-avecvnd}
 				\end{figure}
 				
     \newpage
     \section{Perspectives}
 
-        Nous sommes parvenus à implémenter des méthodes qui fournissent des résultats intéressants mais parfois instables. C'est notamment le cas du MS-ELS, qui favorise trop le temps par rapport au nombre de mobiles à intercepter. Les résultats s'en voient détériorés. Une amélioration est donc possible pour une meilleure gestion du facteur bi-critères. En effet, l'algorithme a un fonctionnement proche de celui que l'on pourrait obtenir en ne considérant qu'un seul critère, il est donc perfectible.
+        Nous sommes parvenus à implémenter des méthodes qui fournissent des résultats intéressants, mais parfois instables. C'est notamment le cas du MS-ELS, qui favorise trop le temps par rapport au nombre de mobiles à intercepter. Les résultats s'en voient détériorés. Une amélioration est donc possible pour une meilleure gestion du facteur bi-critères. En effet, l'algorithme a un fonctionnement proche de celui que l'on pourrait obtenir en ne considérant qu'un seul critère, il est donc perfectible.
 
         Notre modèle propose déjà un certain nombre de fonctionnalités comme l'autonomie des intercepteurs et la possibilité d'une flotte non-homogène. On pourrait toutefois lui ajouter plus de réalisme quant au calcul des dates d'interception en introduisant par exemple un aléa (loi de Poisson ou loi exponentielle négative). Nous n'avons pas eu le temps de développer cette fonctionnalité.
 
-        Par ailleurs, tous nos programmes sont exécutés sur un seul thread, il serait pertinent d'adapter certains éléments pour permettre une exécution \emph{multi-threads} et ainsi apporter un gain significatif en temps d'exécution et donc en performances. On remarque que les méta-heuristiques demandent beaucoup de ressources quand les instances grossissent, aussi leur exécution n'en sera que facilitée.
+        Par ailleurs, tous nos programmes sont exécutés sur un seul \emph{thread}, il serait pertinent d'adapter certains éléments pour permettre une exécution \emph{multi-threads} et ainsi apporter un gain significatif en temps d'exécution et donc en performances. On remarque que les méta-heuristiques demandent beaucoup de ressources quand les instances grossissent, aussi leur exécution n'en sera que facilitée.
