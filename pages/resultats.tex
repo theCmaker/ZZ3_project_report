@@ -71,7 +71,7 @@
 
     	\subsection{Résultats du MS-ELS}
     	
-    	Le tableau~\ref{tab:msels} présente les résultats obtenus avec la métaheuristique MS-ELS. Les résultats ne sont pas aussi bons qu'espérés, car le critère de sélection de la meilleure solution a tendance à privilégier le temps par rapport au nombre de mobiles interceptés. Il serait donc intéressant de revoir l'évalution des solutions pour obtenir de meilleurs résultats. De plus, la MS-ELS est un algorithme mono-objectif, ce qui le rend aussi moins avantageux, car on devra se contenter d'une agrégation entre les critères plutôt que d'une véritable recherche bi-objective.
+    	Le tableau~\ref{tab:msels} présente les résultats obtenus avec la métaheuristique MS-ELS. Les résultats ne sont pas aussi bons qu'espérés, car le critère de sélection de la meilleure solution a tendance à privilégier le temps par rapport au nombre de mobiles interceptés. Il serait donc intéressant de revoir l'évaluation des solutions pour obtenir de meilleurs résultats. De plus, la MS-ELS est un algorithme mono-objectif, ce qui le rend aussi moins avantageux, car on devra se contenter d'une agrégation entre les critères plutôt que d'une véritable recherche bi-objective.
     	
     C'est pour cette raison que nous n'avons pas concentré notre travail sur l'amélioration de cette métaheurisque et qu'à la place, nous avons implémenté un algorithme génétique fondé sur la recherche d'un ensemble de solutions qui répondraient à la fois au critère de temps et à celui du nombre de mobiles interceptés.
     	
@@ -93,7 +93,7 @@
 
         \subsection{Résultats du BRKGA}
 			
-			Le \acrlong{brkga} a été exécuté sans l'utilisation de la \acrshort{vnd} pour obtenir différentes solutions à chaque insertion d'un mobile et définir un front de Pareto initial. Ensuite le programme est lancé sur une instance avec la VND intégrée et l'algorithme génétique va effectuer un certain nombre d'appels à celle-ci pour 100 itérations.
+			Le \acrlong{brkga} a été exécuté sans l'utilisation de la \acrshort{vnd} pour obtenir différentes solutions à chaque insertion d'un mobile et définir un front de Pareto initial. Ensuite le programme applique la VND après l'heuristique de construction et l'algorithme génétique va effectuer un certain nombre d'appels à cette VND. Dans nos tests, BRKGA itère 100 fois (mutations de la population).
 			
 			En termes de performances, le BRKGA sans VND s'exécute très rapidement et avec VND dans un temps plutôt raisonnable, même pour des instances plus importantes. Le tableau~\ref{tab:brkga} présente les résultats obtenus sur quatre instances comportants un nombre différent de mobiles et d'intercepteurs.
 			
