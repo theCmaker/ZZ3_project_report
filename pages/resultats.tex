@@ -171,10 +171,9 @@
 				
 
     \section{Perspectives}
-    
-    	\begin{itemize}
-    		\item amélioration du MS-ELS (critère de sélection des meilleures solutions -> il favorise pour l'instant le temps et donne des résultats moins bons + problème du mono critère)
-    		\item ajout de l'incertitude (loi de Poisson ou loin exponentielle négative ?)
-    		\item multi-thread des métaheuristiques pour augmenter les performances de calcul
-    	\end{itemize}
-    		
+
+        Nous sommes parvenus à implémenter des méthodes qui fournissent des résultats intéressants mais parfois instables. C'est notamment le cas du MS-ELS, qui favorise trop le temps par rapport au nombre de mobiles à intercepter. Les résultats s'en voient détériorés. Une amélioration est donc possible pour une meilleure gestion du facteur bi-critères. En effet, l'algorithme a un fonctionnement proche de celui que l'on pourrait obtenir en ne considérant qu'un seul critère, il est donc perfectible.
+
+        Notre modèle propose déjà un certain nombre de fonctionnalités comme l'autonomie des intercepteurs et la possibilité d'une flotte non-homogène. On pourrait toutefois lui ajouter plus de réalisme quant au calcul des dates d'interception en introduisant par exemple un aléa (loi de Poisson ou loi exponentielle négative). Nous n'avons pas eu le temps de développer cette fonctionnalité.
+
+        Par ailleurs, tous nos programmes sont exécutés sur un seul thread, il serait pertinent d'adapter certains éléments pour permettre une exécution \emph{multi-threads} et ainsi apporter un gain significatif en temps d'exécution et donc en performances. On remarque que les méta-heuristiques demandent beaucoup de ressources quand les instances grossissent, aussi leur exécution n'en sera que facilitée.
