@@ -11,4 +11,4 @@ $(JOBNAME).aux: $(JOBNAME).tex $(CONFIG) $(OBJS)
 	export TEXINPUTS=".//:" ; $(CC) $(CFLAGS) $< && $(CC) $(CFLAGS) $< ;
 
 clean: 
-	rm -rf _minted-$(JOBNAME) *~ $(JOBNAME).aux $(JOBNAME).toc $(JOBNAME).log $(JOBNAME).bbl $(JOBNAME).blg $(JOBNAME).gz $(JOBNAME).out $(JOBNAME)-*.asy $(JOBNAME)-*.pdf $(JOBNAME).pre $(JOBNAME).vrb $(JOBNAME).snm $(JOBNAME).lof $(JOBNAME).lol $(JOBNAME).lot $(JOBNAME).glsdefs $(JOBNAME).glo $(JOBNAME).glg $(JOBNAME).gls $(JOBNAME).xdy
+	rm -rf _minted-$(JOBNAME) *~ $(JOBNAME).aux $(JOBNAME).nav $(JOBNAME).toc $(JOBNAME).log $(JOBNAME).bbl $(JOBNAME).blg $(JOBNAME).gz $(JOBNAME).out $(JOBNAME)-*.asy $(JOBNAME)-*.pdf $(JOBNAME).pre $(JOBNAME).vrb $(JOBNAME).snm $(JOBNAME).lof $(JOBNAME).lol $(JOBNAME).lot $(JOBNAME).glsdefs $(JOBNAME).glo $(JOBNAME).glg $(JOBNAME).gls $(JOBNAME).xdy
