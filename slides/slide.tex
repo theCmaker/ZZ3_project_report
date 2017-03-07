@@ -1,0 +1,89 @@
+\documentclass[xcolor=svgnames]{beamer}
+\mode<presentation>{}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{pbox} %encadrement de texte
+\usepackage{graphicx} %images
+\usepackage[frenchb]{babel}
+\usepackage{numprint}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{{\color{Green}\ding{51} }}%
+\newcommand{\xmark}{{\color{Red}\ding{55} }}%
+\usepackage{lipsum} %génération de lipsum
+
+\newcommand{\TODO}[1]{\colorbox{red}{#1}}
+
+\graphicspath{ {./slide_img/} }
+
+\usetheme{Frankfurt}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+%\setbeamercolor{background canvas}{fg=black,bg=LimeGreen}
+\usecolortheme[named=RoyalBlue]{structure}
+\setbeamercolor*{block title example}{fg=white,bg=OliveGreen!50!OliveGreen}
+
+\newcommand{\TikZ}{Ti{\color{orange}\textit{k}}Z}
+
+\input{settings/schemaSettings}
+
+\title[Interception de mobiles]{Conception d'un solveur\\ pour l'interception de mobiles}
+\author[Aurélie Peres, Pierre-Loup Pissavy]{Aurélie Peres, Pierre-Loup Pissavy}
+\institute{ISIMA -- 3\ieme{} année}
+\date{9 mars 2017}
+
+\AtBeginSection[]{
+	\begin{frame}
+		\frametitle{Plan}
+		\tableofcontents[currentsection, hideothersubsections]
+	\end{frame} 
+}
+\npthousandsep{ }
+\begin{document}
+	\begin{frame}[plain] %title
+		\titlepage
+		\begin{center}
+			Tuteur: Christophe Duhamel\\[0.25cm]
+			Référent: Claude Mazel\\[0.5cm]
+			\includegraphics[height=20pt]{ISIMA_logo.pdf}
+		\end{center}
+	\end{frame}
+	%-------- INTRO
+	\begin{frame}[plain]
+		\frametitle{Introduction}	
+		\begin{center}
+			\input{intro_schema}
+		\end{center}
+	\end{frame}
+	%--------- PLAN
+	\begin{frame}
+		\frametitle{Plan}
+		\tableofcontents[hideallsubsections]
+	\end{frame}
+	%--------- FIN PLAN
+	\section{Présentation}
+		\input{presentation}
+
+	\section{Recherche Locale}
+		\input{ameliorations}
+	\section{Métaheuristiques}
+        \input{metaheuristiques}
+
+	\section*{}
+	\begin{frame}
+		\frametitle{Perspectives}
+		\TODO{CONTENU}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Conclusion}
+		\TODO{CONTENU}
+	\end{frame}
+	\begin{frame}
+		\begin{center}
+			Merci de votre attention
+		\end{center}
+	\end{frame}
+
+\end{document}

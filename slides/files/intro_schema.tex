@@ -1,0 +1,103 @@
+\begin{tikzpicture}[scale=0.5, transform shape]
+\draw[grided,step=1.0,thin] (-9,-3) grid (13,10);
+\draw[color=Gray] (-9,0) -- coordinate (x axis mid) (13,0);
+\draw[color=Gray] (0,-3) -- coordinate (x axis mid) (0,10);
+\foreach \x in {-9,...,-1,1,2,...,13}
+\draw[color=Gray] (\x,1pt) -- (\x,-3pt) node[anchor=north] {\x};
+\foreach \y in {-3,...,-1,1,2,...,10}
+\draw[color=Gray] (1pt,\y) -- (-3pt,\y) node[anchor=east] {\y};
+\node[color=Gray,anchor=north east] at(-3pt,-3pt) {0};
+\node[interceptor] (D0) at (-8.71043,9.0873) {\interceptor};
+\node (I0) at (D0) {};
+\node[interceptor] at ($ (I0) + (395:0.4) $) {$I_0$};
+\node (I1) at (D0) {};
+\node[interceptor,color=Purple!50!Magenta] at ($ (I1) + (495:0.4) $) {$I_1$};
+% Before
+\only<1>{
+\tikzset{mobile/.style={color=orange}}
+\node[mobile,anchor=center] (M0) at (3.68596,9.59608) {\mobile};
+\node[mobile] at (M0.south east) {$M_{0}$};
+\draw[speed] (M0.center) -- ($ (M0.center) + (1.84827,-0.128911) $);
+\node[mobile,anchor=center] (M1) at (0.9682,9.51598) {\mobile};
+\node[mobile] at (M1.south east) {$M_{1}$};
+\draw[speed] (M1.center) -- ($ (M1.center) + (-0.607757,-0.104395) $);
+\node[mobile,anchor=center] (M2) at (0.450554,0.908418) {\mobile};
+\node[mobile] at (M2.south east) {$M_{2}$};
+\draw[speed] (M2.center) -- ($ (M2.center) + (1.95232,0.0326855) $);
+\node[mobile,anchor=center] (M3) at (9.20091,-2.33459) {\mobile};
+\node[mobile] at (M3.south east) {$M_{3}$};
+\draw[speed] (M3.center) -- ($ (M3.center) + (1.10685,0.0383208) $);
+\node[mobile,anchor=center] (M4) at (-4.40584,7.16649) {\mobile};
+\node[mobile] at (M4.south east) {$M_{4}$};
+\draw[speed] (M4.center) -- ($ (M4.center) + (1.60923,0.0104115) $);
+\node[mobile,anchor=center] (M5) at (9.29652,0.609052) {\mobile};
+\node[mobile] at (M5.south east) {$M_{5}$};
+\draw[speed] (M5.center) -- ($ (M5.center) + (-0.545503,-0.0711328) $);
+\node[mobile,anchor=center] (M6) at (8.00955,5.12359) {\mobile};
+\node[mobile] at (M6.south east) {$M_{6}$};
+\draw[speed] (M6.center) -- ($ (M6.center) + (-1.54923,0.0522208) $);
+\node[mobile,anchor=center] (M7) at (5.33937,2.02042) {\mobile};
+\node[mobile] at (M7.south east) {$M_{7}$};
+\draw[speed] (M7.center) -- ($ (M7.center) + (2.07519,-0.116208) $);
+}
+%After
+\only<2>{
+\node[mobile,anchor=center,color=red] (M0) at (3.68596,9.59608) {\mobile};
+\node[mobile,color=red] at (M0.south east) {$M_{0}$};
+\draw[speed,color=red] (M0.center) -- ($ (M0.center) + (1.84827,-0.128911) $);
+\node[mobile,anchor=center] (M1) at (0.9682,9.51598) {\mobile};
+\node[mobile] at (M1.south east) {$M_{1}$};
+\draw[speed] (M1.center) -- ($ (M1.center) + (-0.607757,-0.104395) $);
+\node[mobile,anchor=center] (M2) at (0.450554,0.908418) {\mobile};
+\node[mobile] at (M2.south east) {$M_{2}$};
+\draw[speed] (M2.center) -- ($ (M2.center) + (1.95232,0.0326855) $);
+\node[mobile,anchor=center,color=red] (M3) at (9.20091,-2.33459) {\mobile};
+\node[mobile,color=red] at (M3.south east) {$M_{3}$};
+\draw[speed,color=red] (M3.center) -- ($ (M3.center) + (1.10685,0.0383208) $);
+\node[mobile,anchor=center] (M4) at (-4.40584,7.16649) {\mobile};
+\node[mobile] at (M4.south east) {$M_{4}$};
+\draw[speed] (M4.center) -- ($ (M4.center) + (1.60923,0.0104115) $);
+\node[mobile,anchor=center] (M5) at (9.29652,0.609052) {\mobile};
+\node[mobile] at (M5.south east) {$M_{5}$};
+\draw[speed] (M5.center) -- ($ (M5.center) + (-0.545503,-0.0711328) $);
+\node[mobile,anchor=center] (M6) at (8.00955,5.12359) {\mobile};
+\node[mobile] at (M6.south east) {$M_{6}$};
+\draw[speed] (M6.center) -- ($ (M6.center) + (-1.54923,0.0522208) $);
+\node[mobile,anchor=center,color=red] (M7) at (5.33937,2.02042) {\mobile};
+\node[mobile,color=red] at (M7.south east) {$M_{7}$};
+\draw[speed,color=red] (M7.center) -- ($ (M7.center) + (2.07519,-0.116208) $);
+\draw[direction] (M4.center) -- (-1.0618,7.18813);
+\draw[interceptor] (-8.71043,9.0873) -- (-1.0618,7.18813);
+\node[interceptor] at (-1.0618,7.18813) {\mobile};
+\draw[direction] (M1.center) -- (-0.630935,9.2413);
+\draw[interceptor] (-1.0618,7.18813) -- (-0.630935,9.2413);
+\node[interceptor] at (-0.630935,9.2413) {\mobile};
+\draw[direction] (M6.center) -- (2.00508,5.32599);
+\draw[interceptor] (-0.630935,9.2413) -- (2.00508,5.32599);
+\node[interceptor] at (2.00508,5.32599) {\mobile};
+\draw[direction] (M5.center) -- (6.22797,0.208918);
+\draw[interceptor] (2.00508,5.32599) -- (6.22797,0.208918);
+\node[interceptor] at (6.22797,0.208918) {\mobile};
+\draw[interceptor](6.22797,0.208918) node[anchor=east] {$t_{0}=5.62517$};
+\draw[direction] (M2.center) -- (12.3252,1.10722);
+\draw[interceptor,color=Purple!50!Magenta] (-8.71043,9.0873) -- (12.3252,1.10722);
+\node[interceptor,color=Purple!50!Magenta] at (12.3252,1.10722) {\mobile};
+\draw[interceptor,color=Purple!50!Magenta](12.3252,1.10722) node[anchor=north east] {$t_{1}=6.08234$};
+}
+
+\node[anchor=north east,text width=8cm,draw,color=RoyalBlue!50,fill=white] at (-1,5) {
+	\begin{itemize}
+		\huge
+		\only<1>{
+		\item 8 mobiles
+		\item 2 intercepteurs
+		\item 1 dépôt
+		}
+		\only<2>{
+		\item 2 tournées
+		\item 5 mobiles interceptés
+		\item 3 mobiles non-interceptés
+		}
+	\end{itemize}
+};
+\end{tikzpicture}
