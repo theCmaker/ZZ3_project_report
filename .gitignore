@@ -1,5 +1,6 @@
 # Default pdf output
 compte_rendu.pdf
+slides/slide.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
