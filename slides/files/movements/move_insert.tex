@@ -1,0 +1,12 @@
+\begin{scope}[start chain,x=0,y=0]
+	\node[interceptor, on chain] {};
+	\node[mobile, on chain, join] {};
+	\node[mobile, on chain, join] (B) {};
+	\node[mobile, on chain, join] (A) {};
+	\node[mobile, on chain, join] {};
+	\node[interceptor, on chain, join] {};
+\end{scope}
+\node[right= .5 of B,cross] (X) {$\times$};
+\node[mobile, below= .5 of X,red] (I) {};
+\draw[correction,dotted] (B) -- (I);
+\draw[correction,dotted] (I) -- (A);
