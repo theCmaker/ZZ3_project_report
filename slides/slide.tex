@@ -19,7 +19,30 @@
 
 \usetheme{Frankfurt}
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{footline}[frame number]
+% \setbeamertemplate{footline}[frame number]
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.3\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.6\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+    \insertframenumber{} / \inserttotalframenumber\hspace*{1ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatletter
+
+\makeatletter
+    \newenvironment{withoutheadline}{
+        \setbeamertemplate{headline}[default]
+        \def\beamer@entrycode{\vspace*{-\headheight}}
+    }{}
+\makeatother
 \setbeamertemplate{blocks}[rounded][shadow=true]
 
 %\setbeamercolor{background canvas}{fg=black,bg=LimeGreen}
@@ -52,12 +75,14 @@
 		\end{center}
 	\end{frame}
 	%-------- INTRO
-	\begin{frame}[plain]
+	\begin{withoutheadline}
+	\begin{frame}
 		\frametitle{Introduction}	
 		\begin{center}
 			\input{intro_schema}
 		\end{center}
 	\end{frame}
+	\end{withoutheadline}
 	%--------- PLAN
 	\begin{frame}
 		\frametitle{Plan}
@@ -73,15 +98,19 @@
         \input{metaheuristiques}
 
 	\section*{}
+	\begin{withoutheadline}
 	\begin{frame}
 		\frametitle{Perspectives}
 		\TODO{CONTENU}
 	\end{frame}
+	\end{withoutheadline}
+	\begin{withoutheadline}
 	\begin{frame}
 		\frametitle{Conclusion}
 		\TODO{CONTENU}
 	\end{frame}
-	\begin{frame}
+	\end{withoutheadline}
+	\begin{frame}[plain]
 		\begin{center}
 			Merci de votre attention
 		\end{center}
