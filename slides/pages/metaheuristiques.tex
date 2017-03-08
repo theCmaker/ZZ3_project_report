@@ -29,17 +29,55 @@
 \begin{frame}
 	\frametitle{Biased Random-Key Genetic Algorithm}
 	\framesubtitle{Concept}
-	\TODO{CONTENU}
-	Bi-critères -> évaluation par hypervolume
-	Entrée => Pas 1 solution mais une population P de solutions
-	Sortie => Les meilleurs compromis (sous-ensemble de P)
-\end{frame}
-\begin{frame}
-	\frametitle{Biased Random-Key Genetic Algorithm}
-	\framesubtitle{Résultats}
-	\TODO{CONTENU}
-	+ Comparaison avant/après (superposition Pareto)
-	+ Placement du résultat de la MS-ELS
+	\begin{tikzpicture}[ampersand replacement=\&]
+		\tikzset{node style ge/.style={anchor=center, draw}}
+		\matrix (A) [matrix of math nodes, node style ge] at (-4,4) {%
+		 	0.4 \& 0.2 \& 0.1 \& 0.5 \& 0.3 \\%
+		};%
+		\only<2->{
+			\matrix (B) [below of=A, matrix of math nodes, node style ge] {%
+			 	3 \& 1 \& 0 \& 4 \& 2 \\%
+			};%
+			\draw[->,>=latex] (A) -- (B);
+		}
+		\only<3->{
+			\node (C) [draw,below of=B] {$\mathcal{S} = \{s_1,...,s_n\}$};
+			\draw[->,>=latex] (B) -- (C);
+		}
+		\only<4->{
+			\node (D) [draw,thick,color=Red,below of=C] {$\mathcal{P} = \{p_1,...,p_k\} \subseteq \mathcal{S}$};
+			\draw[->,>=latex] (C) -- (D);
+		}
+		\only<5->{
+			\node (E) [draw,thick,fill=Red!30,below of=D] {Hypervolume};
+			\draw[->,>=latex] (D) -- (E);
+		}
+
+		\only<3->{
+		\draw[->,>=triangle 45] (0,0) -- coordinate (x axis mid) (5,0);
+		\node[below=.5cm,anchor=center] at (x axis mid) {nombre de mobiles ratés};
+		\draw[->,>=triangle 45] (0,0) -- coordinate (y axis mid) (0,5);
+		\node[left=.5cm,rotate=90,anchor=center] at (y axis mid) {temps de la pire tournée};
+		\only<5-> {
+			\fill[color=Red!30] (.5,3.5) -- (1,1.5) -- (2.5,.9) -- (4,.5) -| cycle;
+		}
+
+		\node (a) at (2.5,2.5) {$+$};
+		\node (b) at (1.5,3.5) {$+$};
+		\node (c) at (.5,3.5) {$+$};
+		\node (d) at (2,3) {$+$};
+		\node (e) at (1.7,2.7) {$+$};
+		\node (f) at (3.5,1.5) {$+$};
+		\node (g) at (3.3,3) {$+$};
+		\node (h) at (4,.5) {$+$};
+		\node (i) at (2.5,0.9) {$+$};
+		\node (j) at (1,1.5) {$+$};
+
+		\only<4->{
+			\draw[thick,color=Red] (.5,3.5) -- (1,1.5) -- (2.5,.9) -- (4,.5);
+		}
+		}
+	\end{tikzpicture}
 \end{frame}
 \begin{frame}
 	\frametitle{Biased Random-Key Genetic Algorithm}
