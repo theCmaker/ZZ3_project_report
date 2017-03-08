@@ -11,7 +11,7 @@
   \draw[thick,color=pPointColor] (6,38.9263) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (7,25.7658) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (8,21.6293) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (10,16.8574) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (13,14.3903) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (14,12.4345) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (15,11.91) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (18,10.2815) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (19,9.10052) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (20,8.28724) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (21,7.66967) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {};
 \end{scope}
 }
-\only<2> {
+\only<2-> {
 \begin{scope}
   \definecolor{hvColor}{RGB}{128,0,0}
   \draw[color=hvColor, fill=hvColor, fill opacity=0.4] (6,6.4877) -- (6,14.8468) -- (7,14.2892) -- (11,10.3245) -- (12,9.48769) -- (16,8.48855) -- (25,6.70582) -| (37,6.4877) -- cycle;
@@ -19,6 +19,11 @@
   \colorlet{pPointColor}{ForestGreen}
   \draw[thick,color=ForestGreen] (6,14.8468) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (7,14.2892) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (11,10.3245) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (12,9.48769) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (16,8.48855) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (25,6.70582) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (37,6.4877) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {};
 \end{scope}
+}
+\only<3>{
+  \node[draw,color=black,fill=orange, inner sep = 0pt, minimum size=2mm] at(9,12.5229) {};
+  \node[draw,color=black,fill=orange, inner sep = 0pt, minimum size=2mm] at(10,15.74) {};
+  \node[draw,color=black,fill=orange, inner sep = 0pt, minimum size=2mm] at(10,18.7669) {};
 }
 \draw[->,>=triangle 45] (4.35,6.10684) -- coordinate (x axis mid) (40.6267,6.10684);
 \node[below=1cm,anchor=center] at (x axis mid) {nombre de mobiles ratés};
