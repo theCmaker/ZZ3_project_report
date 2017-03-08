@@ -6,6 +6,7 @@
 \usetikzlibrary{math}
 \usetikzlibrary{matrix}
 \usetikzlibrary{arrows,chains,positioning,quotes}
+\usetikzlibrary{snakes}
 \usepackage{MnSymbol}
 \usepackage{relsize}
 
@@ -13,6 +14,8 @@
 \newcommand{\mobileroute}{\Large{$\oplus$}}
 \newcommand{\interceptor}{\Large{$\square$}}
 \newcommand{\depot}{\Large{$\square$}}
+
+\colorlet{GoodGreen}{LimeGreen!70!Green}
 \tikzset{%styles schémas
     interceptor/.style={thick,color=DarkBlue},  %intercepteur
     route/.style={interceptor},
