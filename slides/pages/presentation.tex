@@ -35,32 +35,65 @@
 \begin{frame}
 	\frametitle{Heuristiques de construction}
 	\framesubtitle{Construction au plus tôt}
-	\TODO{CONTENU}
+	\begin{block}{Principe}
+		\begin{itemize}
+			\item Sélection des meilleurs candidats
+			\item Insertion des mobiles les plus rapides à atteindre
+			\item Système de cache
+		\end{itemize}
+	\end{block}
+	\begin{exampleblock}{Avantages}
+		\begin{itemize}
+			\item Génère de bonnes solutions
+		\end{itemize}
+	\end{exampleblock}
+	\begin{alertblock}{Inconvénients}
+		\begin{itemize}
+			\item Solution unique
+			\item Gourmand en temps
+		\end{itemize}
+	\end{alertblock}
 \end{frame}
 \begin{frame}
 	\frametitle{Heuristiques de construction}
 	\framesubtitle{Construction par séquence}
-	\TODO{CONTENU}
+	\begin{block}{Principe}
+		\begin{itemize}
+			\item Insertion des mobiles selon une séquence donnée
+			\item Ajout dans la tournée de l'intercepteur le plus rapide
+		\end{itemize}
+	\end{block}
+	\begin{exampleblock}{Avantages}
+		\begin{itemize}
+			\item Génère une multitude de solutions
+			\item Rapide
+		\end{itemize}
+	\end{exampleblock}
+	\begin{alertblock}{Inconvénients}
+		\begin{itemize}
+			\item Qualité variable de la solution
+			\item Doit être piloté par l'utilisateur
+		\end{itemize}
+	\end{alertblock}
 \end{frame}
 \begin{frame}
 	\frametitle{Heuristiques de construction}
 	\framesubtitle{Résultats}
 	
 	\begin{columns}[t]
-		\begin{column}{.4\linewidth}
-			\begin{tikzpicture}[scale=.3,baseline,transform shape]
+		\begin{column}{.43\linewidth}
+			\begin{tikzpicture}[scale=.33,baseline,transform shape]
 				\input{test_5m_2i_graph_fastest}
 			\end{tikzpicture}
 			
 			\centering Au plus tôt
 		\end{column}
-		\begin{column}{.6\linewidth}
-			\begin{tikzpicture}[scale=.3,baseline,transform shape]
+		\begin{column}{.63\linewidth}
+			\begin{tikzpicture}[scale=.33,baseline,transform shape]
 				\tikzset{interceptor/.style = {thick, color=OrangeRed}}
 				\input{test_5m_2i_graph_sequence}
 			\end{tikzpicture}
 
-			\vfill
 			\centering	Séquence
 		\end{column}
 	\end{columns}

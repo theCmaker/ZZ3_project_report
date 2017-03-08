@@ -6,49 +6,74 @@
 \begin{frame}
 	\frametitle{Mouvements améliorants (1)}
 	\framesubtitle{Insertion/Extraction}
-	
-	\TODO{CONTENU}
 	\begin{columns}
-		\begin{column}{.5\linewidth}
+		\begin{column}{.53\linewidth}
 			\begin{block}{Insertion}
 				\centering
 				\begin{tikzpicture}[scale=.7,schema,transform shape,thick]
 					\input{move_insert}
 				\end{tikzpicture}
 			\end{block}
+			\begin{itemize}
+				\item Mobile non intercepté
+				\item Améliore le nombre de mobiles
+				\item Ne doit pas détériorer le temps
+			\end{itemize}
 		\end{column}
-		\begin{column}{.5\linewidth}
+		\begin{column}{.53\linewidth}
 			\begin{block}{Extraction}
 				\centering
 				\begin{tikzpicture}[scale=.7,schema,transform shape,thick]
 					\input{move_extract}
 				\end{tikzpicture}
 			\end{block}
+			\begin{itemize}
+				\item Sur la pire tournée
+				\item Réduit le temps max
+				\item Nécessite une bonne politique
+			\end{itemize}
 		\end{column}
 	\end{columns}
+	\vspace*{2em}
+	\textbf{Mouvement de remplacement} : suppression puis insertion
 \end{frame}
 \begin{frame}
 	\frametitle{Mouvements améliorants (2)}
 	\framesubtitle{Déplacement}
-	\TODO{CONTENU}
 	\begin{block}{Déplacement}
 		\centering
 		\begin{tikzpicture}[scale=.7,schema,transform shape,thick]
 			\input{move_move2routes}
 		\end{tikzpicture}
 	\end{block}
+	Deux cas :
+	\begin{itemize}
+		\item Déplacement d'un mobile dans sa tournée
+		\item Déplacement dans une autre tournée
+	\end{itemize}
+	\vspace*{1em}
+	\begin{itemize}
+		\item Meilleure organisation des tournées
+		\item Gain en temps
+	\end{itemize}
+	\vspace*{.5em}
+	\textbf{Mouvement swap} : échange de deux mobiles
 	
 \end{frame}
 \begin{frame}
 	\frametitle{Mouvements améliorants (3)}
 	\framesubtitle{2-Opt}
-	\TODO{CONTENU}
 	\begin{block}{2-Opt}
 		\centering
 		\begin{tikzpicture}[scale=.7,schema,transform shape,thick]
 			\input{move_2opt}
 		\end{tikzpicture}
 	\end{block}
+	\begin{itemize}
+		\item Deux tournées
+		\item Inversion des séquences d'un mobile de la tournée jusqu'à la fin
+		\item Gain en temps
+	\end{itemize}
 \end{frame}
 \begin{frame}
 	\frametitle{Optimisation bi-critères}
