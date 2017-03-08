@@ -1,0 +1,29 @@
+\begin{tikzpicture}[scale=0.5]
+	\umlemptyclass[anchor=center, name=Solution]{Solution}
+
+	\umlemptyclass[x=10,y=-4,anchor=north]{MobileNode}
+
+	\umlemptyclass[x=9.5,y=5.5,anchor=north]{InterceptorNode}
+
+	\umlemptyclass[x=0,y=4,anchor=center]{Problem}
+	\umlemptyclass[x=6.5,y=1,anchor=north]{Mobile}
+	\umlemptyclass[x=12,y=1,anchor=north]{Interceptor}
+	\umlemptyclass[x=0,y=-2.5,anchor=north]{iterator}
+
+	\umluniaggreg{Solution}{Problem}
+	\umluniaggreg{Solution}{InterceptorNode}
+	\umluniaggreg{Solution}{MobileNode}
+
+	\umluniaggreg{MobileNode}{Mobile}
+	\umluniaggreg{MobileNode}{Interceptor}
+
+	\umluniaggreg{InterceptorNode}{Interceptor}
+
+	\umluniaggreg{iterator}{MobileNode}
+
+	\umlNarynode[x=0, y=-6.5, name=naryassoc, above right, transform shape]{}
+	\umluniassoc[]{naryassoc}{iterator}
+	\draw (naryassoc.south) |- ($ (MobileNode.east |- iterator.south) + (2.5,-2) $) |- (Interceptor.east);
+	\draw (Solution.west) -| ($(Solution.west |- naryassoc.west) + (-1,0) $) -- (naryassoc.west);
+\end{tikzpicture}
+
