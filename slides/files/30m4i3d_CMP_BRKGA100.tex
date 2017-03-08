@@ -7,6 +7,7 @@
   \definecolor{pLineColor}{RGB}{128,0,0}
   \definecolor{pPointColor}{RGB}{0,40,240}
   \draw[thick,color=pPointColor] (8,27.091) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (9,18.995) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (10,10.6267) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (11,9.26623) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (12,9.24041) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (13,6.41101) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (16,5.58238) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (17,4.13268) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (19,3.39565) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (24,2.80689) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {};
+  \node (legend-1) [draw,color=black,fill=pPointColor, inner sep = 0pt, minimum size=2mm,label=right:BRKGA] at (16,25) {};
 \end{scope}
 }
 \only<2-> {
@@ -17,12 +18,24 @@
   \definecolor{pLineColor}{RGB}{128,0,0}
   \colorlet{pPointColor}{ForestGreen}
   \draw[thick,color=pPointColor] (0,17.3417) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (1,13.9867) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (5,11.5968) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (6,11.246) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (9,7.45324) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (13,6.14489) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (14,5.37449) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (15,5.15825) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (17,3.90124) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (25,2.27095) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {} -- (26,1.10888) node[draw,color=pPointColor,fill=pPointColor, inner sep = 0pt, minimum size=2mm] {};
+  \node (legend-2) [below=3mm of legend-1,draw,color=black,fill=pPointColor, inner sep = 0pt, minimum size=2mm,label=right:BRKGA (VND)] {};
 \end{scope}
 }
-\only<3>{
+\only<3->{
   \node[draw,color=black,fill=orange, inner sep = 0pt, minimum size=2mm] at(7,10.5255) {};
   \node[draw,color=black,fill=orange, inner sep = 0pt, minimum size=2mm] at(7,9.76) {};
   \node[draw,color=black,fill=orange, inner sep = 0pt, minimum size=2mm] at(5,16.9429) {};
+  \node (legend-3) [below=3mm of legend-2,draw,color=black,fill=orange, inner sep = 0pt, minimum size=2mm,label=right:MS-ELS] {};
+}
+
+\only<4->{
+  \node[draw,color=black,fill=Orchid, inner sep = 0pt, minimum size=2mm] at(2,13.85) {};
+  \node (legend-4) [below=3mm of legend-3,draw,color=black,fill=Orchid, inner sep = 0pt, minimum size=2mm,label=right:VND] {};
+}
+
+\only<5>{
+  \node[draw,color=black,fill=DeepSkyBlue, inner sep = 0pt, minimum size=2mm] at(3,16.62) {};
+  \node (legend-5) [below=3mm of legend-4,draw,color=black,fill=DeepSkyBlue, inner sep = 0pt, minimum size=2mm,label=right:Au plus tôt] {};
 }
 \draw[->,>=triangle 45] (-1.1857,-0.505082) -- coordinate (x axis mid) (30.6659,-0.505082);
 \node[below=1cm,anchor=center] at (x axis mid) {nombre de mobiles ratés};
