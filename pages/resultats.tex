@@ -118,6 +118,8 @@
             On peut donc en déduire que l'algorithme génétique nous permet d'obtenir de très bonnes améliorations en un temps raisonnable et qu'il démontre la possibilité de résoudre rapidement un problème de STDVRP.
 
             Le front de Pareto est représenté en bleu et l'hypervolume correspond à la surface en rouge.
+
+            Afin de comparer les résultats du BRKGA avec les autres méthodes, nous avons superposé et placé les résultats pour chaque instance dans les figures de la section~\ref{subs:comparison} page~\pageref{subs:comparison}.
             
             \subsubsection{Instance A}
                 
@@ -171,6 +173,37 @@
                 \caption{Résultat du BRKGA avec VND pour l'instance D}
 				\label{fig:40m5i4d-avecvnd}
 				\end{figure}
+
+        \subsection{Comparaison des résultats}
+        \label{subs:comparison}
+
+            \subsubsection{Instance A}
+                \begin{figure}[H]
+                    \input{brkga_10m2i2d_comparison}
+                    \caption{Comparaison des résultats sur l'instance A}
+                    \label{fig:10m2i2d-comp}
+                \end{figure}
+
+            \subsubsection{Instance B}
+                \begin{figure}[H]
+                    \input{brkga_20m3i3d_comparison}
+                    \caption{Comparaison des résultats sur l'instance B}
+                    \label{fig:20m3i3d-comp}
+                \end{figure}
+
+            \subsubsection{Instance C}
+                \begin{figure}[H]
+                    \input{brkga_30m4i3d_comparison}
+                    \caption{Comparaison des résultats sur l'instance C}
+                    \label{fig:30m4i3d-comp}
+                \end{figure}
+
+            \subsubsection{Instance D}
+                \begin{figure}[H]
+                    \input{brkga_40m5i4d_comparison}
+                    \caption{Comparaison des résultats sur l'instance D}
+                    \label{fig:40m5i4d-comp}
+                \end{figure}
 				
     \newpage
     \section{Perspectives}
