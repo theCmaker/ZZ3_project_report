@@ -510,9 +510,11 @@
 
 		L'ensemble du projet a été géré à l'aide d'un tableau de bord (figure~\ref{fig:dashboard}) répertoriant les différentes tâches à effectuer, leur avancement ainsi que le nombre d'heures requises et celui effectivement passé sur chacune des tâches. Il permettait notamment de se répartir les différents travaux au cours du projet et d'avoir toujours une vision générale de la situation (notamment les tâches à faire, les tâches en cours et les tâches terminées). Une réunion hebdomadaire avec le responsable du projet permettait de faire le point sur l'avancement, de se réorganiser si besoin ainsi que de remédier aux retards qui ont eu lieu à certaines étapes. 
 		
-		Le code source a été versionné à l'aide de git et a été reparti sur différentes branches au cours du développement (figure~\ref{fig:git}), permettant ainsi d'avancer de manière sécurisée et de se répartir le travail plus facilement.
+		Le code source a été versionné à l'aide de git et a été réparti sur différentes branches au cours du développement (figure~\ref{fig:git}), permettant ainsi d'avancer de manière sécurisée et de se répartir le travail plus facilement.
 		
 		Le développement du projet ne s'est pas toujours passé comme prévu et il a été parfois nécessaire de revoir l'implémentation de certains éléments, comme par exemple les mouvements dont le fonctionnement était crucial et qui constituent une brique essentielle dans l'obtention de solutions performantes.
+
+		De plus, il a fallu adapter le projet pour satisfaire un besoin inattendu. En effet, la prise en compte d'un retour au dépôt à la fin des interceptions a fait l'objet d'une fonctionnalité souhaitable. A cela s'est ajouté le support de l'autonomie des intercepteurs. Grâce à une organisation du code adéquate et stratégique, cela nous a demandé très peu de modifications pour gérer ces deux fonctionnalités, en impactant uniquement la classe \texttt{Interceptor}. 
 		
 		\begin{figure}[h!]
 			\centering
