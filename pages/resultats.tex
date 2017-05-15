@@ -117,62 +117,62 @@
             
             On peut donc en déduire que l'algorithme génétique nous permet d'obtenir de très bonnes améliorations en un temps raisonnable et qu'il démontre la possibilité de résoudre rapidement un problème de STDVRP.
 
-            Le front de Pareto est représenté en bleu et l'hypervolume correspond à la surface en rouge.
+            Le front de Pareto est représenté en bleu et l'hypervolume correspond à la surface en rouge. On constate (dans le cas du BRKGA avec VND) que toutes les solutions ne sont pas sur le front. En effet, le fait d'appliquer la VND à chaque étape de la construction de la solution tend à accélérer l'optimisation et implique des variations qui peuvent mener à exclure du front certaines des solutions obtenues dans les étapes suivantes, apparaissant ici en rouge. Toutefois, on peut constater que cette remarque s'applique au BRKGA sans VND dans un cas particulier: lorsque le front est calculé avec une contrainte d'optimisation stricte (un critère doit toujours être amélioré entre deux compromis successifs), chaque solution qui n'améliore pas strictement la précédente est exclue du front. Si l'on souhaite les inclure, il s'agit simplement de calculer un front de Pareto non-strictement améliorant.
 
-            Afin de comparer les résultats du BRKGA avec les autres méthodes, nous avons superposé et placé les résultats pour chaque instance dans les figures de la section~\ref{subs:comparison} page~\pageref{subs:comparison}.
             
             \subsubsection{Instance A}
                 
                 \begin{figure}[H]
-                	\input{brkga_10m2i2d_novnd_pareto}
+                    \input{brkga_10m2i2d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour l'instance A}
-				\label{fig:10m2i2d-sansvnd}
-				\end{figure}
+                \label{fig:10m2i2d-sansvnd}
+                \end{figure}
                 
                 \begin{figure}[H]
-                	\input{brkga_10m2i2d_vnd_pareto}
+                    \input{brkga_10m2i2d_vnd_pareto}
                 \caption{Résultat du BRKGA avec VND pour l'instance A}
-				\label{fig:10m2i2d-avecvnd}
-				\end{figure}
-				
+                \label{fig:10m2i2d-avecvnd}
+                \end{figure}
+                
             \subsubsection{Instance B}
                 \begin{figure}[H]
-                	\input{brkga_20m3i3d_novnd_pareto}
+                    \input{brkga_20m3i3d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour l'instance B}
-				\label{fig:20m3i3d-sansvnd}
-				\end{figure}
+                \label{fig:20m3i3d-sansvnd}
+                \end{figure}
                 
                 \begin{figure}[H]
-                	\input{brkga_20m3i3d_vnd_pareto}
+                    \input{brkga_20m3i3d_vnd_pareto}
                 \caption{Résultat du BRKGA avec VND pour l'instance B}
-				\label{fig:20m3i3d-avecvnd}
-				\end{figure}
-				
+                \label{fig:20m3i3d-avecvnd}
+                \end{figure}
+                
             \subsubsection{Instance C}
-           		\begin{figure}[H]
-                	\input{brkga_30m4i3d_novnd_pareto}
+                \begin{figure}[H]
+                    \input{brkga_30m4i3d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour l'instance C}
-				\label{fig:30m4i3d-sansvnd}
+                \label{fig:30m4i3d-sansvnd}
                 \end{figure}
                 
                 \begin{figure}[H]
-                	\input{brkga_30m4i3d_vnd_pareto}
+                    \input{brkga_30m4i3d_vnd_pareto}
                 \caption{Résultat du BRKGA avec VND pour l'instance C}
-				\label{fig:30m4i3d-avecvnd}
-				\end{figure}
-				
+                \label{fig:30m4i3d-avecvnd}
+                \end{figure}
+                
             \subsubsection{Instance D}
-            	\begin{figure}[H]
-                	\input{brkga_40m5i4d_novnd_pareto}
+                \begin{figure}[H]
+                    \input{brkga_40m5i4d_novnd_pareto}
                 \caption{Résultat du BRKGA sans VND pour l'instance D}
-				\label{fig:40m5i4d-sansvnd}
+                \label{fig:40m5i4d-sansvnd}
                 \end{figure}
                 
                 \begin{figure}[H]
-                	\input{brkga_40m5i4d_vnd_pareto}
+                    \input{brkga_40m5i4d_vnd_pareto}
                 \caption{Résultat du BRKGA avec VND pour l'instance D}
-				\label{fig:40m5i4d-avecvnd}
-				\end{figure}
+                \label{fig:40m5i4d-avecvnd}
+                \end{figure}
+            Afin de comparer les résultats du BRKGA avec les autres méthodes, nous avons superposé et placé les résultats pour chaque instance dans les figures de la section~\ref{subs:comparison} page~\pageref{subs:comparison}.
 
         \subsection{Comparaison des résultats}
         \label{subs:comparison}
